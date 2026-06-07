@@ -2,9 +2,11 @@ import {
     createSignal,
     createUniqueId,
     For,
+    Match,
     mergeProps,
     onMount,
     Show,
+    Switch,
 } from "solid-js";
 import { Opt, Props, Status } from "./types.js";
 import { useFormContext } from "../../form/FormContext.jsx";
@@ -16,6 +18,8 @@ import { CheckIcon } from "../../icons/CheckIcon.jsx";
 import { ArrowDownOutlineIcon } from "../../icons/ArrowDownOutlineIcon.jsx";
 import { handleOnMount } from "./utils.js";
 import { SearchIcon } from "../../icons/SearchIcon.jsx";
+import { XCircleOutlineIcon } from "../../icons/XCircleOutlineIcon.jsx";
+import { SpinnerLoader } from "../loaders/spinner.jsx";
 
 export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     const merged = mergeProps(props, { id: createUniqueId(), perPage: 20 });
@@ -34,6 +38,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     let dropdown!: HTMLDivElement;
     let button!: HTMLButtonElement;
     let input!: HTMLInputElement;
+    let optsStatusContainer!: HTMLDivElement;
     let optsElem!: HTMLDivElement;
 
     async function handleComboBoxClick(
@@ -43,23 +48,27 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         },
     ) {
         if (dropdown.matches(":popover-open") == true) return;
-		setTimeout(() => {
+        setTimeout(() => {
             input.focus();
         });
         await loadOptsAndReset();
+        optsStatusContainer.addEventListener(
+            "scroll",
+            handleOptsStatusContainerScroll,
+        );
     }
 
-    async function handleOptsContainerScrollEnd(
-        e: Event & {
-            currentTarget: HTMLDivElement;
-            target: Element;
-        },
-    ) {
-        if (page * merged.perPage >= count) return;
-        const optsContainer = e.currentTarget;
-        const totalContentHeight = optsContainer.scrollHeight;
-        const scrolledFromTop = optsContainer.scrollTop;
-        const visibleContainerHeight = optsContainer.clientHeight;
+    async function handleOptsStatusContainerScroll() {
+        if (page * merged.perPage >= count) {
+            optsStatusContainer.removeEventListener(
+                "scroll",
+                handleOptsStatusContainerScroll,
+            );
+        }
+
+        const totalContentHeight = optsStatusContainer.scrollHeight;
+        const scrolledFromTop = optsStatusContainer.scrollTop;
+        const visibleContainerHeight = optsStatusContainer.clientHeight;
 
         // Check if internal scroll reached the bottom boundary
         if (
@@ -73,13 +82,15 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         try {
             const result = await loadOpts();
             setOpts([...opts(), ...result]);
-        } catch (_) {}
+        } catch (_) {
+            setStatus(Status.Error);
+        }
     }
 
     async function loadOptsAndReset() {
         page = 1;
+        setOpts([]);
         try {
-            setStatus(Status.Loading);
             const result = await loadOpts();
             setOpts(result);
         } catch (_) {
@@ -88,6 +99,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     }
 
     async function loadOpts(): Promise<Array<Opt<V, I>>> {
+        setStatus(Status.Loading);
         let result: Array<T>;
         [count, result] = await merged.search(
             input.value,
@@ -100,6 +112,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         for (let i = 0; i < result.length; i++) {
             newOpts[i] = merged.mapToOpt(result[i]);
         }
+        setStatus(Status.Idle);
         return newOpts;
     }
 
@@ -156,7 +169,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                 ref={dropdown}
             >
                 <div class="wl--search-wrapper">
-					<SearchIcon />
+                    <SearchIcon />
                     <input
                         id={createUniqueId()}
                         type="text"
@@ -167,29 +180,52 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                     ></input>
                 </div>
                 <div
-                    class="wl--opts"
-                    onScrollEnd={handleOptsContainerScrollEnd}
-                    ref={optsElem}
+                    class="wl--opts-status"
+                    ref={optsStatusContainer}
                 >
-                    <For each={opts()}>
-                        {(opt, idx) => (
-                            <button
-                                class="wl--opt"
-                                classList={{
-                                    selected: selectedOpt()?.value == opt.value,
-                                }}
-                                type="button"
-                                onMouseEnter={focusOnMouseEnter}
-                                data-idx={idx()}
-                                onclick={select}
-                            >
-                                {opt.optLabel()}
-                                <Show when={selectedOpt()?.value == opt.value}>
-                                    <CheckIcon />
-                                </Show>
-                            </button>
-                        )}
-                    </For>
+                    <div
+                        class="wl--opts"
+                        ref={optsElem}
+                    >
+                        <For each={opts()}>
+                            {(opt, idx) => (
+                                <button
+                                    class="wl--opt"
+                                    classList={{
+                                        selected:
+                                            selectedOpt()?.value == opt.value,
+                                    }}
+                                    type="button"
+                                    onMouseEnter={focusOnMouseEnter}
+                                    data-idx={idx()}
+                                    onclick={select}
+                                >
+                                    {opt.optLabel()}
+                                    <Show
+                                        when={selectedOpt()?.value == opt.value}
+                                    >
+                                        <CheckIcon />
+                                    </Show>
+                                </button>
+                            )}
+                        </For>
+                    </div>
+                    <Show when={status() != Status.Idle}>
+                        <div class="wl--status">
+                            <Switch>
+                                <Match when={status() == Status.Loading}>
+                                    <SpinnerLoader
+                                        classList={{ "wl--loader": true }}
+                                    />
+                                </Match>
+                                <Match when={status() == Status.Error}>
+                                    <XCircleOutlineIcon
+                                        classList={{ "wl--icon-err": true }}
+                                    />
+                                </Match>
+                            </Switch>
+                        </div>
+                    </Show>
                 </div>
             </div>
             <Msg state={msgState} />

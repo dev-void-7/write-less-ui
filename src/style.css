@@ -273,42 +273,65 @@
             }
         }
 
-        & > .wl--opts {
+        & > .wl--opts-status {
             display: flex;
             flex-direction: column;
             align-items: stretch;
             overflow-y: auto;
 
-            & > .wl--opt {
+            & > .wl--opts {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+
+                & > .wl--opt {
+                    display: flex;
+                    align-items: center;
+                    border: 0;
+                    background-color: transparent;
+                    cursor: pointer;
+                    justify-content: start;
+                    position: relative;
+                    padding-inline-start: var(--quarter-height);
+                    padding-inline-end: var(--one-quarter-height);
+                    --opt-height: calc(var(--combo-box-height) * 0.8125);
+                    --opt-icon-size: calc(var(--opt-height) * 0.75);
+                    min-height: var(--opt-height);
+
+                    &.wl--focused {
+                        background-color: lightgray;
+                    }
+
+                    &.selected {
+                        anchor-name: --selected-opt;
+                    }
+
+                    & > .wl--icon {
+                        pointer-events: none;
+                        position: absolute;
+                        position-anchor: --selected-opt;
+                        position-visibility: anchors-visible;
+                        width: var(--opt-icon-size);
+                        height: var(--opt-icon-size);
+                        inset-inline-end: calc(var(--opt-height) / 4);
+                    }
+                }
+            }
+
+            & > .wl--status {
                 display: flex;
                 align-items: center;
-                border: 0;
-                background-color: transparent;
-                cursor: pointer;
-                justify-content: start;
-                position: relative;
-                padding-inline-start: var(--quarter-height);
-                padding-inline-end: var(--one-quarter-height);
-                --opt-height: calc(var(--combo-box-height) * 0.8125);
-                --opt-icon-size: calc(var(--opt-height) * 0.75);
-                min-height: var(--opt-height);
+                justify-content: center;
+                margin-block: var(--combo-box-height);
 
-                &.wl--focused {
-                    background-color: lightgray;
+                & > .wl--loader {
+                    --width: var(--combo-box-height);
                 }
 
-                &.selected {
-                    anchor-name: --selected-opt;
-                }
-
-                & > .wl--icon {
-                    pointer-events: none;
-                    position: absolute;
-                    position-anchor: --selected-opt;
-                    position-visibility: anchors-visible;
-                    width: var(--opt-icon-size);
-                    height: var(--opt-icon-size);
-                    inset-inline-end: calc(var(--opt-height) / 4);
+                & > .wl--icon-err {
+                    width: var(--combo-box-height);
+                    height: var(--combo-box-height);
+                    --wl---icon-color: red;
                 }
             }
         }
@@ -363,8 +386,8 @@
     --width: var(--wl---loader-spinner-width, 2rem);
     --stroke: calc(var(--width) / 8);
     --color: var(--wl---loader-spinner-color, black);
-	width: var(--width);
-	aspect-ratio: 1;
+    width: var(--width);
+    aspect-ratio: 1;
     border-radius: 50%;
     background:
         radial-gradient(farthest-side, var(--color) 94%, #0000)
