@@ -15,6 +15,7 @@ import { focusOnMouseEnter } from "../common/utils/make-arrow-up-down-navigate-d
 import { CheckIcon } from "../../icons/CheckIcon.jsx";
 import { ArrowDownOutlineIcon } from "../../icons/ArrowDownOutlineIcon.jsx";
 import { handleOnMount } from "./utils.js";
+import { SearchIcon } from "../../icons/SearchIcon.jsx";
 
 export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     const merged = mergeProps(props, { id: createUniqueId(), perPage: 20 });
@@ -155,6 +156,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                 ref={dropdown}
             >
                 <div class="wl--search-wrapper">
+					<SearchIcon />
                     <input
                         id={createUniqueId()}
                         type="text"
