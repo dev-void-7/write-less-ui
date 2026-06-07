@@ -151,5 +151,5 @@ function scrollIntoViewIfNeeded(opt: Element) {
     const optRect = opt.getBoundingClientRect();
     if (optRect.top >= parentRect.top && optRect.bottom <= parentRect.bottom)
         return;
-    opt.scrollIntoView({ behavior: "instant", block: "end" });
+    opt.scrollIntoView({ behavior: "instant", block: "nearest" });
 }
