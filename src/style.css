@@ -281,14 +281,18 @@
             overflow-y: auto;
 
             & > .wl--opt {
+				display: flex;
+				align-items: center;
                 border: 0;
                 background-color: transparent;
                 cursor: pointer;
-                text-align: start;
+                justify-content: start;
                 position: relative;
                 padding-inline-start: var(--quarter-height);
                 padding-inline-end: var(--one-quarter-height);
-                min-height: var(--icon-size);
+				--opt-height: calc(var(--combo-box-height) * 0.8125);
+				--opt-icon-size: calc(var(--opt-height) * 0.75);
+                min-height: var(--opt-height);
 
                 &.wl--focused {
                     background-color: lightgray;
@@ -303,12 +307,9 @@
                     position: absolute;
                     position-anchor: --selected-opt;
                     position-visibility: anchors-visible;
-                    top: calc(
-                        anchor(top) + calc(var(--combo-box-height) * 0.09375)
-                    );
-                    width: calc(var(--combo-box-height) * 0.5625);
-                    height: calc(var(--combo-box-height) * 0.5625);
-                    inset-inline-end: var(--quarter-height);
+                    width: var(--opt-icon-size);
+                    height: var(--opt-icon-size);
+                    inset-inline-end: calc(var(--opt-height) / 4);
                 }
             }
         }
