@@ -1,0 +1,30 @@
+{
+    "name": "write-less-ui",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./style.css": "./dist/style.css"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "description": "",
+    "devDependencies": {
+        "@types/node": "^25.6.0",
+        "typescript": "^6.0.3",
+        "vite": "^8.0.16",
+        "vite-plugin-dts": "^5.0.2",
+        "vite-plugin-solid": "^2.11.12"
+    },
+    "peerDependencies": {
+        "solid-js": "^1.9.12"
+    }
+}

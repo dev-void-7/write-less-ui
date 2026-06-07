@@ -1,0 +1,374 @@
+* {
+    box-sizing: border-box;
+}
+
+.wl--field-input {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    --input-height: var(--wl--input-height, 2rem);
+
+    & > .wl--middle-part {
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+
+        & > :first-child {
+            border-start-start-radius: 4px;
+            border-end-start-radius: 4px;
+        }
+
+        & > :last-child {
+            border-start-end-radius: 4px;
+            border-end-end-radius: 4px;
+        }
+
+        &:has(> :first-child:not(.wl--input-wrapper))
+            > .wl--input-wrapper
+            > input {
+            border-start-start-radius: 0 !important;
+            border-end-start-radius: 0 !important;
+        }
+
+        &:has(> :last-child:not(.wl--input-wrapper))
+            > .wl--input-wrapper
+            > input {
+            border-start-end-radius: 0 !important;
+            border-end-end-radius: 0 !important;
+        }
+    }
+
+    & .wl--input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        & > :first-child:not(input) {
+            pointer-events: none;
+            position: absolute;
+            width: calc(var(--input-height) * 0.75);
+            height: calc(var(--input-height) * 0.75);
+            inset-inline-start: calc(var(--input-height) / 4);
+        }
+
+        & > :last-child:not(input) {
+            pointer-events: none;
+            position: absolute;
+            width: calc(var(--input-height) * 0.75);
+            height: calc(var(--input-height) * 0.75);
+            inset-inline-end: calc(var(--input-height) / 4);
+        }
+
+        & > input {
+            width: 100%;
+            height: var(--input-height);
+            min-width: 0;
+            border-radius: 4px;
+            border: 1px solid black;
+            outline: none;
+            padding-inline: calc(var(--input-height) / 4);
+        }
+
+        &:has(> :first-child:not(input)) > input {
+            padding-inline-start: calc(var(--input-height) * 1.25);
+        }
+
+        &:has(> :last-child:not(input)) > input {
+            padding-inline-end: calc(var(--input-height) * 1.25);
+        }
+    }
+}
+
+.wl--field-select {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    --select-height: var(--wl--input-height, 2rem);
+    --icon-size: calc(var(--select-height) * 0.75);
+    --quarter-height: calc(var(--select-height) / 4);
+    --one-quarter-height: calc(var(--select-height) * 1.25);
+    anchor-scope: --select-anchor;
+
+    & > .wl--select {
+        position: relative;
+        anchor-name: --select-anchor;
+        display: flex;
+        align-items: center;
+        height: var(--select-height);
+        min-width: 0;
+        border-radius: 4px;
+        border: 1px solid black;
+        outline: none;
+        padding-inline-start: var(--quarter-height);
+        padding-inline-end: var(--one-quarter-height);
+        background-color: white;
+
+        & > :first-child:not(.wl--selected-label) {
+            pointer-events: none;
+            position: absolute;
+            width: var(--icon-size);
+            height: var(--icon-size);
+            inset-inline-start: var(--quarter-height);
+        }
+
+        &:has(> :first-child:not(.wl--selected-label)) {
+            padding-inline-start: var(--one-quarter-height);
+        }
+
+        & > .wl--icon {
+            pointer-events: none;
+            position: absolute;
+            width: var(--icon-size);
+            height: var(--icon-size);
+            inset-inline-end: var(--quarter-height);
+            rotate: 0deg;
+            transition: rotate 0.2s ease-out;
+            transform-origin: center;
+        }
+    }
+
+    & > .wl--dropdown {
+        position-anchor: --select-anchor;
+        anchor-scope: --selected-opt;
+        & > .wl--opts {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+
+            & > .wl--opt {
+                border: 0;
+                background-color: transparent;
+                cursor: pointer;
+                text-align: start;
+                position: relative;
+                padding-inline-start: var(--quarter-height);
+                padding-inline-end: var(--one-quarter-height);
+                min-height: var(--icon-size);
+
+                &.wl--focused {
+                    background-color: lightgray;
+                }
+
+                &.selected {
+                    anchor-name: --selected-opt;
+                }
+            }
+        }
+
+        & > .wl--icon {
+            pointer-events: none;
+            position: absolute;
+            position-anchor: --selected-opt;
+            position-visibility: anchors-visible;
+            top: calc(anchor(top) + calc(var(--select-height) * 0.09375));
+            width: calc(var(--select-height) * 0.5625);
+            height: calc(var(--select-height) * 0.5625);
+            inset-inline-end: calc(var(--select-height) / 4);
+
+            &.wl--hidden {
+                display: none;
+            }
+        }
+    }
+
+    &:has(> .wl--dropdown:popover-open) {
+        & > .wl--select {
+            & > .wl--icon:dir(ltr) {
+                rotate: -180deg;
+            }
+
+            & > .wl--icon:dir(rtl) {
+                rotate: 180deg;
+            }
+        }
+    }
+}
+
+.wl--field-single-combo-box {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    --combo-box-height: var(--wl--input-height, 2rem);
+    --icon-size: calc(var(--combo-box-height) * 0.75);
+    --quarter-height: calc(var(--combo-box-height) / 4);
+    --one-quarter-height: calc(var(--combo-box-height) * 1.25);
+    anchor-scope: --combo-box-anchor;
+
+    & > .wl--combo-box {
+        position: relative;
+        anchor-name: --combo-box-anchor;
+        display: flex;
+        align-items: center;
+        height: var(--combo-box-height);
+        min-width: 0;
+        border-radius: 4px;
+        border: 1px solid black;
+        outline: none;
+        padding-inline-start: var(--quarter-height);
+        padding-inline-end: var(--one-quarter-height);
+        background-color: white;
+
+        & > :first-child:not(.wl--selected-label) {
+            pointer-events: none;
+            position: absolute;
+            width: var(--icon-size);
+            height: var(--icon-size);
+            inset-inline-start: var(--quarter-height);
+        }
+
+        &:has(> :first-child:not(.wl--selected-label)) {
+            padding-inline-start: var(--one-quarter-height);
+        }
+
+        & > .wl--icon {
+            pointer-events: none;
+            position: absolute;
+            width: var(--icon-size);
+            height: var(--icon-size);
+            inset-inline-end: var(--quarter-height);
+            rotate: 0deg;
+            transition: rotate 0.2s ease-out;
+            transform-origin: center;
+        }
+    }
+
+    & > .wl--dropdown {
+        position-anchor: --combo-box-anchor;
+        anchor-scope: --selected-opt;
+        & > .wl--opts {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            overflow-y: auto;
+
+            & > .wl--opt {
+                border: 0;
+                background-color: transparent;
+                cursor: pointer;
+                text-align: start;
+                position: relative;
+                padding-inline-start: var(--quarter-height);
+                padding-inline-end: var(--one-quarter-height);
+                min-height: var(--icon-size);
+
+                &.wl--focused {
+                    background-color: lightgray;
+                }
+
+                &.selected {
+                    anchor-name: --selected-opt;
+                }
+
+                & > .wl--icon {
+                    pointer-events: none;
+                    position: absolute;
+                    position-anchor: --selected-opt;
+                    position-visibility: anchors-visible;
+                    top: calc(
+                        anchor(top) + calc(var(--combo-box-height) * 0.09375)
+                    );
+                    width: calc(var(--combo-box-height) * 0.5625);
+                    height: calc(var(--combo-box-height) * 0.5625);
+                    inset-inline-end: var(--quarter-height);
+                }
+            }
+        }
+    }
+
+    &:has(> .wl--dropdown:popover-open) {
+        & > .wl--combo-box {
+            & > .wl--icon:dir(ltr) {
+                rotate: -180deg;
+            }
+
+            & > .wl--icon:dir(rtl) {
+                rotate: 180deg;
+            }
+        }
+    }
+}
+
+.wl--dropdown {
+    flex-direction: column;
+    align-items: stretch;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 0.25rem 0;
+    margin: 0;
+    opacity: 0;
+    transform: scale(0.95);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease-out,
+        display 0.2s allow-discrete,
+        overlay 0.2s allow-discrete;
+    top: anchor(bottom);
+    inset-inline-start: anchor(start);
+    min-width: anchor-size(width);
+    width: max-content;
+    max-height: 40vh;
+
+    &:popover-open {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+
+        @starting-style {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    }
+}
+
+/* 
+.wl--select {
+    position: relative;
+    display: flex;
+    align-items: center;
+    appearance: base-select;
+    width: 100%;
+    --input-height: var(--wl--input-height, 2rem);
+
+    &::picker-icon {
+        display: none;
+    }
+
+    & .wl--icon {
+        pointer-events: none;
+        position: absolute;
+        width: calc(var(--input-height) * 0.75);
+        height: calc(var(--input-height) * 0.75);
+        inset-inline-end: calc(var(--input-height) / 4);
+        rotate: 0deg;
+        transition: rotate 0.2s ease-out;
+        transform-origin: center;
+    }
+
+    &:open .wl--icon {
+        rotate: -180deg;
+    }
+
+    &::picker(select) {
+        border-radius: 4px;
+        appearance: base-select;
+        opacity: 0;
+        transform: scale(0.95);
+        transition:
+            opacity 0.2s ease,
+            transform 0.2s ease-out,
+            display 0.2s allow-discrete,
+            overlay 0.2s allow-discrete;
+    }
+
+    &:open::picker(select) {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    @starting-style {
+        &:open::picker(select) {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    }
+} */
