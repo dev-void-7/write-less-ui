@@ -19,7 +19,8 @@ import { ArrowDownOutlineIcon } from "../../icons/ArrowDownOutlineIcon.jsx";
 import { handleOnMount } from "./utils.js";
 import { SearchIcon } from "../../icons/SearchIcon.jsx";
 import { XCircleOutlineIcon } from "../../icons/XCircleOutlineIcon.jsx";
-import { SpinnerLoader } from "../loaders/spinner.jsx";
+import { SpinnerLoader } from "../../loaders/spinner.jsx";
+import { AbortablePromise } from "../../utils/abortable-promise.js";
 
 export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     const merged = mergeProps(props, { id: createUniqueId(), perPage: 20 });
@@ -32,6 +33,9 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         return sOpt ? sOpt.selectionLabel?.() || sOpt.optLabel() : undefined;
     };
     const dropdownId = createUniqueId();
+    let searchAbortablePromise:
+        | AbortablePromise<[count: number, items: Array<T>]>
+        | undefined = undefined;
     let msgState = form && new MsgState(form.props.mapCodeToMsg);
     let page = 1;
     let count = 0;
@@ -82,8 +86,8 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         try {
             const result = await loadOpts();
             setOpts([...opts(), ...result]);
-        } catch (_) {
-            setStatus(Status.Error);
+        } catch (e) {
+            if (e !== undefined) setStatus(Status.Error);
         }
     }
 
@@ -93,19 +97,20 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         try {
             const result = await loadOpts();
             setOpts(result);
-        } catch (_) {
-            setStatus(Status.Error);
+        } catch (e) {
+            if (e !== undefined) setStatus(Status.Error);
         }
     }
 
     async function loadOpts(): Promise<Array<Opt<V, I>>> {
         setStatus(Status.Loading);
+        await searchAbortablePromise?.abort();
         let result: Array<T>;
-        [count, result] = await merged.search(
-            input.value,
-            page,
-            merged.perPage,
+        searchAbortablePromise = new AbortablePromise(
+            merged.search(input.value, page, merged.perPage),
         );
+        [count, result] = await searchAbortablePromise.promise;
+        searchAbortablePromise = undefined;
         const newOpts: Array<Opt<V, I>> = Array.from({
             length: result.length,
         });
