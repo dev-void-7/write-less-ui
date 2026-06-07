@@ -7,7 +7,7 @@
     flex-direction: column;
     align-items: stretch;
     --input-height: var(--wl--input-height, 2rem);
-	--icon-size: calc(var(--input-height) * 0.75);
+    --icon-size: calc(var(--input-height) * 0.75);
 
     & > .wl--middle-part {
         display: flex;
@@ -236,23 +236,22 @@
     & > .wl--dropdown {
         position-anchor: --combo-box-anchor;
         anchor-scope: --selected-opt;
-		padding-block-start: 0;
-		padding-block-end: var(--quarter-height);
+        padding-block-start: 0;
+        padding-block-end: var(--quarter-height);
 
         & > .wl--search-wrapper {
             position: relative;
             display: flex;
             align-items: center;
-			box-sizing: content-box;
-			margin-inline: var(--quarter-height);
-			margin-block: var(--quarter-height);
-			padding-block-end: var(--quarter-height);
-			border-bottom: 1px solid black;
+            box-sizing: content-box;
+            margin-inline: var(--quarter-height);
+            margin-block: var(--quarter-height);
+            padding-block-end: var(--quarter-height);
+            border-bottom: 1px solid black;
             --search-height: calc(var(--combo-box-height) * 0.8125);
             --icon-size: calc(var(--search-height) * 0.75);
             --search-quarter-height: calc(var(--search-height) / 4);
             --search-one-quarter-height: calc(var(--search-height) * 1.25);
-			
 
             & > :first-child {
                 pointer-events: none;
@@ -281,8 +280,8 @@
             overflow-y: auto;
 
             & > .wl--opt {
-				display: flex;
-				align-items: center;
+                display: flex;
+                align-items: center;
                 border: 0;
                 background-color: transparent;
                 cursor: pointer;
@@ -290,8 +289,8 @@
                 position: relative;
                 padding-inline-start: var(--quarter-height);
                 padding-inline-end: var(--one-quarter-height);
-				--opt-height: calc(var(--combo-box-height) * 0.8125);
-				--opt-icon-size: calc(var(--opt-height) * 0.75);
+                --opt-height: calc(var(--combo-box-height) * 0.8125);
+                --opt-icon-size: calc(var(--opt-height) * 0.75);
                 min-height: var(--opt-height);
 
                 &.wl--focused {
@@ -357,6 +356,33 @@
             opacity: 0;
             transform: scale(0.95);
         }
+    }
+}
+
+.wl--loader-spinner {
+    width: var(--width, 2rem);
+    --stroke: calc(var(--width) / 8);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+        radial-gradient(farthest-side, var(--color-primary-600) 94%, #0000)
+            top/var(--stroke) var(--stroke) no-repeat,
+        conic-gradient(#0000 30%, var(--color-primary-600));
+    mask: radial-gradient(
+        farthest-side,
+        #0000 calc(100% - var(--stroke)),
+        #000 0
+    );
+    -webkit-mask: radial-gradient(
+        farthest-side,
+        #0000 calc(100% - var(--stroke)),
+        #000 0
+    );
+    animation: l13 1s infinite linear;
+}
+@keyframes l13 {
+    100% {
+        transform: rotate(1turn);
     }
 }
 
