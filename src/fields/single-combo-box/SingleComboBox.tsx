@@ -42,6 +42,9 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         },
     ) {
         if (dropdown.matches(":popover-open") == true) return;
+		setTimeout(() => {
+            input.focus();
+        });
         await loadOptsAndReset();
     }
 
