@@ -221,6 +221,18 @@
             padding-inline-start: var(--one-quarter-height);
         }
 
+        & > .wl--selected-label {
+            color: var(--wl---input-color, black);
+
+            &.wl--no-select {
+                color: color-mix(
+                    in srgb,
+                    var(--wl---input-color, black) 50%,
+                    transparent
+                );
+            }
+        }
+
         & > .wl--icon {
             pointer-events: none;
             position: absolute;

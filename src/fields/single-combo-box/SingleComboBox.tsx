@@ -164,7 +164,12 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                 disabled={merged.disabled}
             >
                 {merged.startIcon}
-                <span class="wl--selected-label">{selectedOptLabel()}</span>
+                <span
+                    class="wl--selected-label"
+                    classList={{ "wl--no-select": selectedOpt() == undefined }}
+                >
+                    {selectedOptLabel() || merged.placeholder}
+                </span>
                 <ArrowDownOutlineIcon />
             </button>
             <div
