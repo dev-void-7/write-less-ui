@@ -1,4 +1,11 @@
-import { createSignal, createUniqueId, For, mergeProps, onMount, Show } from "solid-js";
+import {
+    createSignal,
+    createUniqueId,
+    For,
+    mergeProps,
+    onMount,
+    Show,
+} from "solid-js";
 import { Opt, Props, Status } from "./types.js";
 import { useFormContext } from "../../form/FormContext.jsx";
 import { MsgState } from "../../msg/types.js";
@@ -7,7 +14,7 @@ import { Label } from "../common/label/Label.jsx";
 import { focusOnMouseEnter } from "../common/utils/make-arrow-up-down-navigate-dropdown-opts.js";
 import { CheckIcon } from "../../icons/CheckIcon.jsx";
 import { ArrowDownOutlineIcon } from "../../icons/ArrowDownOutlineIcon.jsx";
-import { getFns, handleOnMount } from "./utils.js";
+import { handleOnMount } from "./utils.js";
 
 export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     const merged = mergeProps(props, { id: createUniqueId(), perPage: 20 });
@@ -21,14 +28,14 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     };
     const dropdownId = createUniqueId();
     let msgState = form && new MsgState(form.props.mapCodeToMsg);
-	let page = 1;
+    let page = 1;
     let count = 0;
     let dropdown!: HTMLDivElement;
     let button!: HTMLButtonElement;
     let input!: HTMLInputElement;
-	let optsElem!: HTMLDivElement;
+    let optsElem!: HTMLDivElement;
 
-     async function handleComboBoxClick(
+    async function handleComboBoxClick(
         e: MouseEvent & {
             currentTarget: HTMLButtonElement;
             target: Element;
@@ -102,7 +109,15 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     }
 
     onMount(() => {
-        handleOnMount(form, merged, button, dropdown, optsElem, selectedOpt, msgState);
+        handleOnMount(
+            form,
+            merged,
+            button,
+            dropdown,
+            optsElem,
+            selectedOpt,
+            msgState,
+        );
     });
 
     return (
@@ -149,7 +164,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                 <div
                     class="wl--opts"
                     onScrollEnd={handleOptsContainerScrollEnd}
-					ref={optsElem}
+                    ref={optsElem}
                 >
                     <For each={opts()}>
                         {(opt, idx) => (
