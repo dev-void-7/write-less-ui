@@ -360,14 +360,16 @@
 }
 
 .wl--loader-spinner {
-    width: var(--width, 2rem);
+    --width: var(--wl---loader-spinner-width, 2rem);
     --stroke: calc(var(--width) / 8);
-    aspect-ratio: 1;
+    --color: var(--wl---loader-spinner-color, black);
+	width: var(--width);
+	aspect-ratio: 1;
     border-radius: 50%;
     background:
-        radial-gradient(farthest-side, var(--color-primary-600) 94%, #0000)
+        radial-gradient(farthest-side, var(--color) 94%, #0000)
             top/var(--stroke) var(--stroke) no-repeat,
-        conic-gradient(#0000 30%, var(--color-primary-600));
+        conic-gradient(#0000 30%, var(--color));
     mask: radial-gradient(
         farthest-side,
         #0000 calc(100% - var(--stroke)),
