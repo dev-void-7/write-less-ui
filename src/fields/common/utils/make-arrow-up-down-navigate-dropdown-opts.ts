@@ -1,4 +1,7 @@
-const FOCUSED_CLASS = "wl--focused" as const;
+const enum Classes {
+	FocusedClass = "wl--focused"
+};
+
 
 export function makeArrowUpDownNavigateOpts(
     dropdown: HTMLElement,
@@ -52,7 +55,7 @@ function focusNextOpt(opts: HTMLCollection) {
     for (let i = idx; i < len; i++) {
         opt = opts[i];
         if (opt.checkVisibility()) {
-            opt.classList.add(FOCUSED_CLASS);
+            opt.classList.add(Classes.FocusedClass);
             scrollIntoViewIfNeeded(opt);
             return;
         }
@@ -61,7 +64,7 @@ function focusNextOpt(opts: HTMLCollection) {
     for (let i = 0; i < idx; i++) {
         opt = opts[i];
         if (opt.checkVisibility()) {
-            opt.classList.add(FOCUSED_CLASS);
+            opt.classList.add(Classes.FocusedClass);
             scrollIntoViewIfNeeded(opt);
             return;
         }
@@ -84,7 +87,7 @@ function focusPreOpt(opts: HTMLCollection) {
     for (let i = idx; i > -1; i--) {
         opt = opts[i];
         if (opt.checkVisibility()) {
-            opt.classList.add(FOCUSED_CLASS);
+            opt.classList.add(Classes.FocusedClass);
             scrollIntoViewIfNeeded(opt);
             return;
         }
@@ -93,7 +96,7 @@ function focusPreOpt(opts: HTMLCollection) {
     for (let i = len - 1; i > idx; i--) {
         opt = opts[i];
         if (opt.checkVisibility()) {
-            opt.classList.add(FOCUSED_CLASS);
+            opt.classList.add(Classes.FocusedClass);
             scrollIntoViewIfNeeded(opt);
             return;
         }
@@ -107,23 +110,23 @@ export function focusOnMouseEnter(
     },
 ) {
     const curTarget = e.currentTarget;
-    if (curTarget.classList.contains(FOCUSED_CLASS)) return;
+    if (curTarget.classList.contains(Classes.FocusedClass)) return;
 
     const parent = curTarget.parentElement;
     if (parent == null) return;
 
     for (const child of parent.children) {
-        if (child.classList.contains(FOCUSED_CLASS)) {
-            child.classList.remove(FOCUSED_CLASS);
+        if (child.classList.contains(Classes.FocusedClass)) {
+            child.classList.remove(Classes.FocusedClass);
             break;
         }
     }
-    curTarget.classList.add(FOCUSED_CLASS);
+    curTarget.classList.add(Classes.FocusedClass);
 }
 
 function clickFocused(opts: HTMLCollection) {
     for (const opt of opts) {
-        if (opt.classList.contains(FOCUSED_CLASS)) {
+        if (opt.classList.contains(Classes.FocusedClass)) {
             if (opt instanceof HTMLElement) {
                 opt.click();
             }
@@ -136,8 +139,8 @@ function unFocusCurFocusedAndGetIdx(opts: HTMLCollection): number | undefined {
     let opt;
     for (let i = 0; i < opts.length; i++) {
         opt = opts[i];
-        if (opt.classList.contains(FOCUSED_CLASS)) {
-            opt.classList.remove(FOCUSED_CLASS);
+        if (opt.classList.contains(Classes.FocusedClass)) {
+            opt.classList.remove(Classes.FocusedClass);
             return i;
         }
     }
