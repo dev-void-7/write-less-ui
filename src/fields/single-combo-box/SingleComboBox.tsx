@@ -73,28 +73,40 @@ function ControlPart<T, V, I>(props: {
             disabled={merged.disabled}
         >
             {merged.startIcon}
-            <Switch>
-                <Match
-                    when={
-                        merged.placeholder && state.selectedOpt() === undefined
-                    }
-                >
-                    <span class="wl--placeholder">{merged.placeholder}</span>
-                </Match>
-                <Match when={state.selectedOpt() !== undefined}>
-                    <span class="wl--selected-label">
-                        {state.selectedOptLabel()}
-                    </span>
-                    <button
-                        class="wl--btn-deselect"
-                        onclick={state.deselect.bind(state)}
-                    >
-                        <XIcon classList={{ "wl--icon-deselect": true }} />
-                    </button>
-                </Match>
-            </Switch>
+            <ControlSelectedLabelOrPlaceholderPart
+                merged={merged}
+                state={state}
+            />
             <ArrowDownOutlineIcon classList={{ "wl--icon-arrow": true }} />
         </button>
+    );
+}
+
+function ControlSelectedLabelOrPlaceholderPart<T, V, I>(props: {
+    merged: Merged<T, V, I>;
+    state: State<T, V, I>;
+}) {
+    const { merged, state } = props;
+
+    return (
+        <Switch>
+            <Match
+                when={merged.placeholder && state.selectedOpt() === undefined}
+            >
+                <span class="wl--placeholder">{merged.placeholder}</span>
+            </Match>
+            <Match when={state.selectedOpt() !== undefined}>
+                <span class="wl--selected-label">
+                    {state.selectedOptLabel()}
+                </span>
+                <button
+                    class="wl--btn-deselect"
+                    onclick={state.deselect.bind(state)}
+                >
+                    <XIcon classList={{ "wl--icon-deselect": true }} />
+                </button>
+            </Match>
+        </Switch>
     );
 }
 
