@@ -162,7 +162,7 @@ function OptsPart<T, V, I>(props: { state: State<T, V, I> }) {
                         data-idx={idx()}
                         onclick={state.select.bind(state)}
                     >
-                        {opt.optLabel()}
+                        {opt.optLabel(state.searchInput.value)}
                         <Show when={state.selectedOpt()?.value == opt.value}>
                             <CheckIcon />
                         </Show>

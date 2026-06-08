@@ -32,7 +32,7 @@ export interface MainProps<T, V, I> {
 
 export type Opt<V, I> = {
     selectionLabel?: () => JSXElement;
-    optLabel: () => JSXElement;
+    optLabel: (key: string) => JSXElement;
     value: V;
     item: I;
 };
