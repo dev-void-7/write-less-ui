@@ -1,4 +1,4 @@
-import { Accessor, Setter } from "solid-js";
+import { Accessor, createSignal, createUniqueId, Setter } from "solid-js";
 import { PromiseManager } from "../../utils/promise-manager.js";
 import { Merged, Opt, Status } from "./types.js";
 
@@ -8,8 +8,15 @@ export class State<T, V, I> {
     popoverOpen = false;
     opts: Accessor<Array<Opt<V, I>>>;
     setOpts: Setter<Array<Opt<V, I>>>;
+	status: Accessor<Status>;
     setStatus: Setter<Status>;
+	selectedOpt: Accessor<Opt<V, I> | undefined>;
     setSelectedOpt: Setter<Opt<V, I> | undefined>;
+	selectedOptLabel = () => {
+        const sOpt = this.selectedOpt();
+        return sOpt ? sOpt.selectionLabel?.() || sOpt.optLabel() : undefined;
+    };
+	dropdownId: string;
     page = 1;
     count = 0;
     dropdown!: HTMLDivElement;
@@ -20,17 +27,13 @@ export class State<T, V, I> {
 
     constructor(
         merged: Merged<T, V, I>,
-        opts: Accessor<Array<Opt<V, I>>>,
-        setOpts: Setter<Array<Opt<V, I>>>,
-        setStatus: Setter<Status>,
-        setSelectedOpt: Setter<Opt<V, I> | undefined>,
     ) {
         this.merged = merged;
         this.promiseManager = new PromiseManager();
-        this.opts = opts;
-        this.setOpts = setOpts;
-        this.setStatus = setStatus;
-        this.setSelectedOpt = setSelectedOpt;
+        [this.opts, this.setOpts] = createSignal<Array<Opt<V, I>>>([]);
+        [this.status, this.setStatus] = createSignal<Status>(Status.Idle);
+        [this.selectedOpt, this.setSelectedOpt] = createSignal<Opt<V, I> | undefined>(undefined);
+		this.dropdownId = createUniqueId();
     }
 
     bindAndGetPubFns() {

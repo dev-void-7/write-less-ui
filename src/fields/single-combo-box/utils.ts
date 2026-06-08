@@ -3,23 +3,21 @@ import { Merged, Opt } from "./types.js";
 import { FormState } from "../../form/state.js";
 import { MsgState } from "../../msg/types.js";
 import { makeArrowUpDownNavigateOpts } from "../common/utils/make-arrow-up-down-navigate-dropdown-opts.js";
+import { State } from "./state.js";
 
 export function handleOnMount<T, V, I>(
     form: FormState | undefined,
     merged: Merged<T, V, I>,
-    button: HTMLButtonElement,
-    dropdown: HTMLDivElement,
-    opts: HTMLDivElement,
-    selectedOpt: Accessor<Opt<V, I> | undefined>,
+    state: State<T, V, I>,
     msgState: MsgState | undefined,
 ) {
     form?.registerField({
         getKey: () => merged.key,
-        getValue: () => selectedOpt()?.value,
-        elem: button,
+        getValue: () => state.selectedOpt()?.value,
+        elem: state.button,
         msgState: msgState as MsgState,
         validate: () => {
-            if (merged.required && selectedOpt() == undefined) {
+            if (merged.required && state.selectedOpt() == undefined) {
                 (msgState as MsgState).err(merged.requiredCode);
                 return false;
             }
@@ -27,5 +25,5 @@ export function handleOnMount<T, V, I>(
         },
     });
 
-    makeArrowUpDownNavigateOpts(dropdown, opts);
+    makeArrowUpDownNavigateOpts(state.dropdown, state.optsElem);
 }
