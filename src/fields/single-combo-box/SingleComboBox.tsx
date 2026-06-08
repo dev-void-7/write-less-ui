@@ -16,141 +16,37 @@ import { Label } from "../common/label/Label.jsx";
 import { focusOnMouseEnter } from "../common/utils/make-arrow-up-down-navigate-dropdown-opts.js";
 import { CheckIcon } from "../../icons/CheckIcon.jsx";
 import { ArrowDownOutlineIcon } from "../../icons/ArrowDownOutlineIcon.jsx";
-import { handleOnMount } from "./utils.js";
+import { handleOnMount, State } from "./utils.js";
 import { SearchIcon } from "../../icons/SearchIcon.jsx";
 import { XCircleOutlineIcon } from "../../icons/XCircleOutlineIcon.jsx";
 import { SpinnerLoader } from "../../loaders/spinner.jsx";
-import { PromiseManager } from "../../utils/abortable-promise.js";
 import { XIcon } from "../../icons/X.jsx";
 
 export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     const merged = mergeProps(props, { id: createUniqueId(), perPage: 20 });
+
     const form = useFormContext();
+
     const [opts, setOpts] = createSignal<Array<Opt<V, I>>>([]);
     const [status, setStatus] = createSignal(Status.Idle);
     const [selectedOpt, setSelectedOpt] = createSignal<Opt<V, I> | undefined>();
+
+    const dropdownId = createUniqueId();
+    const state = new State(merged, opts, setOpts, setStatus, setSelectedOpt);
+    const msgState = form && new MsgState(form.props.mapCodeToMsg);
+
     const selectedOptLabel = () => {
         const sOpt = selectedOpt();
         return sOpt ? sOpt.selectionLabel?.() || sOpt.optLabel() : undefined;
     };
-    const dropdownId = createUniqueId();
-    const promiseManager = new PromiseManager();
-    let msgState = form && new MsgState(form.props.mapCodeToMsg);
-    let popoverOpen = false;
-    let page = 1;
-    let count = 0;
-    let dropdown!: HTMLDivElement;
-    let button!: HTMLButtonElement;
-    let input!: HTMLInputElement;
-    let optsStatusContainer!: HTMLDivElement;
-    let optsElem!: HTMLDivElement;
-
-    async function handleComboBoxClick(
-        e: MouseEvent & {
-            currentTarget: HTMLButtonElement;
-            target: Element;
-        },
-    ) {
-        // here checking is done on the pre value becuase `handleCombBoxClick` is called before `checkPopoverStatus`
-        if (popoverOpen) return;
-        setTimeout(() => {
-            input.focus();
-        });
-        await loadOptsAndReset();
-        optsStatusContainer.addEventListener(
-            "scroll",
-            handleOptsStatusContainerScroll,
-        );
-    }
-
-    async function handleOptsStatusContainerScroll() {
-        if (page * merged.perPage >= count) {
-            optsStatusContainer.removeEventListener(
-                "scroll",
-                handleOptsStatusContainerScroll,
-            );
-        }
-
-        const totalContentHeight = optsStatusContainer.scrollHeight;
-        const scrolledFromTop = optsStatusContainer.scrollTop;
-        const visibleContainerHeight = optsStatusContainer.clientHeight;
-
-        // Check if internal scroll reached the bottom boundary
-        if (
-            Math.ceil(scrolledFromTop + visibleContainerHeight) + 8 <
-            totalContentHeight
-        ) {
-            return;
-        }
-
-        page++;
-        try {
-            const result = await loadOpts();
-            setOpts([...opts(), ...result]);
-        } catch (e) {
-            if (e !== undefined) setStatus(Status.Error);
-        }
-    }
-
-    async function loadOptsAndReset() {
-        page = 1;
-        setOpts([]);
-        try {
-            const result = await loadOpts();
-            setOpts(result);
-        } catch (e) {
-            if (e !== undefined) setStatus(Status.Error);
-        }
-    }
-
-    async function loadOpts(): Promise<Array<Opt<V, I>>> {
-        setStatus(Status.Loading);
-        promiseManager.abort();
-        let result: Array<T>;
-        [count, result] = await promiseManager.run(
-            merged.search(input.value, page, merged.perPage),
-        );
-        const newOpts: Array<Opt<V, I>> = Array.from({
-            length: result.length,
-        });
-        for (let i = 0; i < result.length; i++) {
-            newOpts[i] = merged.mapToOpt(result[i]);
-        }
-        setStatus(Status.Idle);
-        return newOpts;
-    }
-
-    function select(e: MouseEvent & { currentTarget: HTMLButtonElement }) {
-        if (merged.disabled) return;
-        const opt = opts()[Number(e.currentTarget.dataset.idx)];
-        setSelectedOpt(opt);
-        merged.onValueChange?.(opt.value, opt.item);
-        // without `setTimeout` popover won't be hidden in case of `Enter` keydown
-        setTimeout(() => dropdown.hidePopover());
-    }
-
-    function deselect(e: MouseEvent) {
-        e.stopImmediatePropagation();
-        e.stopPropagation();
-        e.preventDefault();
-        setSelectedOpt(undefined);
-    }
-
-    async function checkPopoverStatus(e: ToggleEvent) {
-        popoverOpen = e.newState == "open";
-
-        if (!popoverOpen) {
-			promiseManager.abort();
-        }
-    }
 
     onMount(() => {
         handleOnMount(
             form,
             merged,
-            button,
-            dropdown,
-            optsElem,
+            state.button,
+            state.dropdown,
+            state.optsElem,
             selectedOpt,
             msgState,
         );
@@ -172,9 +68,9 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                 id={merged.id}
                 class="wl--combo-box"
                 type="button"
-                onClick={handleComboBoxClick}
+                onClick={state.handleComboBoxClick}
                 popoverTarget={dropdownId}
-                ref={button}
+                ref={state.button}
                 disabled={merged.disabled}
             >
                 {merged.startIcon}
@@ -192,7 +88,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                         </span>
                         <button
                             class="wl--btn-deselect"
-                            onclick={deselect}
+                            onclick={state.deselect}
                         >
                             <XIcon classList={{ "wl--icon-deselect": true }} />
                         </button>
@@ -204,8 +100,8 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                 id={dropdownId}
                 class="wl--dropdown"
                 popover
-                onToggle={checkPopoverStatus}
-                ref={dropdown}
+                onToggle={state.checkPopoverStatus}
+                ref={state.dropdown}
             >
                 <div class="wl--search-wrapper">
                     <SearchIcon />
@@ -214,17 +110,17 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                         type="text"
                         inputMode="text"
                         autocomplete="off"
-                        ref={input}
-                        onInput={loadOptsAndReset}
+                        ref={state.searchInput}
+                        onInput={state.loadOptsAndReset}
                     ></input>
                 </div>
                 <div
                     class="wl--opts-status"
-                    ref={optsStatusContainer}
+                    ref={state.optsStatusContainer}
                 >
                     <div
                         class="wl--opts"
-                        ref={optsElem}
+                        ref={state.optsElem}
                     >
                         <For each={opts()}>
                             {(opt, idx) => (
@@ -237,7 +133,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                                     type="button"
                                     onMouseEnter={focusOnMouseEnter}
                                     data-idx={idx()}
-                                    onclick={select}
+                                    onclick={state.select}
                                 >
                                     {opt.optLabel()}
                                     <Show
