@@ -32,8 +32,15 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     const [selectedOpt, setSelectedOpt] = createSignal<Opt<V, I> | undefined>();
 
     const dropdownId = createUniqueId();
-    const state = new State(merged, opts, setOpts, setStatus, setSelectedOpt);
     const msgState = form && new MsgState(form.props.mapCodeToMsg);
+    const state = new State(merged, opts, setOpts, setStatus, setSelectedOpt);
+	const {
+		handleComboBoxClick,
+		loadOptsAndReset,
+		select,
+		deselect,
+		checkPopoverStatus,
+	} = state.bindAndGetPubFns();
 
     const selectedOptLabel = () => {
         const sOpt = selectedOpt();
@@ -68,7 +75,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                 id={merged.id}
                 class="wl--combo-box"
                 type="button"
-                onClick={state.handleComboBoxClick}
+                onClick={handleComboBoxClick}
                 popoverTarget={dropdownId}
                 ref={state.button}
                 disabled={merged.disabled}
@@ -88,7 +95,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                         </span>
                         <button
                             class="wl--btn-deselect"
-                            onclick={state.deselect}
+                            onclick={deselect}
                         >
                             <XIcon classList={{ "wl--icon-deselect": true }} />
                         </button>
@@ -100,7 +107,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                 id={dropdownId}
                 class="wl--dropdown"
                 popover
-                onToggle={state.checkPopoverStatus}
+                onToggle={checkPopoverStatus}
                 ref={state.dropdown}
             >
                 <div class="wl--search-wrapper">
@@ -111,7 +118,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                         inputMode="text"
                         autocomplete="off"
                         ref={state.searchInput}
-                        onInput={state.loadOptsAndReset}
+                        onInput={loadOptsAndReset}
                     ></input>
                 </div>
                 <div
@@ -133,7 +140,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                                     type="button"
                                     onMouseEnter={focusOnMouseEnter}
                                     data-idx={idx()}
-                                    onclick={state.select}
+                                    onclick={select}
                                 >
                                     {opt.optLabel()}
                                     <Show

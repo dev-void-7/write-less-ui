@@ -62,6 +62,16 @@ export class State<T, V, I> {
         this.setSelectedOpt = setSelectedOpt;
     }
 
+    bindAndGetPubFns() {
+        return {
+            handleComboBoxClick: this.handleComboBoxClick.bind(this),
+            loadOptsAndReset: this.loadOptsAndReset.bind(this),
+            select: this.select.bind(this),
+            deselect: this.deselect.bind(this),
+            checkPopoverStatus: this.checkPopoverStatus.bind(this),
+        };
+    }
+
     async handleComboBoxClick(
         e: MouseEvent & {
             currentTarget: HTMLButtonElement;
@@ -76,15 +86,15 @@ export class State<T, V, I> {
         await this.loadOptsAndReset();
         this.optsStatusContainer.addEventListener(
             "scroll",
-            this.handleOptsStatusContainerScroll,
+            this.#handleOptsStatusContainerScroll,
         );
     }
 
-    async handleOptsStatusContainerScroll() {
+    async #handleOptsStatusContainerScroll() {
         if (this.page * this.merged.perPage >= this.count) {
             this.optsStatusContainer.removeEventListener(
                 "scroll",
-                this.handleOptsStatusContainerScroll,
+                this.#handleOptsStatusContainerScroll,
             );
         }
 
@@ -103,7 +113,7 @@ export class State<T, V, I> {
 
         this.page++;
         try {
-            const result = await this.loadOpts();
+            const result = await this.#loadOpts();
             this.setOpts([...this.opts(), ...result]);
         } catch (e) {
             if (e !== undefined) this.setStatus(Status.Error);
@@ -114,14 +124,14 @@ export class State<T, V, I> {
         this.page = 1;
         this.setOpts([]);
         try {
-            const result = await this.loadOpts();
+            const result = await this.#loadOpts();
             this.setOpts(result);
         } catch (e) {
             if (e !== undefined) this.setStatus(Status.Error);
         }
     }
 
-    async loadOpts(): Promise<Array<Opt<V, I>>> {
+    async #loadOpts(): Promise<Array<Opt<V, I>>> {
         this.setStatus(Status.Loading);
         this.promiseManager.abort();
         let result: Array<T>;
