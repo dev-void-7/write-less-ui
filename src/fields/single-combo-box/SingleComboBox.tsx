@@ -133,12 +133,12 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         setTimeout(() => dropdown.hidePopover());
     }
 
-	function deselect(e: MouseEvent) {
-		e.stopImmediatePropagation();
-		e.stopPropagation();
-		e.preventDefault();
-		setSelectedOpt(undefined);
-	}
+    function deselect(e: MouseEvent) {
+        e.stopImmediatePropagation();
+        e.stopPropagation();
+        e.preventDefault();
+        setSelectedOpt(undefined);
+    }
 
     async function checkPopoverStatus(e: ToggleEvent) {
         popoverOpen = e.newState == "open";
@@ -195,9 +195,12 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                         <span class="wl--selected-label">
                             {selectedOptLabel()}
                         </span>
-						<button class="wl--btn-deselect" onclick={deselect}>
-                        	<XIcon classList={{ "wl--icon-deselect": true }} />
-						</button>
+                        <button
+                            class="wl--btn-deselect"
+                            onclick={deselect}
+                        >
+                            <XIcon classList={{ "wl--icon-deselect": true }} />
+                        </button>
                     </Match>
                 </Switch>
                 <ArrowDownOutlineIcon classList={{ "wl--icon-arrow": true }} />
