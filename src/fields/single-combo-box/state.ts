@@ -140,6 +140,7 @@ export class State<T, V, I> {
         e.stopPropagation();
         e.preventDefault();
         this.setSelectedOpt(undefined);
+		this.merged.onValueChange?.();
     }
 
     async checkPopoverStatus(e: ToggleEvent) {
