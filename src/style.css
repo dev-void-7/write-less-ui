@@ -209,7 +209,7 @@
         padding-inline-end: var(--one-quarter-height);
         background-color: white;
 
-        & > :first-child:not(.wl--selected-label) {
+        & > :first-child:not(.wl--selected-label, .wl--placeholder) {
             pointer-events: none;
             position: absolute;
             width: var(--icon-size);
@@ -217,23 +217,47 @@
             inset-inline-start: var(--quarter-height);
         }
 
-        &:has(> :first-child:not(.wl--selected-label)) {
+        &:has(> :first-child:not(.wl--selected-label, .wl--placeholder)) {
             padding-inline-start: var(--one-quarter-height);
+        }
+
+        & > .wl--placeholder {
+            color: color-mix(
+                in srgb,
+                var(--wl---input-color, black) 50%,
+                transparent
+            );
         }
 
         & > .wl--selected-label {
             color: var(--wl---input-color, black);
+        }
 
-            &.wl--no-select {
-                color: color-mix(
-                    in srgb,
-                    var(--wl---input-color, black) 50%,
-                    transparent
-                );
+        & > .wl--btn-deselect {
+            cursor: pointer;
+			margin-inline-start: auto;
+			border: none;
+			background-color: transparent;
+			padding: 0;
+			line-height: 0;
+			min-height: 0;
+
+            & > .wl--icon-deselect {
+                width: calc(var(--combo-box-height) * 0.5);
+                height: calc(var(--combo-box-height) * 0.5);
+                opacity: 0.5;
+				--wl---icon-weight: 2;
+                &:hover {
+                    opacity: 0.75;
+                }
+
+                &:active {
+                    opacity: 1;
+                }
             }
         }
 
-        & > .wl--icon {
+        & > .wl--icon-arrow {
             pointer-events: none;
             position: absolute;
             width: var(--icon-size);
@@ -351,11 +375,11 @@
 
     &:has(> .wl--dropdown:popover-open) {
         & > .wl--combo-box {
-            & > .wl--icon:dir(ltr) {
+            & > .wl--icon-arrow:dir(ltr) {
                 rotate: -180deg;
             }
 
-            & > .wl--icon:dir(rtl) {
+            & > .wl--icon-arrow:dir(rtl) {
                 rotate: 180deg;
             }
         }

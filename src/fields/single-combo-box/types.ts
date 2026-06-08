@@ -12,6 +12,7 @@ export interface MainProps<T, V, I> {
     hint?: string;
     info?: string;
     placeholder?: string;
+    deselect?: string;
     // startElem?: JSX.Element;
     // endElem?: JSX.Element;
     startIcon?: JSX.Element;

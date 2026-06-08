@@ -21,6 +21,7 @@ import { SearchIcon } from "../../icons/SearchIcon.jsx";
 import { XCircleOutlineIcon } from "../../icons/XCircleOutlineIcon.jsx";
 import { SpinnerLoader } from "../../loaders/spinner.jsx";
 import { AbortablePromise } from "../../utils/abortable-promise.js";
+import { XIcon } from "../../icons/X.jsx";
 
 export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     const merged = mergeProps(props, { id: createUniqueId(), perPage: 20 });
@@ -37,6 +38,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         | AbortablePromise<[count: number, items: Array<T>]>
         | undefined = undefined;
     let msgState = form && new MsgState(form.props.mapCodeToMsg);
+    let popoverOpen = false;
     let page = 1;
     let count = 0;
     let dropdown!: HTMLDivElement;
@@ -51,7 +53,8 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
             target: Element;
         },
     ) {
-        if (dropdown.matches(":popover-open") == true) return;
+        // here checking is done on the pre value becuase `handleCombBoxClick` is called before `checkPopoverStatus`
+        if (popoverOpen) return;
         setTimeout(() => {
             input.focus();
         });
@@ -130,6 +133,22 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         setTimeout(() => dropdown.hidePopover());
     }
 
+	function deselect(e: MouseEvent) {
+		e.stopImmediatePropagation();
+		e.stopPropagation();
+		e.preventDefault();
+		setSelectedOpt(undefined);
+	}
+
+    async function checkPopoverStatus(e: ToggleEvent) {
+        popoverOpen = e.newState == "open";
+
+        if (!popoverOpen) {
+            await searchAbortablePromise?.abort();
+            searchAbortablePromise = undefined;
+        }
+    }
+
     onMount(() => {
         handleOnMount(
             form,
@@ -164,18 +183,30 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
                 disabled={merged.disabled}
             >
                 {merged.startIcon}
-                <span
-                    class="wl--selected-label"
-                    classList={{ "wl--no-select": selectedOpt() == undefined }}
-                >
-                    {selectedOptLabel() || merged.placeholder}
-                </span>
-                <ArrowDownOutlineIcon />
+                <Switch>
+                    <Match
+                        when={merged.placeholder && selectedOpt() === undefined}
+                    >
+                        <span class="wl--placeholder">
+                            {merged.placeholder}
+                        </span>
+                    </Match>
+                    <Match when={selectedOpt() !== undefined}>
+                        <span class="wl--selected-label">
+                            {selectedOptLabel()}
+                        </span>
+						<button class="wl--btn-deselect" onclick={deselect}>
+                        	<XIcon classList={{ "wl--icon-deselect": true }} />
+						</button>
+                    </Match>
+                </Switch>
+                <ArrowDownOutlineIcon classList={{ "wl--icon-arrow": true }} />
             </button>
             <div
                 id={dropdownId}
                 class="wl--dropdown"
                 popover
+                onToggle={checkPopoverStatus}
                 ref={dropdown}
             >
                 <div class="wl--search-wrapper">
