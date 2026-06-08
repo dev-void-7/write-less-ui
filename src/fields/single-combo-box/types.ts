@@ -24,7 +24,7 @@ export interface MainProps<T, V, I> {
         perPage: number,
     ) => Promise<[count: number, items: Array<T>]>;
     mapToOpt: (t: T) => Opt<V, I>;
-    onValueChange?: (val: V, item: I) => void;
+    onValueChange?: (opt?: Opt<V, I>) => void;
     errCodes?: Array<number>;
     /** the number of options to fetch on every search */
     perPage?: number;

@@ -130,7 +130,7 @@ export class State<T, V, I> {
         if (this.merged.disabled) return;
         const opt = this.opts()[Number(e.currentTarget.dataset.idx)];
         this.setSelectedOpt(opt);
-        this.merged.onValueChange?.(opt.value, opt.item);
+        this.merged.onValueChange?.(opt);
         // without `setTimeout` popover won't be hidden in case of `Enter` keydown
         setTimeout(() => this.dropdown.hidePopover());
     }
