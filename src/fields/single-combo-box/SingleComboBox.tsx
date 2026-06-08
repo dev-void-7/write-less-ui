@@ -20,7 +20,7 @@ import { handleOnMount } from "./utils.js";
 import { SearchIcon } from "../../icons/SearchIcon.jsx";
 import { XCircleOutlineIcon } from "../../icons/XCircleOutlineIcon.jsx";
 import { SpinnerLoader } from "../../loaders/spinner.jsx";
-import { AbortablePromise } from "../../utils/abortable-promise.js";
+import { PromiseManager } from "../../utils/abortable-promise.js";
 import { XIcon } from "../../icons/X.jsx";
 
 export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
@@ -34,9 +34,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         return sOpt ? sOpt.selectionLabel?.() || sOpt.optLabel() : undefined;
     };
     const dropdownId = createUniqueId();
-    let searchAbortablePromise:
-        | AbortablePromise<[count: number, items: Array<T>]>
-        | undefined = undefined;
+    const promiseManager = new PromiseManager();
     let msgState = form && new MsgState(form.props.mapCodeToMsg);
     let popoverOpen = false;
     let page = 1;
@@ -107,13 +105,11 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
 
     async function loadOpts(): Promise<Array<Opt<V, I>>> {
         setStatus(Status.Loading);
-        await searchAbortablePromise?.abort();
+        promiseManager.abort();
         let result: Array<T>;
-        searchAbortablePromise = new AbortablePromise(
+        [count, result] = await promiseManager.run(
             merged.search(input.value, page, merged.perPage),
         );
-        [count, result] = await searchAbortablePromise.promise;
-        searchAbortablePromise = undefined;
         const newOpts: Array<Opt<V, I>> = Array.from({
             length: result.length,
         });
@@ -144,8 +140,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
         popoverOpen = e.newState == "open";
 
         if (!popoverOpen) {
-            await searchAbortablePromise?.abort();
-            searchAbortablePromise = undefined;
+			promiseManager.abort();
         }
     }
 

@@ -1,23 +1,23 @@
-export class AbortablePromise<T> {
-    promise: Promise<T>;
+export class PromiseManager {
     rej: ((reason?: any) => void) | undefined = undefined;
 
-    constructor(promise: Promise<T>) {
-        this.promise = new Promise((res, rej) => {
+    run<T>(promise: Promise<T>): Promise<T> {
+        return new Promise((res, rej) => {
             this.rej = rej;
-            promise.then(res).catch(rej);
+            promise
+                .then(res)
+                .catch(rej)
+                .finally(() => {
+                    this.rej = undefined;
+                });
         });
     }
 
-    async abort(reason?: any) {
-        while (!this.rej) {
-            await new Promise((res) => setTimeout(res, 70));
-        }
-		console.log("aborted promise!!!");
-		this.rej(reason);
+    abort(reason?: any) {
+        if (!this.rej) return;
+        this.rej(reason);
+        this.rej = undefined;
     }
-
-	run() {
-		return this.promise;
-	}
 }
+
+// await promiseManager.run(Promise);
