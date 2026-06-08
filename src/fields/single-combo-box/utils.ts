@@ -3,7 +3,7 @@ import { Merged, Opt, Status } from "./types.js";
 import { FormState } from "../../form/state.js";
 import { MsgState } from "../../msg/types.js";
 import { makeArrowUpDownNavigateOpts } from "../common/utils/make-arrow-up-down-navigate-dropdown-opts.js";
-import { PromiseManager } from "../../utils/abortable-promise.js";
+import { PromiseManager } from "../../utils/promise-manager.js";
 
 export function handleOnMount<T, V, I>(
     form: FormState | undefined,
