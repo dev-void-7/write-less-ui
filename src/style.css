@@ -195,58 +195,75 @@
     --one-quarter-height: calc(var(--combo-box-height) * 1.25);
     anchor-scope: --combo-box-anchor;
 
-    & > .wl--combo-box {
+    & > .wl--combo-box-wrapper {
         position: relative;
-        anchor-name: --combo-box-anchor;
-        display: flex;
-        align-items: center;
-        height: var(--combo-box-height);
-        min-width: 0;
-        border-radius: 4px;
-        border: 1px solid black;
-        outline: none;
-        padding-inline-start: var(--quarter-height);
-        padding-inline-end: var(--one-quarter-height);
-        background-color: white;
 
-        & > :first-child:not(.wl--selected-label, .wl--placeholder) {
-            pointer-events: none;
-            position: absolute;
-            width: var(--icon-size);
-            height: var(--icon-size);
-            inset-inline-start: var(--quarter-height);
-        }
+        > .wl--combo-box {
+            anchor-name: --combo-box-anchor;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            height: var(--combo-box-height);
+            min-width: 0;
+            border-radius: 4px;
+            border: 1px solid black;
+            outline: none;
+            padding-inline-start: var(--quarter-height);
+            padding-inline-end: var(--one-quarter-height);
+            background-color: white;
 
-        &:has(> :first-child:not(.wl--selected-label, .wl--placeholder)) {
-            padding-inline-start: var(--one-quarter-height);
-        }
+            & > :first-child:not(.wl--selected-label, .wl--placeholder) {
+                pointer-events: none;
+                position: absolute;
+                width: var(--icon-size);
+                height: var(--icon-size);
+                inset-inline-start: var(--quarter-height);
+            }
 
-        & > .wl--placeholder {
-            color: color-mix(
-                in srgb,
-                var(--wl---input-color, black) 50%,
-                transparent
-            );
-        }
+            &:has(> :first-child:not(.wl--selected-label, .wl--placeholder)) {
+                padding-inline-start: var(--one-quarter-height);
+            }
 
-        & > .wl--selected-label {
-            color: var(--wl---input-color, black);
+            & > .wl--placeholder {
+                color: color-mix(
+                    in srgb,
+                    var(--wl---input-color, black) 50%,
+                    transparent
+                );
+            }
+
+            & > .wl--selected-label {
+                color: var(--wl---input-color, black);
+            }
+
+            & > .wl--icon-arrow {
+                pointer-events: none;
+                position: absolute;
+                width: var(--icon-size);
+                height: var(--icon-size);
+                inset-inline-end: var(--quarter-height);
+                rotate: 0deg;
+                transition: rotate 0.2s ease-out;
+                transform-origin: center;
+            }
         }
 
         & > .wl--btn-deselect {
+			position: absolute;
             cursor: pointer;
-			margin-inline-start: auto;
-			border: none;
-			background-color: transparent;
-			padding: 0;
-			line-height: 0;
-			min-height: 0;
+			top: var(--quarter-height);
+            inset-inline-end: var(--one-quarter-height);
+            border: none;
+            background-color: transparent;
+            padding: 0;
+            line-height: 0;
+            min-height: 0;
 
             & > .wl--icon-deselect {
                 width: calc(var(--combo-box-height) * 0.5);
                 height: calc(var(--combo-box-height) * 0.5);
                 opacity: 0.5;
-				--wl---icon-weight: 2;
+                --wl---icon-weight: 2;
                 &:hover {
                     opacity: 0.75;
                 }
@@ -255,17 +272,6 @@
                     opacity: 1;
                 }
             }
-        }
-
-        & > .wl--icon-arrow {
-            pointer-events: none;
-            position: absolute;
-            width: var(--icon-size);
-            height: var(--icon-size);
-            inset-inline-end: var(--quarter-height);
-            rotate: 0deg;
-            transition: rotate 0.2s ease-out;
-            transform-origin: center;
         }
     }
 
@@ -374,13 +380,13 @@
     }
 
     &:has(> .wl--dropdown:popover-open) {
-        & > .wl--combo-box {
+        & > .wl--combo-box-wrapper > .wl--combo-box {
             & > .wl--icon-arrow:dir(ltr) {
-                rotate: -180deg;
+                rotate: x -180deg;
             }
 
             & > .wl--icon-arrow:dir(rtl) {
-                rotate: 180deg;
+                rotate: x 180deg;
             }
         }
     }

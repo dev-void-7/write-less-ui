@@ -63,22 +63,32 @@ function ControlPart<T, V, I>(props: {
 }) {
     const { merged, state } = props;
     return (
-        <button
-            id={merged.id}
-            class="wl--combo-box"
-            type="button"
-            onClick={state.handleComboBoxClick.bind(state)}
-            popoverTarget={state.dropdownId}
-            ref={state.button}
-            disabled={merged.disabled}
-        >
-            {merged.startIcon}
-            <ControlSelectedLabelOrPlaceholderPart
-                merged={merged}
-                state={state}
-            />
-            <ArrowDownOutlineIcon classList={{ "wl--icon-arrow": true }} />
-        </button>
+        <div class="wl--combo-box-wrapper">
+            <button
+                id={merged.id}
+                class="wl--combo-box"
+                type="button"
+                onClick={state.handleComboBoxClick.bind(state)}
+                popoverTarget={state.dropdownId}
+                ref={state.button}
+                disabled={merged.disabled}
+            >
+                {merged.startIcon}
+                <ControlSelectedLabelOrPlaceholderPart
+                    merged={merged}
+                    state={state}
+                />
+                <ArrowDownOutlineIcon classList={{ "wl--icon-arrow": true }} />
+            </button>
+            <Show when={state.selectedOpt() !== undefined}>
+                <button
+                    class="wl--btn-deselect"
+                    onclick={state.deselect.bind(state)}
+                >
+                    <XIcon classList={{ "wl--icon-deselect": true }} />
+                </button>
+            </Show>
+        </div>
     );
 }
 
@@ -99,12 +109,6 @@ function ControlSelectedLabelOrPlaceholderPart<T, V, I>(props: {
                 <span class="wl--selected-label">
                     {state.selectedOptLabel()}
                 </span>
-                <button
-                    class="wl--btn-deselect"
-                    onclick={state.deselect.bind(state)}
-                >
-                    <XIcon classList={{ "wl--icon-deselect": true }} />
-                </button>
             </Match>
         </Switch>
     );
