@@ -174,11 +174,11 @@
 
     &:has(> .wl--dropdown:popover-open) {
         & > .wl--select {
-            & > .wl--icon:dir(ltr) {
+            & > .wl--icon-arrow:dir(ltr) {
                 rotate: -180deg;
             }
 
-            & > .wl--icon:dir(rtl) {
+            & > .wl--icon-arrow:dir(rtl) {
                 rotate: 180deg;
             }
         }

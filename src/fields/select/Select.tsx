@@ -67,7 +67,7 @@ export function Select<V, I>(props: Props<V, I>) {
             >
                 {merged.startIcon}
                 <span class="wl--selected-label">{selectedOpt()?.label()}</span>
-                <ArrowDownOutlineIcon />
+                <ArrowDownOutlineIcon classList={{"wl--icon-arrow": true}}/>
             </button>
             <div
                 id={dropdownId}
