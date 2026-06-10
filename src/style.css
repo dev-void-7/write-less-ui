@@ -231,13 +231,13 @@
             & > .wl--placeholder {
                 color: color-mix(
                     in srgb,
-                    var(--wl---input-color, black) 50%,
+                    var(--wl--input-color, black) 50%,
                     transparent
                 );
             }
 
             & > .wl--selected-label {
-                color: var(--wl---input-color, black);
+                color: var(--wl--input-color, black);
             }
 
             & > .wl--icon-arrow {
@@ -267,7 +267,7 @@
                 width: calc(var(--combo-box-height) * 0.5);
                 height: calc(var(--combo-box-height) * 0.5);
                 opacity: 0.5;
-                --wl---icon-weight: 2;
+                --wl--icon-weight: 2;
                 &:hover {
                     opacity: 0.75;
                 }
@@ -377,7 +377,7 @@
                 & > .wl--icon-err {
                     width: var(--combo-box-height);
                     height: var(--combo-box-height);
-                    --wl---icon-color: red;
+                    --wl--icon-color: red;
                 }
             }
         }
