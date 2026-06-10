@@ -8,8 +8,8 @@
     align-items: stretch;
     --input-height: var(--wl--input-height, 2rem);
     --icon-size: calc(var(--input-height) * 0.625);
-	--input-height-1\/4: calc(var(--input-height) / 4);
-	--input-height-9\/8: calc(var(--input-height) * 1.125);
+    --input-height-1\/4: calc(var(--input-height) / 4);
+    --input-height-9\/8: calc(var(--input-height) * 1.125);
 
     & > .wl--middle-part {
         display: flex;
@@ -89,7 +89,7 @@
     --select-height: var(--wl--input-height, 2rem);
     --icon-size: calc(var(--select-height) * 0.625);
     --select-height-1\/4: calc(var(--select-height) / 4);
-    --select-height-5\/4: calc(var(--select-height) * 1.25);
+    --select-height-9\/8: calc(var(--select-height) * 1.125);
     anchor-scope: --select-anchor;
 
     & > .wl--select {
@@ -103,7 +103,7 @@
         border: 1px solid black;
         outline: none;
         padding-inline-start: var(--select-height-1\/4);
-        padding-inline-end: var(--select-height-5\/4);
+        padding-inline-end: var(--select-height-9\/8);
         background-color: white;
 
         & > :first-child:not(.wl--selected-label) {
@@ -115,7 +115,7 @@
         }
 
         &:has(> :first-child:not(.wl--selected-label)) {
-            padding-inline-start: var(--select-height-5\/4);
+            padding-inline-start: var(--select-height-9\/8);
         }
 
         & > .wl--icon {
@@ -133,6 +133,7 @@
     & > .wl--dropdown {
         position-anchor: --select-anchor;
         anchor-scope: --selected-opt;
+        --opt-height: calc(var(--select-height) * 0.8125);
         & > .wl--opts {
             display: flex;
             flex-direction: column;
@@ -145,8 +146,8 @@
                 text-align: start;
                 position: relative;
                 padding-inline-start: var(--select-height-1\/4);
-                padding-inline-end: var(--select-height-5\/4);
-                min-height: calc(var(--select-height) * 0.75);
+                padding-inline-end: var(--select-height-9\/8);
+                min-height: var(--opt-height);
 
                 &.wl--focused {
                     background-color: lightgray;
@@ -163,10 +164,11 @@
             position: absolute;
             position-anchor: --selected-opt;
             position-visibility: anchors-visible;
-            top: calc(anchor(top) + calc(var(--select-height) * 0.09375));
-            width: calc(var(--select-height) * 0.5625);
-            height: calc(var(--select-height) * 0.5625);
-            inset-inline-end: calc(var(--select-height) / 4);
+
+            top: calc(anchor(top) + calc(var(--opt-height) * 0.1875));
+            width: calc(var(--opt-height) * 0.625);
+            height: calc(var(--opt-height) * 0.625);
+            inset-inline-end: var(--select-height-1\/4);
 
             &.wl--hidden {
                 display: none;
@@ -194,7 +196,7 @@
     --combo-box-height: var(--wl--input-height, 2rem);
     --icon-size: calc(var(--combo-box-height) * 0.625);
     --combo-box-height-1\/4: calc(var(--combo-box-height) / 4);
-    --select-height-5\/4: calc(var(--combo-box-height) * 1.25);
+    --select-height-9\/8: calc(var(--combo-box-height) * 1.25);
     anchor-scope: --combo-box-anchor;
 
     & > .wl--combo-box-wrapper {
@@ -211,7 +213,7 @@
             border: 1px solid black;
             outline: none;
             padding-inline-start: var(--combo-box-height-1\/4);
-            padding-inline-end: var(--select-height-5\/4);
+            padding-inline-end: var(--select-height-9\/8);
             background-color: white;
 
             & > :first-child:not(.wl--selected-label, .wl--placeholder) {
@@ -223,7 +225,7 @@
             }
 
             &:has(> :first-child:not(.wl--selected-label, .wl--placeholder)) {
-                padding-inline-start: var(--select-height-5\/4);
+                padding-inline-start: var(--select-height-9\/8);
             }
 
             & > .wl--placeholder {
@@ -251,10 +253,10 @@
         }
 
         & > .wl--btn-deselect {
-			position: absolute;
+            position: absolute;
             cursor: pointer;
-			top: var(--combo-box-height-1\/4);
-            inset-inline-end: var(--select-height-5\/4);
+            top: var(--combo-box-height-1\/4);
+            inset-inline-end: var(--select-height-9\/8);
             border: none;
             background-color: transparent;
             padding: 0;
@@ -337,7 +339,7 @@
                     justify-content: start;
                     position: relative;
                     padding-inline-start: var(--combo-box-height-1\/4);
-                    padding-inline-end: var(--select-height-5\/4);
+                    padding-inline-end: var(--select-height-9\/8);
                     --opt-height: calc(var(--combo-box-height) * 0.8125);
                     --opt-icon-size: calc(var(--opt-height) * 0.625);
                     min-height: var(--opt-height);
