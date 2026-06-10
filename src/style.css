@@ -7,7 +7,9 @@
     flex-direction: column;
     align-items: stretch;
     --input-height: var(--wl--input-height, 2rem);
-    --icon-size: calc(var(--input-height) * 0.75);
+    --icon-size: calc(var(--input-height) * 0.625);
+	--input-height-1\/4: calc(var(--input-height) / 4);
+	--input-height-9\/8: calc(var(--input-height) * 1.125);
 
     & > .wl--middle-part {
         display: flex;
@@ -49,7 +51,7 @@
             position: absolute;
             width: var(--icon-size);
             height: var(--icon-size);
-            inset-inline-start: calc(var(--input-height) / 4);
+            inset-inline-start: var(--input-height-1\/4);
         }
 
         & > :last-child:not(input) {
@@ -57,7 +59,7 @@
             position: absolute;
             width: var(--icon-size);
             height: var(--icon-size);
-            inset-inline-end: calc(var(--input-height) / 4);
+            inset-inline-end: var(--input-height-1\/4);
         }
 
         & > input {
@@ -67,15 +69,15 @@
             border-radius: 4px;
             border: 1px solid black;
             outline: none;
-            padding-inline: calc(var(--input-height) / 4);
+            padding-inline: var(--input-height-1\/4);
         }
 
         &:has(> :first-child:not(input)) > input {
-            padding-inline-start: calc(var(--input-height) * 1.25);
+            padding-inline-start: var(--input-height-9\/8);
         }
 
         &:has(> :last-child:not(input)) > input {
-            padding-inline-end: calc(var(--input-height) * 1.25);
+            padding-inline-end: var(--input-height-9\/8);
         }
     }
 }
@@ -85,9 +87,9 @@
     flex-direction: column;
     align-items: stretch;
     --select-height: var(--wl--input-height, 2rem);
-    --icon-size: calc(var(--select-height) * 0.75);
-    --quarter-height: calc(var(--select-height) / 4);
-    --one-quarter-height: calc(var(--select-height) * 1.25);
+    --icon-size: calc(var(--select-height) * 0.625);
+    --select-height-1\/4: calc(var(--select-height) / 4);
+    --select-height-5\/4: calc(var(--select-height) * 1.25);
     anchor-scope: --select-anchor;
 
     & > .wl--select {
@@ -100,8 +102,8 @@
         border-radius: 4px;
         border: 1px solid black;
         outline: none;
-        padding-inline-start: var(--quarter-height);
-        padding-inline-end: var(--one-quarter-height);
+        padding-inline-start: var(--select-height-1\/4);
+        padding-inline-end: var(--select-height-5\/4);
         background-color: white;
 
         & > :first-child:not(.wl--selected-label) {
@@ -109,11 +111,11 @@
             position: absolute;
             width: var(--icon-size);
             height: var(--icon-size);
-            inset-inline-start: var(--quarter-height);
+            inset-inline-start: var(--select-height-1\/4);
         }
 
         &:has(> :first-child:not(.wl--selected-label)) {
-            padding-inline-start: var(--one-quarter-height);
+            padding-inline-start: var(--select-height-5\/4);
         }
 
         & > .wl--icon {
@@ -121,7 +123,7 @@
             position: absolute;
             width: var(--icon-size);
             height: var(--icon-size);
-            inset-inline-end: var(--quarter-height);
+            inset-inline-end: var(--select-height-1\/4);
             rotate: 0deg;
             transition: rotate 0.2s ease-out;
             transform-origin: center;
@@ -142,9 +144,9 @@
                 cursor: pointer;
                 text-align: start;
                 position: relative;
-                padding-inline-start: var(--quarter-height);
-                padding-inline-end: var(--one-quarter-height);
-                min-height: var(--icon-size);
+                padding-inline-start: var(--select-height-1\/4);
+                padding-inline-end: var(--select-height-5\/4);
+                min-height: calc(var(--select-height) * 0.75);
 
                 &.wl--focused {
                     background-color: lightgray;
@@ -190,9 +192,9 @@
     flex-direction: column;
     align-items: stretch;
     --combo-box-height: var(--wl--input-height, 2rem);
-    --icon-size: calc(var(--combo-box-height) * 0.75);
-    --quarter-height: calc(var(--combo-box-height) / 4);
-    --one-quarter-height: calc(var(--combo-box-height) * 1.25);
+    --icon-size: calc(var(--combo-box-height) * 0.625);
+    --combo-box-height-1\/4: calc(var(--combo-box-height) / 4);
+    --select-height-5\/4: calc(var(--combo-box-height) * 1.25);
     anchor-scope: --combo-box-anchor;
 
     & > .wl--combo-box-wrapper {
@@ -208,8 +210,8 @@
             border-radius: 4px;
             border: 1px solid black;
             outline: none;
-            padding-inline-start: var(--quarter-height);
-            padding-inline-end: var(--one-quarter-height);
+            padding-inline-start: var(--combo-box-height-1\/4);
+            padding-inline-end: var(--select-height-5\/4);
             background-color: white;
 
             & > :first-child:not(.wl--selected-label, .wl--placeholder) {
@@ -217,11 +219,11 @@
                 position: absolute;
                 width: var(--icon-size);
                 height: var(--icon-size);
-                inset-inline-start: var(--quarter-height);
+                inset-inline-start: var(--combo-box-height-1\/4);
             }
 
             &:has(> :first-child:not(.wl--selected-label, .wl--placeholder)) {
-                padding-inline-start: var(--one-quarter-height);
+                padding-inline-start: var(--select-height-5\/4);
             }
 
             & > .wl--placeholder {
@@ -241,7 +243,7 @@
                 position: absolute;
                 width: var(--icon-size);
                 height: var(--icon-size);
-                inset-inline-end: var(--quarter-height);
+                inset-inline-end: var(--combo-box-height-1\/4);
                 rotate: 0deg;
                 transition: rotate 0.2s ease-out;
                 transform-origin: center;
@@ -251,8 +253,8 @@
         & > .wl--btn-deselect {
 			position: absolute;
             cursor: pointer;
-			top: var(--quarter-height);
-            inset-inline-end: var(--one-quarter-height);
+			top: var(--combo-box-height-1\/4);
+            inset-inline-end: var(--select-height-5\/4);
             border: none;
             background-color: transparent;
             padding: 0;
@@ -279,28 +281,28 @@
         position-anchor: --combo-box-anchor;
         anchor-scope: --selected-opt;
         padding-block-start: 0;
-        padding-block-end: var(--quarter-height);
+        padding-block-end: var(--combo-box-height-1\/4);
 
         & > .wl--search-wrapper {
             position: relative;
             display: flex;
             align-items: center;
             box-sizing: content-box;
-            margin-inline: var(--quarter-height);
-            margin-block: var(--quarter-height);
-            padding-block-end: var(--quarter-height);
+            margin-inline: var(--combo-box-height-1\/4);
+            margin-block: var(--combo-box-height-1\/4);
+            padding-block-end: var(--combo-box-height-1\/4);
             border-bottom: 1px solid black;
             --search-height: calc(var(--combo-box-height) * 0.8125);
-            --icon-size: calc(var(--search-height) * 0.75);
-            --search-quarter-height: calc(var(--search-height) / 4);
-            --search-one-quarter-height: calc(var(--search-height) * 1.25);
+            --icon-size: calc(var(--search-height) * 0.625);
+            --search-height-1\/4: calc(var(--search-height) / 4);
+            --search-height-5\/4: calc(var(--search-height) * 1.25);
 
             & > :first-child {
                 pointer-events: none;
                 position: absolute;
                 width: var(--icon-size);
                 height: var(--icon-size);
-                inset-inline-start: var(--search-quarter-height);
+                inset-inline-start: var(--search-height-1\/4);
             }
 
             & > input {
@@ -310,8 +312,8 @@
                 border-radius: 4px;
                 border: 1px solid black;
                 outline: none;
-                padding-inline-start: var(--search-one-quarter-height);
-                padding-inline-end: var(--search-quarter-height);
+                padding-inline-start: var(--search-height-5\/4);
+                padding-inline-end: var(--search-height-1\/4);
             }
         }
 
@@ -334,10 +336,10 @@
                     cursor: pointer;
                     justify-content: start;
                     position: relative;
-                    padding-inline-start: var(--quarter-height);
-                    padding-inline-end: var(--one-quarter-height);
+                    padding-inline-start: var(--combo-box-height-1\/4);
+                    padding-inline-end: var(--select-height-5\/4);
                     --opt-height: calc(var(--combo-box-height) * 0.8125);
-                    --opt-icon-size: calc(var(--opt-height) * 0.75);
+                    --opt-icon-size: calc(var(--opt-height) * 0.625);
                     min-height: var(--opt-height);
 
                     &.wl--focused {
@@ -425,9 +427,9 @@
 }
 
 .wl--loader-spinner {
-    --width: var(--wl---loader-spinner-width, 2rem);
+    --width: var(--wl--loader-spinner-width, 2rem);
     --stroke: calc(var(--width) / 8);
-    --color: var(--wl---loader-spinner-color, black);
+    --color: var(--wl--loader-spinner-color, black);
     width: var(--width);
     aspect-ratio: 1;
     border-radius: 50%;
@@ -471,7 +473,7 @@
         position: absolute;
         width: calc(var(--input-height) * 0.8);
         height: calc(var(--input-height) * 0.8);
-        inset-inline-end: calc(var(--input-height) / 4);
+        inset-inline-end: var(--height-1\/4);
         rotate: 0deg;
         transition: rotate 0.2s ease-out;
         transform-origin: center;
