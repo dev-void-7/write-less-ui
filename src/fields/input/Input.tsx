@@ -36,6 +36,7 @@ export function Input<T extends Type>(props: Props<T>) {
                 id={merged.id}
                 type={merged.type}
                 inputmode={merged.inputMode}
+				placeholder={merged.placeholder}
                 ref={input}
                 autocomplete="off"
             />
