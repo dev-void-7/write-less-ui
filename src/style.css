@@ -539,6 +539,8 @@
     flex-direction: column;
     align-items: stretch;
     border-radius: 4px;
+	border: var(--wl--dropdown-border-width, 1px) solid
+        var(--wl--dropdown-border-color, lightgray);
     padding: 0.25rem 0;
     margin: 0;
     opacity: 0;
