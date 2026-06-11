@@ -14,7 +14,7 @@ export class State<T, V, I> {
     setSelectedOpt: Setter<Opt<V, I> | undefined>;
 	selectedOptLabel = () => {
         const sOpt = this.selectedOpt();
-        return sOpt ? sOpt.selectionLabel?.() || sOpt.optLabel() : undefined;
+        return sOpt ? sOpt.selectionLabel?.() || sOpt.optLabel("") : undefined;
     };
 	dropdownId: string;
     page = 1;
