@@ -1,20 +1,22 @@
 import { JSX, JSXElement, MergeProps } from "solid-js";
 import { Cols } from "../common/types/types.js";
 
-export type Merged<V, I> = MergeProps<[Props<V, I>, { id: string, cols: Cols }]>;
+export type Merged<V, I> = MergeProps<
+    [{ id: string; cols: Cols }, Props<V, I>]
+>;
 
 export type Props<V, I> = MainProps<V, I> & Required;
 
 export interface MainProps<V, I> {
     id?: string;
     label?: string;
-	hint?: string;
-	info?: string,
+    hint?: string;
+    info?: string;
     opts: Array<Opt<V, I>>;
     // startElem?: JSX.Element;
     // endElem?: JSX.Element;
     startIcon?: JSX.Element;
-	cols?: Cols,
+    cols?: Cols;
     key: string;
     disabled?: boolean;
     hidden?: boolean;

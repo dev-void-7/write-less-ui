@@ -18,10 +18,10 @@ import { CheckIcon } from "../../icons/CheckIcon.jsx";
 import { Cols } from "../common/types/types.js";
 
 export function Select<V, I>(props: Props<V, I>) {
-    const merged = mergeProps(props, {
+    const merged = mergeProps({
         id: createUniqueId(),
         cols: 12 as Cols,
-    });
+    }, props);
     const form = useFormContext();
     const [selectedOpt, setSelectedOpt] = createSignal<Opt<V, I> | undefined>();
     const dropdownId = createUniqueId();

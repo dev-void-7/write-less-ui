@@ -25,11 +25,14 @@ import { State } from "./state.js";
 import { Cols } from "../common/types/types.js";
 
 export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
-    const merged = mergeProps(props, {
-        id: createUniqueId(),
-        perPage: 20,
-        cols: 12 as Cols,
-    });
+    const merged = mergeProps(
+        {
+            id: createUniqueId(),
+            perPage: 20,
+            cols: 12 as Cols,
+        },
+        props,
+    );
 
     const form = useFormContext();
 

@@ -2,7 +2,7 @@ import { JSX, MergeProps } from "solid-js";
 import { Cols } from "../common/types/types.js";
 
 export type Merged<T extends Type> = MergeProps<
-    [Props<T>, { id: string; type: Type; inputMode: InputMode; cols: Cols }]
+    [{ id: string; type: Type; inputMode: InputMode; cols: Cols }, Props<T>]
 >;
 
 export type Props<T extends Type> = MainProps<T> &

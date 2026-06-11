@@ -8,12 +8,15 @@ import { MsgState } from "../../msg/types.js";
 import { Cols } from "../common/types/types.js";
 
 export function Input<T extends Type>(props: Props<T>) {
-    const merged = mergeProps(props, {
-        id: createUniqueId(),
-        type: "text" as Type,
-        inputMode: inputMode(props.type || "text"),
-        cols: 12 as Cols,
-    });
+    const merged = mergeProps(
+        {
+            id: createUniqueId(),
+            type: "text" as Type,
+            inputMode: inputMode(props.type || "text"),
+            cols: 12 as Cols,
+        },
+        props,
+    );
 
     const form = useFormContext();
     // eslint-disable-next-line no-unassigned-vars

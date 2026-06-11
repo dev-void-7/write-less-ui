@@ -2,7 +2,7 @@ import { JSX, JSXElement, MergeProps } from "solid-js";
 import { Cols } from "../common/types/types.js";
 
 export type Merged<T, V, I> = MergeProps<
-    [Props<T, V, I>, { id: string; perPage: number; cols: Cols }]
+    [{ id: string; perPage: number; cols: Cols }, Props<T, V, I>]
 >;
 
 export type Props<T, V, I> = MainProps<T, V, I> & Required;
