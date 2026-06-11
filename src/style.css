@@ -396,8 +396,6 @@
             box-sizing: content-box;
             margin-inline: var(--combo-box-height-1\/4);
             margin-block: var(--combo-box-height-1\/4);
-            padding-block-end: var(--combo-box-height-1\/4);
-            border-bottom: 1px solid black;
             --search-height: calc(var(--combo-box-height) * 0.8125);
             --icon-size: calc(var(--search-height) * 0.625);
             --search-height-1\/4: calc(var(--search-height) / 4);
