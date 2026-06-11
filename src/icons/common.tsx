@@ -1,6 +1,6 @@
 export const enum Vars {
-    IconColor = "var(--wl---icon-color, black)",
-    IconWeight = "var(--wl---icon-weight, 1.25)",
+    IconColor = "var(--wl--icon-color, black)",
+    IconWeight = "var(--wl--icon-weight, 1.25)",
 }
 
 export type Props = {
