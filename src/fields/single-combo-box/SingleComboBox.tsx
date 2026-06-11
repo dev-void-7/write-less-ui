@@ -43,8 +43,8 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     return (
         <div
             class="wl--field-single-combo-box"
-            hidden={merged.hidden}
             style={{
+                display: merged.hidden ? "none" : undefined,
                 "grid-column": `span ${merged.cols}`,
             }}
         >

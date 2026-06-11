@@ -60,8 +60,8 @@ export function Select<V, I>(props: Props<V, I>) {
     return (
         <div
             class="wl--field-select"
-            hidden={merged.hidden}
             style={{
+				display: merged.hidden ? "none" : undefined,
                 "grid-column": `span ${merged.cols}`,
             }}
         >

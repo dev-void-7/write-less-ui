@@ -63,8 +63,8 @@ export function Input<T extends Type>(props: Props<T>) {
     return (
         <div
             class="wl--field-input"
-            hidden={merged.hidden}
             style={{
+                display: merged.hidden ? "none" : undefined,
                 "grid-column": `span ${merged.cols}`,
             }}
         >
