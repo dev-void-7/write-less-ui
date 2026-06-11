@@ -401,7 +401,7 @@
             --search-height: calc(var(--combo-box-height) * 0.8125);
             --icon-size: calc(var(--search-height) * 0.625);
             --search-height-1\/4: calc(var(--search-height) / 4);
-            --search-height-5\/4: calc(var(--search-height) * 1.25);
+            --search-height-9\/8: calc(var(--search-height) * 1.125);
 
             & > :first-child {
                 pointer-events: none;
@@ -418,7 +418,7 @@
                 border-radius: 4px;
                 border: 1px solid black;
                 outline: none;
-                padding-inline-start: var(--search-height-5\/4);
+                padding-inline-start: var(--search-height-9\/8);
                 padding-inline-end: var(--search-height-1\/4);
             }
         }
