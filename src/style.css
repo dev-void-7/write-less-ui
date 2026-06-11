@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+.wl--form {
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+}
+
 .wl--field-input {
     display: flex;
     flex-direction: column;
