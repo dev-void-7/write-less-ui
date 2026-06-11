@@ -7,7 +7,7 @@ export function Form(props: Props) {
 
     return (
         <FormContext.Provider value={state}>
-            <form onSubmit={(e) => e.preventDefault()}>{props.children}</form>
+            <form class="wl--form" onSubmit={(e) => e.preventDefault()}>{props.children}</form>
         </FormContext.Provider>
     );
 }
