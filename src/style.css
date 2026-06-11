@@ -350,7 +350,7 @@
             position: absolute;
             cursor: pointer;
             top: var(--combo-box-height-1\/4);
-            inset-inline-end: var(--select-height-9\/8);
+            inset-inline-end: var(--combo-box-height-9\/8);
             border: none;
             background-color: transparent;
             padding: 0;
@@ -441,7 +441,7 @@
                     justify-content: start;
                     position: relative;
                     padding-inline-start: var(--combo-box-height-1\/4);
-                    padding-inline-end: var(--select-height-9\/8);
+                    padding-inline-end: var(--combo-box-height-9\/8);
                     --opt-height: calc(var(--combo-box-height) * 0.8125);
                     --opt-icon-size: calc(var(--opt-height) * 0.625);
                     min-height: var(--opt-height);
