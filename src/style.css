@@ -87,7 +87,10 @@
             padding-inline: var(--input-height-1\/4);
             border: var(--wl--input-border-width, 1px) solid
                 var(--wl--input-border-color, darkgrey);
-            font: var(--wl--input-font);
+            font-family: var(--wl--input-font-family);
+            font-size: var(--wl--input-font-size);
+            font-weight: var(--wl--input-font-weight);
+            line-height: var(--wl--input-line-height);
             color: var(--wl-input-color, black);
 
             &:focus {
@@ -165,7 +168,10 @@
         background-color: white;
         border: var(--wl--input-border-width, 1px) solid
             var(--wl--input-border-color, darkgrey);
-        font: var(--wl--input-font);
+        font-family: var(--wl--input-font-family);
+        font-size: var(--wl--input-font-size);
+        font-weight: var(--wl--input-font-weight);
+        line-height: var(--wl--input-line-height);
         color: var(--wl-input-color, black);
 
         &:focus {
@@ -313,7 +319,10 @@
             background-color: white;
             border: var(--wl--input-border-width, 1px) solid
                 var(--wl--input-border-color, darkgrey);
-            font: var(--wl--input-font);
+            font-family: var(--wl--input-font-family);
+            font-size: var(--wl--input-font-size);
+            font-weight: var(--wl--input-font-weight);
+            line-height: var(--wl--input-line-height);
             color: var(--wl-input-color, black);
 
             &:focus {
@@ -424,7 +433,6 @@
                 height: var(--search-height);
                 min-width: 0;
                 border-radius: 4px;
-                border: 1px solid black;
                 outline: none;
                 padding-inline-start: var(--search-height-9\/8);
                 padding-inline-end: var(--search-height-1\/4);
@@ -539,7 +547,7 @@
     flex-direction: column;
     align-items: stretch;
     border-radius: 4px;
-	border: var(--wl--dropdown-border-width, 1px) solid
+    border: var(--wl--dropdown-border-width, 1px) solid
         var(--wl--dropdown-border-color, lightgray);
     padding: 0.25rem 0;
     margin: 0;
