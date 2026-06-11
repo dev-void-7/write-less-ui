@@ -5,12 +5,14 @@ import { Label } from "../common/label/Label.jsx";
 import { useFormContext } from "../../form/FormContext.jsx";
 import { Msg } from "../../msg/Msg.jsx";
 import { MsgState } from "../../msg/types.js";
+import { Cols } from "../common/types/types.js";
 
 export function Input<T extends Type>(props: Props<T>) {
     const merged = mergeProps(props, {
         id: createUniqueId(),
         type: "text" as Type,
         inputMode: inputMode(props.type || "text"),
+        cols: 12 as Cols,
     });
 
     const form = useFormContext();
@@ -36,7 +38,7 @@ export function Input<T extends Type>(props: Props<T>) {
                 id={merged.id}
                 type={merged.type}
                 inputmode={merged.inputMode}
-				placeholder={merged.placeholder}
+                placeholder={merged.placeholder}
                 ref={input}
                 autocomplete="off"
             />
@@ -62,6 +64,9 @@ export function Input<T extends Type>(props: Props<T>) {
         <div
             class="wl--field-input"
             hidden={merged.hidden}
+            style={{
+                "grid-column": `span ${merged.cols}`,
+            }}
         >
             <Label
                 label={merged.label}

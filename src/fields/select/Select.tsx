@@ -15,15 +15,19 @@ import { handleOnMount, handleOptsMutation } from "./utils.js";
 import { focusOnMouseEnter } from "../common/utils/make-arrow-up-down-navigate-dropdown-opts.js";
 import { ArrowDownOutlineIcon } from "../../icons/ArrowDownOutlineIcon.jsx";
 import { CheckIcon } from "../../icons/CheckIcon.jsx";
+import { Cols } from "../common/types/types.js";
 
 export function Select<V, I>(props: Props<V, I>) {
-    const merged = mergeProps(props, { id: createUniqueId() });
+    const merged = mergeProps(props, {
+        id: createUniqueId(),
+        cols: 12 as Cols,
+    });
     const form = useFormContext();
     const [selectedOpt, setSelectedOpt] = createSignal<Opt<V, I> | undefined>();
     const dropdownId = createUniqueId();
     let dropdown!: HTMLDivElement;
     let button!: HTMLButtonElement;
-	let opts!: HTMLDivElement;
+    let opts!: HTMLDivElement;
     let msgState = form && new MsgState(form.props.mapCodeToMsg);
 
     handleOptsMutation(merged, selectedOpt, setSelectedOpt);
@@ -42,13 +46,24 @@ export function Select<V, I>(props: Props<V, I>) {
     }
 
     onMount(() => {
-        handleOnMount(form, merged, button, dropdown, opts, selectedOpt, msgState);
+        handleOnMount(
+            form,
+            merged,
+            button,
+            dropdown,
+            opts,
+            selectedOpt,
+            msgState,
+        );
     });
 
     return (
         <div
             class="wl--field-select"
             hidden={merged.hidden}
+            style={{
+                "grid-column": `span ${merged.cols}`,
+            }}
         >
             <Label
                 label={merged.label}
@@ -67,7 +82,7 @@ export function Select<V, I>(props: Props<V, I>) {
             >
                 {merged.startIcon}
                 <span class="wl--selected-label">{selectedOpt()?.label()}</span>
-                <ArrowDownOutlineIcon classList={{"wl--icon-arrow": true}}/>
+                <ArrowDownOutlineIcon classList={{ "wl--icon-arrow": true }} />
             </button>
             <div
                 id={dropdownId}
@@ -75,7 +90,10 @@ export function Select<V, I>(props: Props<V, I>) {
                 popover
                 ref={dropdown}
             >
-                <div class="wl--opts" ref={opts}>
+                <div
+                    class="wl--opts"
+                    ref={opts}
+                >
                     <For each={merged.opts}>
                         {(opt, idx) => (
                             <button
