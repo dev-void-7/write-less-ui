@@ -209,7 +209,7 @@
                 min-height: var(--opt-height);
 
                 &.wl--focused {
-                    background-color: lightgray;
+                    background-color: var(--wl--dropdown-opt-hover-color, lightgray);
                 }
 
                 &.selected {
@@ -447,7 +447,7 @@
                     min-height: var(--opt-height);
 
                     &.wl--focused {
-                        background-color: lightgray;
+                        background-color: var(--wl--dropdown-opt-hover-color, lightgray);
                     }
 
                     &.selected {
