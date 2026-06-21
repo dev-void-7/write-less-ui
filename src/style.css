@@ -72,7 +72,7 @@
 	--wl--dropdown-border-width: 1px;
 	--wl--dropdown-border-color: lightgray;
 
-	--wl--loader-spinner-width: 2px;
+	--wl--loader-spinner-width: 2rem;
 	--wl--loader-spinner-color: black;
 }
 
