@@ -501,6 +501,10 @@
                 font-size: calc(var(--wl--field-control-font-size) * 0.8125);
                 font-weight: var(--wl--field-control-font-weight);
                 line-height: calc(var(--wl--field-control-line-height) * 0.8125);
+
+				&:focus {
+					border-color: var(--wl--field-control-focus-border-color);
+				}
             }
         }
 
