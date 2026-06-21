@@ -1,5 +1,5 @@
 import { Accessor, createSignal, createUniqueId, Setter } from "solid-js";
-import { PromiseManager } from "../../utils/promise-manager.js";
+import { PromiseManager } from "../../../utils/promise-manager.js";
 import { Merged, Opt, Status } from "./types.js";
 
 export class State<T, V, I> {
