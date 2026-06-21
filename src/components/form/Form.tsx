@@ -11,7 +11,10 @@ export function Form(props: Props) {
             <form
                 id={props.id || createUniqueId()}
                 class="wl--form"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={(e) => {
+					e.preventDefault();
+					state.submit();
+				}}
             >
                 {props.children}
             </form>
