@@ -13,6 +13,10 @@ export function handleOnMount<V, I>(
     selectedOpt: Accessor<Opt<V, I> | undefined>,
     msgState: MsgState | undefined,
 ) {
+    const errCodes = [];
+    if (merged.errCodes) errCodes.push(...merged.errCodes);
+    if (merged.requiredCode) errCodes.push(merged.requiredCode);
+
     form?.registerField({
         getKey: () => merged.key,
         getValue: () => selectedOpt()?.value,
@@ -25,6 +29,7 @@ export function handleOnMount<V, I>(
             }
             return true;
         },
+        errCodes,
     });
 
     makeArrowUpDownNavigateOpts(dropdown, opts);

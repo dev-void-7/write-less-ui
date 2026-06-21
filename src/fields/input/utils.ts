@@ -10,20 +10,10 @@ export function handleOnMountWhenForm<T extends Type>(
 ) {
     switch (merged.type) {
         case "number":
-            hanldeOnMountWhenFormForNumberInput(
-                form,
-                merged as Merged<"number">,
-                input,
-                msgState,
-            );
+            hanldeOnMountWhenFormForNumberInput(form, merged as Merged<"number">, input, msgState);
             break;
         case "text":
-            hanldeOnMountWhenFormForTextInput(
-                form,
-                merged as Merged<"text">,
-                input,
-                msgState,
-            );
+            hanldeOnMountWhenFormForTextInput(form, merged as Merged<"text">, input, msgState);
             break;
         case "password":
             hanldeOnMountWhenFormForPasswordInput(
@@ -34,20 +24,10 @@ export function handleOnMountWhenForm<T extends Type>(
             );
             break;
         case "email":
-            hanldeOnMountWhenFormForEmailInput(
-                form,
-                merged as Merged<"email">,
-                input,
-                msgState,
-            );
+            hanldeOnMountWhenFormForEmailInput(form, merged as Merged<"email">, input, msgState);
             break;
         case "tel":
-            hanldeOnMountWhenFormForTelInput(
-                form,
-                merged as Merged<"tel">,
-                input,
-                msgState,
-            );
+            hanldeOnMountWhenFormForTelInput(form, merged as Merged<"tel">, input, msgState);
             break;
     }
 }
@@ -59,6 +39,11 @@ function hanldeOnMountWhenFormForNumberInput(
     msgState: MsgState,
 ) {
     hanldeOnMountForNumberInput(merged, input);
+    const errCodes = [];
+    if (merged.errCodes) errCodes.push(...merged.errCodes);
+    if (merged.requiredCode) errCodes.push(merged.requiredCode);
+    if (merged.maxCode) errCodes.push(merged.maxCode);
+    if (merged.minCode) errCodes.push(merged.minCode);
 
     function validate() {
         if (merged.required && input.value.length == 0) {
@@ -106,6 +91,7 @@ function hanldeOnMountWhenFormForNumberInput(
         validate,
         elem: input,
         msgState,
+        errCodes,
     });
 }
 
@@ -116,6 +102,12 @@ function hanldeOnMountWhenFormForTextInput(
     msgState: MsgState,
 ) {
     hanldeOnMountForTextInput(merged, input);
+
+    const errCodes = [];
+    if (merged.errCodes) errCodes.push(...merged.errCodes);
+    if (merged.requiredCode) errCodes.push(merged.requiredCode);
+    if (merged.maxCode) errCodes.push(merged.maxCode);
+    if (merged.minCode) errCodes.push(merged.minCode);
 
     function validate() {
         const val = input.value;
@@ -145,12 +137,15 @@ function hanldeOnMountWhenFormForTextInput(
         return true;
     }
 
+    const getValue = merged.undefinedOnEmpty ? () => input.value || undefined : () => input.value;
+
     form.registerField({
         getKey: () => merged.key,
-        getValue: () => input.value,
+        getValue,
         validate,
         elem: input,
         msgState,
+        errCodes,
     });
 }
 
@@ -161,6 +156,13 @@ function hanldeOnMountWhenFormForPasswordInput(
     msgState: MsgState,
 ) {
     hanldeOnMountForPasswordInput(merged, input);
+
+    const errCodes = [];
+    if (merged.errCodes) errCodes.push(...merged.errCodes);
+    if (merged.requiredCode) errCodes.push(merged.requiredCode);
+    if (merged.maxCode) errCodes.push(merged.maxCode);
+    if (merged.minCode) errCodes.push(merged.minCode);
+    if (merged.minStrengthCode) errCodes.push(merged.minStrengthCode);
 
     function validate() {
         const val = input.value;
@@ -219,12 +221,15 @@ function hanldeOnMountWhenFormForPasswordInput(
         return true;
     }
 
+    const getValue = merged.undefinedOnEmpty ? () => input.value || undefined : () => input.value;
+
     form.registerField({
         getKey: () => merged.key,
-        getValue: () => input.value,
+        getValue,
         validate,
         elem: input,
         msgState,
+        errCodes,
     });
 }
 
@@ -235,6 +240,13 @@ function hanldeOnMountWhenFormForEmailInput(
     msgState: MsgState,
 ) {
     hanldeOnMountForEmailInput(merged, input);
+
+    // in case of Merged<"email"> this property is exists but it seems typescript has issue detecting that
+    const errCodes = [merged.invalidEmailCode as number];
+    if (merged.errCodes) errCodes.push(...merged.errCodes);
+    if (merged.requiredCode) errCodes.push(merged.requiredCode);
+    if (merged.maxCode) errCodes.push(merged.maxCode);
+    if (merged.minCode) errCodes.push(merged.minCode);
 
     function validate() {
         const val = input.value;
@@ -259,12 +271,15 @@ function hanldeOnMountWhenFormForEmailInput(
         return true;
     }
 
+    const getValue = merged.undefinedOnEmpty ? () => input.value || undefined : () => input.value;
+
     form.registerField({
         getKey: () => merged.key,
-        getValue: () => input.value,
+        getValue,
         validate,
         elem: input,
         msgState,
+        errCodes,
     });
 }
 
@@ -275,6 +290,12 @@ function hanldeOnMountWhenFormForTelInput(
     msgState: MsgState,
 ) {
     hanldeOnMountForTelInput(merged, input);
+
+    const errCodes = [];
+    if (merged.errCodes) errCodes.push(...merged.errCodes);
+    if (merged.requiredCode) errCodes.push(merged.requiredCode);
+    if (merged.maxCode) errCodes.push(merged.maxCode);
+    if (merged.minCode) errCodes.push(merged.minCode);
 
     function validate() {
         const val = input.value;
@@ -293,19 +314,19 @@ function hanldeOnMountWhenFormForTelInput(
         return true;
     }
 
+    const getValue = merged.undefinedOnEmpty ? () => input.value || undefined : () => input.value;
+
     form.registerField({
         getKey: () => merged.key,
-        getValue: () => input.value,
+        getValue,
         validate,
         elem: input,
         msgState,
+        errCodes,
     });
 }
 
-export function handleOnMount<T extends Type>(
-    merged: Merged<T>,
-    input: HTMLInputElement,
-) {
+export function handleOnMount<T extends Type>(merged: Merged<T>, input: HTMLInputElement) {
     switch (merged.type) {
         case "number":
             hanldeOnMountForNumberInput(merged as Merged<"number">, input);
@@ -325,10 +346,7 @@ export function handleOnMount<T extends Type>(
     }
 }
 
-function hanldeOnMountForNumberInput(
-    merged: Merged<"number">,
-    input: HTMLInputElement,
-) {
+function hanldeOnMountForNumberInput(merged: Merged<"number">, input: HTMLInputElement) {
     const onValueChange = merged.onValueChange;
     if (onValueChange) {
         input.addEventListener("input", (e: InputEvent) => {
@@ -345,10 +363,7 @@ function hanldeOnMountForNumberInput(
     }
 }
 
-function hanldeOnMountForTextInput(
-    merged: Merged<"text">,
-    input: HTMLInputElement,
-) {
+function hanldeOnMountForTextInput(merged: Merged<"text">, input: HTMLInputElement) {
     const onValueChange = merged.onValueChange;
     if (onValueChange) {
         input.addEventListener("input", (e: InputEvent) => {
@@ -357,10 +372,7 @@ function hanldeOnMountForTextInput(
     }
 }
 
-function hanldeOnMountForPasswordInput(
-    merged: Merged<"password">,
-    input: HTMLInputElement,
-) {
+function hanldeOnMountForPasswordInput(merged: Merged<"password">, input: HTMLInputElement) {
     const onValueChange = merged.onValueChange;
     if (onValueChange) {
         input.addEventListener("input", (e: InputEvent) => {
@@ -369,10 +381,7 @@ function hanldeOnMountForPasswordInput(
     }
 }
 
-function hanldeOnMountForEmailInput(
-    merged: Merged<"email">,
-    input: HTMLInputElement,
-) {
+function hanldeOnMountForEmailInput(merged: Merged<"email">, input: HTMLInputElement) {
     const onValueChange = merged.onValueChange;
     if (onValueChange) {
         input.addEventListener("input", (e: InputEvent) => {
@@ -381,10 +390,7 @@ function hanldeOnMountForEmailInput(
     }
 }
 
-function hanldeOnMountForTelInput(
-    merged: Merged<"tel">,
-    input: HTMLInputElement,
-) {
+function hanldeOnMountForTelInput(merged: Merged<"tel">, input: HTMLInputElement) {
     const onValueChange = merged.onValueChange;
     if (onValueChange) {
         input.addEventListener("input", (e: InputEvent) => {

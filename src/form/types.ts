@@ -5,6 +5,7 @@ export type { FormState } from "./state.js";
 export interface Props {
     mapCodeToMsg: (key: number) => string;
     children: JSX.Element;
+    onSubmit: (body: { [key: string]: any }) => Promise<number | undefined>;
 }
 
 export const enum Status {
@@ -17,9 +18,10 @@ export const enum Status {
 export interface Field {
     // it is a function instaed of a property so if the the key changes
     // function will just get the latest value
-    getKey: () => string | undefined;
+    getKey: () => string;
     getValue(): any;
     validate(): boolean;
     elem: HTMLElement;
     msgState: MsgState;
+	errCodes: Array<number>,
 }
