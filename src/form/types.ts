@@ -3,6 +3,7 @@ import { MsgState } from "../msg/types.js";
 export type { FormState } from "./state.js";
 
 export interface Props {
+	id?: string;
     mapCodeToMsg: (key: number) => string;
     children: JSX.Element;
     onSubmit: (body: { [key: string]: any }) => Promise<number | undefined>;
