@@ -68,7 +68,7 @@
     --wl--combo-box-deselect-icon-color: black;
 
     --wl--btn-height: 2rem;
-	--wl--btn-height-1\/4: calc(var(--wl--btn-height) / 4);
+    --wl--btn-height-1\/4: calc(var(--wl--btn-height) / 4);
     --wl--btn-border-width: 1px;
     --wl--btn-bg-color: lightgray;
     --wl--btn-border-color: lightgray;
@@ -502,9 +502,9 @@
                 font-weight: var(--wl--field-control-font-weight);
                 line-height: calc(var(--wl--field-control-line-height) * 0.8125);
 
-				&:focus {
-					border-color: var(--wl--field-control-focus-border-color);
-				}
+                &:focus {
+                    border-color: var(--wl--field-control-focus-border-color);
+                }
             }
         }
 
@@ -613,26 +613,28 @@
 .wl--btn {
     display: flex;
     align-items: center;
-	justify-content: center;
+    justify-content: center;
     height: var(--wl--btn-height);
-	padding-inline: var(--wl--btn-height-1\/4);
-	column-gap: var(--wl--btn-height-1\/4);
+    padding-inline: var(--wl--btn-height-1\/4);
+    column-gap: var(--wl--btn-height-1\/4);
     background-color: var(--wl--btn-bg-color);
     border: var(--wl--btn-border-width) solid var(--wl--btn-border-color);
     border-radius: 4px;
     cursor: pointer;
-	filter: brightness(1);
-	scale: 1;
-	transition: filter 0.2s ease-out, scale 0.2s ease-out;
-	/* TODO: add focus style */
+    filter: brightness(1);
+    scale: 1;
+    transition:
+        filter 0.2s ease-out,
+        scale 0.2s ease-out;
+    /* TODO: add focus style */
 
-	&:hover {
-		filter: brightness(0.85);
-	}
+    &:hover {
+        filter: brightness(0.85);
+    }
 
-	&:active {
-		scale: 0.97;
-	}
+    &:active {
+        scale: 0.97;
+    }
 
     & > :first-child:not(.wl--children),
     & > :last-child:not(.wl--children) {
@@ -702,7 +704,7 @@
     }
 }
 
-/* 
+/*
 .wl--select {
     position: relative;
     display: flex;
@@ -754,3 +756,6 @@
         }
     }
 } */
+
+.grid {
+}
