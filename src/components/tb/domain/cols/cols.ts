@@ -26,7 +26,12 @@ export class Cols {
     }
 }
 
-function colsFromArgs(idx: Uint32Array, args: Array<ColArg>, id: string): Array<Col> {
+function colsFromArgs(
+    idx: Uint32Array,
+    args: Array<ColArg>,
+    id: string,
+    firstInRow: boolean = true,
+): Array<Col> {
     const cols = [];
     let arg: ColArg;
     for (let i = 0; i < args.length; i++) {
@@ -34,24 +39,30 @@ function colsFromArgs(idx: Uint32Array, args: Array<ColArg>, id: string): Array<
         if (typeof arg == "string") {
             const fixedLabel = arg;
             cols.push(
-                new ColLeaf(idx[0]++, {
-                    label: () => fixedLabel,
-                }),
+                new ColLeaf(
+                    idx[0]++,
+                    {
+                        label: () => fixedLabel,
+                    },
+                    firstInRow && i === 0,
+                ),
             );
             continue;
         }
         if (typeof arg == "function") {
-            cols.push(new ColLeaf(idx[0]++, { label: arg }));
+            cols.push(new ColLeaf(idx[0]++, { label: arg }, firstInRow && i === 0));
             continue;
         }
 
         if (!arg.children) {
-            cols.push(new ColLeaf(idx[0]++, arg));
+            cols.push(new ColLeaf(idx[0]++, arg, firstInRow && i === 0));
             continue;
         }
 
-        const children = colsFromArgs(idx, arg.children, `${id}.${i}`);
-        cols.push(new ColGroup(`${id}.${i}`, arg.label, arg.rowSpan, children));
+        const children = colsFromArgs(idx, arg.children, `${id}.${i}`, firstInRow && i === 0);
+        cols.push(
+            new ColGroup(`${id}.${i}`, arg.label, arg.rowSpan, children, firstInRow && i === 0),
+        );
     }
 
     return cols;

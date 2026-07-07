@@ -16,7 +16,10 @@ export function Tb(props: Props) {
                                         <th
                                             colspan={col.colSpan()}
                                             rowSpan={col.rowSpan}
-                                            classList={{ hidden: col.hidden() }}
+                                            classList={{
+                                                hidden: col.hidden(),
+                                                "visually-first-child": col.visuallyFirstInRow,
+                                            }}
                                         >
                                             {col.label()}
                                         </th>
@@ -45,3 +48,47 @@ export function Tb(props: Props) {
         </div>
     );
 }
+
+// so what?
+/*
+    table:
+        - must write as less code as possible
+        - supports hiding cols
+        - supports col/row span
+        - supports changing columns order
+        - save the order of columns
+        - supports sort/filter by column (only last child)
+        - when hiding a column reduce colspan by colspan of column and if colspan is 0, hide the cell
+        - do not allow moving column if it has a cell that spans outside of the column
+        - to change sort use ondrag event which will modify the order array in the parent
+*/
+
+/*
+    structure:
+        - cols =
+            Array<
+                | string
+                | () => string
+                | {
+                    label: ()=> string;
+                    rowSpan?: number;
+                    children: Array<Col>;
+                    minWidth?: never;
+                    sortable?: never;
+                    hideOnExport?: never;
+                    hideOnPrint?: never;
+                    unhideable?: never;
+                }
+                | {
+                    label: ()=> string;
+                    rowSpan?: number;
+                    minWidth?: string;
+                    sortable?: boolean;
+                    hideOnExport?: boolean;
+                    hideOnPrint?: boolean;
+                    unhideable?: boolean;
+                    type?: Type;
+                    children?: never;
+                }
+            >
+*/

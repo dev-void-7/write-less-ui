@@ -14,8 +14,9 @@ export class ColLeaf {
     hidden: Accessor<boolean>;
     #setHidden: Setter<boolean>;
     colSpan: Accessor<undefined> = () => undefined;
+    visuallyFirstInRow: boolean;
 
-    constructor(idx: number, arg: ColLeafArg) {
+    constructor(idx: number, arg: ColLeafArg, visuallyFirstInRow: boolean) {
         this.idx = idx;
         this.label = arg.label;
         this.rowSpan = arg.rowSpan;
@@ -26,6 +27,7 @@ export class ColLeaf {
         this.unhideable = arg.unhideable || false;
         this.type = arg.type || Type.Text;
         [this.hidden, this.#setHidden] = createSignal(false);
+        this.visuallyFirstInRow = visuallyFirstInRow;
     }
 
     hide() {

@@ -9,25 +9,23 @@ export class ColGroup {
     children: Array<Col>;
     colSpan: Accessor<number>;
     hidden: Accessor<boolean>;
-
     colsOrder: Accessor<Array<number>>;
     setColsOrder: Setter<Array<number>>;
-
     orderedChildren: Accessor<Array<Col>>;
+    visuallyFirstInRow: boolean;
 
     constructor(
         id: string,
         label: () => string,
         rowSpan: number | undefined,
         children: Array<Col>,
+        visuallyFirstInRow: boolean,
     ) {
         this.label = label;
         this.rowSpan = rowSpan;
         this.children = children;
         [this.colsOrder, this.setColsOrder] = createSignal(getColOrder(id, children.length));
-
         this.orderedChildren = createMemo(() => getOrderedCols(this.children, this.colsOrder()));
-
         this.colSpan = createMemo(() => {
             let span = 0;
             for (const child of this.children) {
@@ -35,13 +33,12 @@ export class ColGroup {
                     if (!child.hidden()) span++;
                     continue;
                 }
-
                 span += child.colSpan();
             }
             return span;
         });
-
         this.hidden = createMemo(() => this.colSpan() == 0);
+        this.visuallyFirstInRow = visuallyFirstInRow;
     }
 
     hide() {
