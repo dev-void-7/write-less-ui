@@ -3,7 +3,6 @@ import { type Props, Cols } from "./domain/index.js";
 
 export function Tb(props: Props) {
     const cols = new Cols(props);
-    console.log(cols.orderedLeafs());
     return (
         <div class="wl--tb-wrapper">
             <table id={props.id}>
@@ -35,7 +34,12 @@ export function Tb(props: Props) {
                             <tr>
                                 <For each={cols.orderedLeafs()}>
                                     {(leaf) => (
-                                        <td classList={{ hidden: leaf.hidden() }}>
+                                        <td
+                                            classList={{
+                                                hidden: leaf.hidden(),
+                                                "wl--no-print": leaf.hideOnPrint,
+                                            }}
+                                        >
                                             {row[leaf.idx]}
                                         </td>
                                     )}

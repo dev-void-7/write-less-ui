@@ -693,6 +693,12 @@
                         display: none;
                     }
                 }
+
+                @media print {
+                    > .wl--no-print {
+                        display: none;
+                    }
+                }
             }
         }
 
