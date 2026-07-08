@@ -16,8 +16,8 @@ export function Tb(props: Props) {
                                             colspan={col.colSpan()}
                                             rowSpan={col.rowSpan}
                                             classList={{
-                                                hidden: col.hidden(),
-                                                "visually-first-child": col.visuallyFirstInRow,
+                                                "wl--hidden": col.hidden(),
+                                                "wl--visually-first-child": col.visuallyFirstInRow,
                                             }}
                                         >
                                             {col.label()}
@@ -36,7 +36,7 @@ export function Tb(props: Props) {
                                     {(leaf) => (
                                         <td
                                             classList={{
-                                                hidden: leaf.hidden(),
+                                                "wl--hidden": leaf.hidden(),
                                                 "wl--no-print": leaf.hideOnPrint,
                                             }}
                                         >

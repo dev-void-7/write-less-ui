@@ -672,11 +672,11 @@
                     border-inline-end: 1px solid black;
                     border-block-end: 1px solid black;
 
-                    &.visually-first-child {
+                    &.wl--visually-first-child {
                         border-inline-start: 1px solid black;
                     }
 
-                    &.hidden {
+                    &.wl--hidden {
                         display: none;
                     }
                 }
@@ -689,7 +689,7 @@
                         border-inline-start: 1px solid black;
                     }
 
-                    &.hidden {
+                    &.wl--hidden {
                         display: none;
                     }
                 }
