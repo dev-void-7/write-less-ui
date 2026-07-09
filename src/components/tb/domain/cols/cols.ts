@@ -11,6 +11,7 @@ export class Cols {
     orderedCols: Accessor<Array<Col>>;
     orderedColsAsRows: Accessor<Array<Array<Col>>>;
     orderedLeafs: Accessor<Array<ColLeaf>>;
+    leafs: Accessor<Array<ColLeaf>>;
 
     constructor(props: { id: string; cols: Array<ColArg> }) {
         [this.colsOrder, this.setColsOrder] = createSignal(
@@ -20,7 +21,8 @@ export class Cols {
         this.cols = createMemo(() => colsFromArgs(new Uint32Array([0]), props.cols, props.id));
         this.orderedCols = createMemo(() => getOrderedCols(this.cols(), this.colsOrder()));
         this.orderedColsAsRows = createMemo(() => orderedColsIntoRows(this.orderedCols()));
-        this.orderedLeafs = createMemo(() => getOrderLeafs(this.orderedCols()));
+        this.orderedLeafs = createMemo(() => getLeafs(this.orderedCols()));
+        this.leafs = createMemo(() => getLeafs(this.cols()));
 
         createEffect(() => this.setColsOrder(getColOrder(props.id, this.cols().length)));
     }
@@ -88,11 +90,11 @@ function orderedColsIntoRowsRecursively(cols: Array<Col>, rows: Array<Array<Col>
     }
 }
 
-function getOrderLeafs(cols: Array<Col>): Array<ColLeaf> {
+function getLeafs(cols: Array<Col>): Array<ColLeaf> {
     const leafs: Array<ColLeaf> = [];
     for (let col of cols) {
         if (col instanceof ColLeaf) leafs.push(col);
-        else if (col instanceof ColGroup) leafs.push(...getOrderLeafs(col.orderedChildren()));
+        else if (col instanceof ColGroup) leafs.push(...getLeafs(col.orderedChildren()));
     }
     return leafs;
 }
