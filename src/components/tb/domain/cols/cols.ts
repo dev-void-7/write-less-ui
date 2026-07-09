@@ -94,7 +94,7 @@ function getLeafs(cols: Array<Col>): Array<ColLeaf> {
     const leafs: Array<ColLeaf> = [];
     for (let col of cols) {
         if (col instanceof ColLeaf) leafs.push(col);
-        else if (col instanceof ColGroup) leafs.push(...getLeafs(col.orderedChildren()));
+        else if (col instanceof ColGroup) leafs.push(...getLeafs(col.children));
     }
     return leafs;
 }
