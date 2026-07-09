@@ -1,8 +1,10 @@
-import { For } from "solid-js";
+import { For, Show } from "solid-js";
 import { type Props, Cols } from "./domain/index.js";
+import { Foots } from "./domain/foots/foots.js";
 
 export function Tb(props: Props) {
     const cols = new Cols(props);
+    const foots = new Foots(props, cols.leafs, cols.orderedLeafs);
     return (
         <div class="wl--tb-wrapper">
             <table id={props.id}>
@@ -48,6 +50,31 @@ export function Tb(props: Props) {
                         )}
                     </For>
                 </tbody>
+                <Show when={foots.orderedFootsAsRows()}>
+                    <tfoot>
+                        <For each={foots.orderedFootsAsRows()}>
+                            {(row) => (
+                                <tr>
+                                    <For each={row}>
+                                        {(foot) => (
+                                            <td
+                                                rowspan={foot.rowSpan}
+                                                colspan={foot.colSpan()}
+                                                classList={{
+                                                    "wl--hidden": foot.hidden(),
+                                                    "wl--visually-first-child":
+                                                        foot.visuallyFirstInRow,
+                                                }}
+                                            >
+                                                {foot.label()}
+                                            </td>
+                                        )}
+                                    </For>
+                                </tr>
+                            )}
+                        </For>
+                    </tfoot>
+                </Show>
             </table>
         </div>
     );
