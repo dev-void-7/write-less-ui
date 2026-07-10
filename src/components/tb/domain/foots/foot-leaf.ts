@@ -1,6 +1,6 @@
 import { Accessor } from "solid-js/types/server/reactive.js";
 import { ColLeaf } from "../cols/col-leaf.js";
-import { createEffect, createMemo } from "solid-js";
+import { createMemo } from "solid-js";
 
 export class FootLeaf {
     label: () => string;
@@ -10,6 +10,8 @@ export class FootLeaf {
     type: Type;
     visuallyFirstInRow: boolean;
     hidden: Accessor<boolean>;
+    hideOnPrint: Accessor<boolean>;
+    hideOnExport: Accessor<boolean>;
 
     constructor(
         arg: FootLeafArg,
@@ -30,6 +32,20 @@ export class FootLeaf {
         this.type = arg.type || Type.Text;
         this.visuallyFirstInRow = visuallyFirstInRow;
         this.hidden = createMemo(() => this.colSpan() == 0);
+        this.hideOnPrint = createMemo(() => {
+            for (const col of this.cols) {
+                if (col.hidden()) continue;
+                if (col.hideOnPrint) return true;
+            }
+            return false;
+        });
+        this.hideOnExport = createMemo(() => {
+            for (const col of this.cols) {
+                if (col.hidden()) continue;
+                if (col.hideOnExport) return true;
+            }
+            return false;
+        });
     }
 }
 

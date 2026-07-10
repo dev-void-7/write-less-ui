@@ -62,8 +62,9 @@ export function Tb(props: Props) {
                                                 colspan={foot.colSpan()}
                                                 classList={{
                                                     "wl--hidden": foot.hidden(),
-                                                    "wl--visually-first-child":
+                                                     "wl--visually-first-child":
                                                         foot.visuallyFirstInRow,
+                                                     "wl--no-print": foot.hideOnPrint(),
                                                 }}
                                             >
                                                 {foot.label()}
@@ -123,3 +124,12 @@ export function Tb(props: Props) {
                 }
             >
 */
+
+/**
+ * 	issues:
+ * 		- no-print in foots does not work (try to look at all cols
+ * 		if they all has `no-print` then add the class to foot)
+ *
+ * 		- specifying the visually first and last cells does not work with hiding columns
+ *
+ */

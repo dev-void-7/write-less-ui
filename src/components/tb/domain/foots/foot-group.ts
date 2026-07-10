@@ -8,6 +8,8 @@ export class FootGroup {
     colSpan: Accessor<number>;
     hidden: Accessor<boolean>;
     visuallyFirstInRow: boolean;
+    hideOnPrint: Accessor<boolean>;
+    hideOnExport: Accessor<boolean>;
 
     constructor(
         label: () => string,
@@ -27,6 +29,18 @@ export class FootGroup {
         });
         this.hidden = createMemo(() => this.colSpan() == 0);
         this.visuallyFirstInRow = visuallyFirstInRow;
+        this.hideOnPrint = createMemo(() => {
+            for (const child of this.children) {
+                if (child.hideOnPrint()) return true;
+            }
+            return false;
+        });
+        this.hideOnExport = createMemo(() => {
+            for (const child of this.children) {
+                if (child.hideOnExport()) return true;
+            }
+            return false;
+        });
     }
 }
 
