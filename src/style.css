@@ -662,7 +662,8 @@
         width: 100%;
 
         > thead,
-        > tbody {
+        > tbody,
+        > tfoot {
             > tr {
                 &:first-child > th {
                     border-block-start: 1px solid black;
@@ -714,7 +715,8 @@
             }
         }
 
-        > tbody {
+        > :has(:not(tfoot)) tbody,
+        > tfoot {
             > tr:last-child {
                 > td:first-child {
                     border-end-start-radius: 4px;
