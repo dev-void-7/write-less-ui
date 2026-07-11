@@ -711,7 +711,7 @@
             }
         }
 
-        > :has(:not(tfoot)) tbody {
+        &:not(:has(tfoot)) > tbody {
             > tr:last-child {
                 > td:nth-child(1 of :not(.wl--hidden)) {
                     border-end-start-radius: 4px;
