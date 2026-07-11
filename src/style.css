@@ -81,6 +81,26 @@
     --wl--btn-icon-color: black;
     --wl--btn-icon-weight: 1.25;
 
+    --wl--tb-head-color: rgb(45, 45, 45);
+    --wl--tb-head-bg-color: rgb(245, 245, 245);
+    --wl--tb-head-font: 500 0.875rem/125% IBMPlexSans;
+    --wl--tb-head-height: 2rem;
+    --wl--tb-head-height-1\/4: calc(var(--wl--field-control-height) / 4);
+    --wl--tb-border-width: 1px;
+    --wl--tb-border-color: darkgray;
+    --wl--tb-data-color: black;
+    --wl--tb-data-font-family: IBMPlexSans;
+    --wl--tb-data-font-size: 0.8125rem;
+    --wl--tb-data-font-weight: 400;
+    --wl--tb-data-line-height: 125%;
+    --wl--tb-data-height: 2rem;
+    --wl--tb-data-height-1\/4: calc(var(--wl--field-control-height) / 4);
+    --wl--tb-foot-color: rgb(45, 45, 45);
+    --wl--tb-foot-bg-color: rgb(245, 245, 245);
+    --wl--tb-foot-font: 500 0.875rem/125% IBMPlexSans;
+    --wl--tb-foot-height: 2rem;
+    --wl--tb-foot-height-1\/4: calc(var(--wl--field-control-height) / 4);
+
     --wl--dropdown-opt-hover-color: lightgray;
 
     --wl--dropdown-border-width: 1px;
@@ -666,16 +686,17 @@
         > tfoot {
             > tr {
                 &:first-child > th {
-                    border-block-start: 1px solid black;
+                    border-block-start: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
                 }
 
                 > th,
                 > td {
-                    border-inline-end: 1px solid black;
-                    border-block-end: 1px solid black;
+                    border-inline-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
+                    border-block-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
 
                     &.wl--visually-first-col {
-                        border-inline-start: 1px solid black;
+                        border-inline-start: var(--wl--tb-border-width) solid
+                            var(--wl--tb-border-color);
                     }
 
                     &.wl--hidden {
@@ -692,6 +713,16 @@
         }
 
         > thead {
+            > tr > th {
+                color: var(--wl--tb-head-color);
+                font: var(--wl--tb-head-font);
+                height: var(--wl--tb-head-height);
+                vertical-align: middle;
+                text-align: start;
+                padding-inline: var(--wl--tb-head-height-1\/4);
+                background-color: var(--wl--tb-head-bg-color);
+            }
+
             > tr:first-child {
                 > th:nth-child(1 of :not(.wl--hidden)) {
                     border-start-start-radius: 4px;
@@ -699,14 +730,6 @@
 
                 > th:nth-last-child(1 of :not(.wl--hidden)) {
                     border-start-end-radius: 4px;
-                }
-            }
-        }
-
-        > tbody {
-            > tr {
-                > td:nth-child(1 of :not(.wl--hidden)) {
-                    border-inline-start: 1px solid black;
                 }
             }
         }
@@ -723,7 +746,39 @@
             }
         }
 
+        > tbody {
+            > tr {
+                td {
+                    color: var(--wl--tb-data-color);
+                    font-family: var(--wl--tb-data-font-family);
+                    font-size: var(--wl--tb-data-font-size);
+                    font-weight: var(--wl--tb-data-font-weight);
+                    line-height: var(--wl--tb-data-line-height);
+                    height: var(--wl--tb-data-height);
+                    vertical-align: middle;
+                    text-align: start;
+                    padding-inline: var(--wl--tb-data-height-1\/4);
+                }
+
+                > td:nth-child(1 of :not(.wl--hidden)) {
+                    border-inline-start: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
+                }
+            }
+        }
+
         > tfoot {
+            > tr {
+                > td {
+                    color: var(--wl--tb-foot-color);
+                    font: var(--wl--tb-foot-font);
+                    height: var(--wl--tb-foot-height);
+                    vertical-align: middle;
+                    text-align: start;
+                    padding-inline: var(--wl--tb-foot-height-1\/4);
+                    background-color: var(--wl--tb-foot-bg-color);
+                }
+            }
+
             > tr:nth-last-child(1 of :has(> .wl--visually-first-col)) {
                 > .wl--visually-first-col {
                     border-end-start-radius: 4px;
@@ -735,7 +790,6 @@
                     border-end-end-radius: 4px;
                 }
             }
-
         }
     }
 }
