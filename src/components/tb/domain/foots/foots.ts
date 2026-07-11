@@ -7,6 +7,7 @@ import { ColLeaf } from "../cols/col-leaf.js";
 export class Foots {
     colLeafs: Accessor<Array<ColLeaf>>;
     orderedColLeafs: Accessor<Array<ColLeaf>>;
+    colLeafsOrder: Accessor<Array<number>>;
     foots: Accessor<Array<Foot> | undefined>;
     orderedFootsAsRows: Accessor<Array<Array<Foot>> | undefined>;
     depth: number;
@@ -18,16 +19,13 @@ export class Foots {
     ) {
         this.colLeafs = colLeafs;
         this.orderedColLeafs = orderedColLeafs;
+        this.colLeafsOrder = createMemo(() => this.orderedColLeafs().map((leaf) => leaf.idx));
         this.depth = highestFootsDepth(props.foots ?? []);
         this.foots = createMemo(() =>
             footsFromArgs(props.foots, props.id, this.colLeafs(), this.depth),
         );
         this.orderedFootsAsRows = createMemo(() =>
-            orderFootsIntoRows(
-                this.foots(),
-                this.orderedColLeafs().map((leaf) => leaf.idx),
-                this.depth,
-            ),
+            orderFootsIntoRows(this.foots(), this.colLeafsOrder(), this.depth),
         );
     }
 }
