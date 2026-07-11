@@ -3,6 +3,7 @@ import { Foot, FootArg } from "./foot.js";
 
 export class FootGroup {
     label: () => string;
+    colsCount: number;
     rowSpan?: number;
     children: Array<Foot>;
     colSpan: Accessor<number>;
@@ -18,6 +19,7 @@ export class FootGroup {
         visuallyFirstInRow: boolean,
     ) {
         this.label = label;
+        this.colsCount = children.reduce((acc, child) => acc + child.colsCount, 0);
         if (rowSpan > 1) this.rowSpan = rowSpan;
         this.children = children;
         this.colSpan = createMemo(() => {

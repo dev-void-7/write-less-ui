@@ -64,8 +64,9 @@ export function Tb(props: Props) {
                                                 colspan={foot.colSpan()}
                                                 classList={{
                                                     "wl--hidden": foot.hidden(),
-                                                    "wl--visually-first-child":
-                                                        foot.visuallyFirstInRow,
+                                                    "wl--visually-first-col": foots
+                                                        .firstVisibleFoots()
+                                                        .includes(foot),
                                                     "wl--no-print": foot.hideOnPrint(),
                                                 }}
                                             >

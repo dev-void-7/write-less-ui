@@ -9,6 +9,7 @@ export class Foots {
     orderedColLeafs: Accessor<Array<ColLeaf>>;
     colLeafsOrder: Accessor<Array<number>>;
     foots: Accessor<Array<Foot> | undefined>;
+    firstVisibleFoots: Accessor<Array<Foot>>;
     orderedFootsAsRows: Accessor<Array<Array<Foot>> | undefined>;
     depth: number;
 
@@ -23,6 +24,9 @@ export class Foots {
         this.depth = highestFootsDepth(props.foots ?? []);
         this.foots = createMemo(() =>
             footsFromArgs(props.foots, props.id, this.colLeafs(), this.depth),
+        );
+        this.firstVisibleFoots = createMemo(() =>
+            detFirstVisibleFoots(this.foots() ?? [], this.colLeafsOrder()),
         );
         this.orderedFootsAsRows = createMemo(() =>
             orderFootsIntoRows(this.foots(), this.colLeafsOrder(), this.depth),
@@ -189,5 +193,50 @@ function orderFootsIntoRowsRecursively(
         } else {
             orderedIdx[0] += foot.cols.length;
         }
+    }
+}
+
+function detFirstVisibleFoots(
+    foots: Array<Foot>,
+    colLeafsOrder: Array<number>,
+    start: number = 0,
+    colLeafIdx: number = 0,
+): Array<Foot> {
+    const firstVisible: Array<Foot> = [];
+    let foot;
+    while (colLeafIdx < colLeafsOrder.length) {
+        foot = getFootCovers(foots, colLeafsOrder[colLeafIdx] - start);
+        if (!foot) {
+            console.log(foots.length);
+            console.log(colLeafsOrder, colLeafsOrder[colLeafIdx], start, colLeafIdx);
+            return firstVisible;
+        }
+        if (foot.hidden()) {
+            colLeafIdx += foot.colsCount;
+            continue;
+        }
+        firstVisible.push(foot);
+        if (foot instanceof FootGroup)
+            firstVisible.push(
+                ...detFirstVisibleFoots(
+                    foot.children,
+                    colLeafsOrder,
+                    start + colLeafIdx,
+                    colLeafIdx,
+                ),
+            );
+
+        return firstVisible;
+    }
+
+    // it is possible that no visible foot was found (e.g. all foots are hidden), return an empty array in that case
+    return firstVisible;
+}
+
+function getFootCovers(foots: Array<Foot>, pos: number): Foot | undefined {
+    let span = 0;
+    for (const foot of foots) {
+        if (pos >= span && pos < span + foot.colsCount) return foot;
+        span += foot.colsCount;
     }
 }

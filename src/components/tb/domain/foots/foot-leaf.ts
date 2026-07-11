@@ -5,6 +5,7 @@ import { createMemo } from "solid-js";
 export class FootLeaf {
     label: () => string;
     cols: Array<ColLeaf>;
+    colsCount: number;
     rowSpan?: number;
     colSpan: Accessor<number>;
     type: Type;
@@ -21,6 +22,7 @@ export class FootLeaf {
     ) {
         this.label = arg.label;
         this.cols = cols;
+        this.colsCount = cols.length;
         if (rowSpan > 1) this.rowSpan = rowSpan;
         this.colSpan = createMemo(() => {
             let colSpan = 0;
