@@ -669,22 +669,14 @@
                     border-block-start: 1px solid black;
                 }
 
-                > th {
+                > th,
+                > td {
                     border-inline-end: 1px solid black;
                     border-block-end: 1px solid black;
 
                     &.wl--visually-first-col {
                         border-inline-start: 1px solid black;
                     }
-
-                    &.wl--hidden {
-                        display: none;
-                    }
-                }
-
-                > td {
-                    border-inline-end: 1px solid black;
-                    border-block-end: 1px solid black;
 
                     &.wl--hidden {
                         display: none;
@@ -701,11 +693,11 @@
 
         > thead {
             > tr:first-child {
-                > th:first-child {
+                > th:nth-child(1 of :not(.wl--hidden)) {
                     border-start-start-radius: 4px;
                 }
 
-                > th:last-child {
+                > th:nth-last-child(1 of :not(.wl--hidden)) {
                     border-start-end-radius: 4px;
                 }
             }
@@ -719,14 +711,13 @@
             }
         }
 
-        > :has(:not(tfoot)) tbody,
-        > tfoot {
+        > :has(:not(tfoot)) tbody {
             > tr:last-child {
-                > td:first-child {
+                > td:nth-child(1 of :not(.wl--hidden)) {
                     border-end-start-radius: 4px;
                 }
 
-                > td:last-child {
+                > td:nth-last-child(1 of :not(.wl--hidden)) {
                     border-end-end-radius: 4px;
                 }
             }
