@@ -67,6 +67,9 @@ export function Tb(props: Props) {
                                                     "wl--visually-first-col": foots
                                                         .firstVisibleFoots()
                                                         .includes(foot),
+                                                    "wl--visually-last-col": foots
+                                                        .lastVisibleFoots()
+                                                        .includes(foot),
                                                     "wl--no-print": foot.hideOnPrint(),
                                                 }}
                                             >
