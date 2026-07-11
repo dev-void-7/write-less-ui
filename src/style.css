@@ -724,9 +724,18 @@
         }
 
         > tfoot {
-            td:nth-last-child(1 of .wl--visually-first-col) {
-                border-end-start-radius: 4px;
+            > tr:nth-last-child(1 of :has(> .wl--visually-first-col)) {
+                > .wl--visually-first-col {
+                    border-end-start-radius: 4px;
+                }
             }
+
+            > tr:nth-last-child(1 of :has(> .wl--visually-last-col)) {
+                > .wl--visually-last-col {
+                    border-end-end-radius: 4px;
+                }
+            }
+
         }
     }
 }
