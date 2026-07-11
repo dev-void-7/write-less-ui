@@ -722,6 +722,12 @@
                 }
             }
         }
+
+        > tfoot {
+            td:nth-last-child(1 of .wl--visually-first-col) {
+                border-end-start-radius: 4px;
+            }
+        }
     }
 }
 
