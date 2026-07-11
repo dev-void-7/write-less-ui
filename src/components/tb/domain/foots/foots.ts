@@ -9,6 +9,7 @@ export class Foots {
     orderedColLeafs: Accessor<Array<ColLeaf>>;
     foots: Accessor<Array<Foot> | undefined>;
     orderedFootsAsRows: Accessor<Array<Array<Foot>> | undefined>;
+    depth: number;
 
     constructor(
         props: { id: string; foots?: Array<FootArg> },
@@ -17,15 +18,17 @@ export class Foots {
     ) {
         this.colLeafs = colLeafs;
         this.orderedColLeafs = orderedColLeafs;
-        this.foots = createMemo(() => footsFromArgs(props.foots, props.id, this.colLeafs()));
-        this.orderedFootsAsRows = createMemo(() => {
-            const foots = this.foots();
-            if (!foots) return undefined;
-            return orderFootsIntoRows(
-                foots,
+        this.depth = highestFootsDepth(props.foots ?? []);
+        this.foots = createMemo(() =>
+            footsFromArgs(props.foots, props.id, this.colLeafs(), this.depth),
+        );
+        this.orderedFootsAsRows = createMemo(() =>
+            orderFootsIntoRows(
+                this.foots(),
                 this.orderedColLeafs().map((leaf) => leaf.idx),
-            );
-        });
+                this.depth,
+            ),
+        );
     }
 }
 
@@ -33,9 +36,9 @@ function footsFromArgs(
     args: Array<FootArg> | undefined,
     id: string,
     colLeafs: Array<ColLeaf>,
+    depth: number,
 ): Array<Foot> | undefined {
     if (!args) return undefined;
-    const depth = highestFootsDepth(args);
     return footsFromArgsRecursively(args, id, colLeafs, depth);
 }
 
@@ -138,9 +141,14 @@ function highestFootsDepth(foots: Array<FootArg>, depth = 1) {
     return depth;
 }
 
-function orderFootsIntoRows(foots: Array<Foot>, colLeafsOrder: Array<number>): Array<Array<Foot>> {
-    const rows: Array<Array<Foot>> = [];
-    orderFootsIntoRowsRecursively(foots, colLeafsOrder, new Uint32Array([0]), rows, 0);
+function orderFootsIntoRows(
+    foots: Array<Foot> | undefined,
+    colLeafsOrder: Array<number>,
+    depth: number,
+): Array<Array<Foot>> | undefined {
+    if (!foots) return undefined;
+    const rows: Array<Array<Foot>> = Array.from({ length: depth }).map(() => []);
+    orderFootsIntoRowsRecursively(foots, colLeafsOrder, new Uint32Array([0]), rows, depth);
     // remove empty `empty` (`[1, empty, 3]`) from array
     const filtered = [];
     for (const row of rows) {
@@ -154,10 +162,12 @@ function orderFootsIntoRowsRecursively(
     colLeafsOrder: Array<number>,
     orderedIdx: Uint32Array,
     rows: Array<Array<Foot>>,
-    rowIdx: number,
+    depth: number,
+    lvl: number = 0,
 ) {
-    let row = rows[rowIdx];
-    if (!row) row = rows[rowIdx] = [];
+    // it is impossible for `row` to be `undefined` here, as `rows` is initialized with `depth` empty arrays
+    // if (!row) row = rows[rowIdx] = [];
+    //
     let foot;
     let position;
 
@@ -167,16 +177,16 @@ function orderFootsIntoRowsRecursively(
          * this will get the place in which the foot should be placed BUT!!! regardless of colspan
          * which might create gaps in the row array which will be solved by the `filter` call above at {@link orderFootsIntoRows}.
          */
-
         position = colLeafsOrder[orderedIdx[0]];
-        row[position] = foot;
+        rows[depth - (foot.rowSpan || 1) - lvl][position] = foot;
         if (foot instanceof FootGroup) {
             orderFootsIntoRowsRecursively(
                 foot.children,
                 colLeafsOrder,
                 orderedIdx,
                 rows,
-                rowIdx + 1,
+                depth,
+                lvl + 1,
             );
         } else {
             orderedIdx[0] += foot.cols.length;
