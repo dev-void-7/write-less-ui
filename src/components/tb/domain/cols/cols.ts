@@ -9,6 +9,7 @@ export class Cols {
     colsOrder: Accessor<Array<number>>;
     setColsOrder: Setter<Array<number>>;
     orderedCols: Accessor<Array<Col>>;
+    firstVisibleCols: Accessor<Array<Col>>;
     orderedColsAsRows: Accessor<Array<Array<Col>>>;
     orderedLeafs: Accessor<Array<ColLeaf>>;
     leafs: Accessor<Array<ColLeaf>>;
@@ -20,6 +21,7 @@ export class Cols {
 
         this.cols = createMemo(() => colsFromArgs(new Uint32Array([0]), props.cols, props.id));
         this.orderedCols = createMemo(() => getOrderedCols(this.cols(), this.colsOrder()));
+        this.firstVisibleCols = createMemo(() => detFirstVisibleCols(this.orderedCols()));
         this.orderedColsAsRows = createMemo(() => orderedColsIntoRows(this.orderedCols()));
         this.orderedLeafs = createMemo(() => getLeafs(this.orderedCols()));
         this.leafs = createMemo(() => getLeafs(this.cols()));
@@ -97,4 +99,18 @@ function getLeafs(cols: Array<Col>): Array<ColLeaf> {
         else if (col instanceof ColGroup) leafs.push(...getLeafs(col.children));
     }
     return leafs;
+}
+
+function detFirstVisibleCols(orderedCols: Array<Col>): Array<Col> {
+    const firstVisible: Array<Col> = [];
+    for (const col of orderedCols) {
+        if (col.hidden()) continue;
+        firstVisible.push(col);
+        if (col instanceof ColGroup)
+            firstVisible.push(...detFirstVisibleCols(col.orderedChildren()));
+        return firstVisible;
+    }
+
+    // it is possible that no visible col was found (e.g. all cols are hidden), return an empty array in that case
+    return firstVisible;
 }

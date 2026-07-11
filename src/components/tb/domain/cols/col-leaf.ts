@@ -28,6 +28,18 @@ export class ColLeaf {
         this.type = arg.type || Type.Text;
         [this.hidden, this.#setHidden] = createSignal(false);
         this.visuallyFirstInRow = visuallyFirstInRow;
+
+        if (this.label() == "first name") {
+            setTimeout(() => {
+                this.hide();
+            }, 5000);
+        }
+
+        if (this.label() == "last name") {
+            setTimeout(() => {
+                this.hide();
+            }, 8000);
+        }
     }
 
     hide() {

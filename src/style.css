@@ -673,7 +673,7 @@
                     border-inline-end: 1px solid black;
                     border-block-end: 1px solid black;
 
-                    &.wl--visually-first-child {
+                    &.wl--visually-first-col {
                         border-inline-start: 1px solid black;
                     }
 
@@ -685,10 +685,6 @@
                 > td {
                     border-inline-end: 1px solid black;
                     border-block-end: 1px solid black;
-
-                    &:first-child {
-                        border-inline-start: 1px solid black;
-                    }
 
                     &.wl--hidden {
                         display: none;
@@ -711,6 +707,14 @@
 
                 > th:last-child {
                     border-start-end-radius: 4px;
+                }
+            }
+        }
+
+        > tbody {
+            > tr {
+                > td:nth-child(1 of :not(.wl--hidden)) {
+                    border-inline-start: 1px solid black;
                 }
             }
         }
