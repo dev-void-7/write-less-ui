@@ -107,7 +107,7 @@ function footsFromArgsRecursively(
         const children = footsFromArgsRecursively(
             arg.children,
             `${id}.${i}`,
-            colLeafs.slice(colLeafIdx[0]),
+            colLeafs,
             depth,
             curLvl + 1,
             colLeafIdx,
