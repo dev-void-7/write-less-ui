@@ -737,6 +737,7 @@
                 text-align: start;
                 padding-inline: var(--wl--tb-head-height-1\/4);
                 background-color: var(--wl--tb-head-bg-color);
+                text-transform: capitalize;
             }
 
             > tr:first-child {
@@ -790,6 +791,7 @@
                     height: var(--wl--tb-foot-height);
                     vertical-align: middle;
                     text-align: start;
+                    text-transform: capitalize;
                     padding-inline: var(--wl--tb-foot-height-1\/4);
                     background-color: var(--wl--tb-foot-bg-color);
                 }
