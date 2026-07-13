@@ -43,7 +43,7 @@
     --wl--fs-s: calc(var(--wl--fs-base) * pow(var(--wl--fs-ratio), -1));
     --wl--fs-r: var(--wl--fs-base);
 
-    --wl--h-base: 2.7rem;
+    --wl--h-base: 2.5rem;
     --wl--h-ratio: var(--wl--size-ratio);
     --wl--h-2xs: calc(var(--wl--h-base) * pow(var(--wl--h-ratio), -3));
     --wl--h-xs: calc(var(--wl--h-base) * pow(var(--wl--h-ratio), -2));
