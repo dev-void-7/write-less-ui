@@ -34,12 +34,28 @@
 }
 
 :root {
+    --wl--size-ratio: 1.125;
+
+    --wl--fs-base: 1rem;
+    --wl--fs-ratio: var(--wl--size-ratio);
+    --wl--fs-2xs: calc(var(--wl--fs-base) * pow(var(--wl--fs-ratio), -3));
+    --wl--fs-xs: calc(var(--wl--fs-base) * pow(var(--wl--fs-ratio), -2));
+    --wl--fs-s: calc(var(--wl--fs-base) * pow(var(--wl--fs-ratio), -1));
+    --wl--fs-r: var(--wl--fs-base);
+
+    --wl--h-base: 2.7rem;
+    --wl--h-ratio: var(--wl--size-ratio);
+    --wl--h-2xs: calc(var(--wl--h-base) * pow(var(--wl--h-ratio), -3));
+    --wl--h-xs: calc(var(--wl--h-base) * pow(var(--wl--h-ratio), -2));
+    --wl--h-s: calc(var(--wl--h-base) * pow(var(--wl--h-ratio), -1));
+    --wl--h-r: var(--wl--h-base);
+
     --wl--form-gap: 0.5rem 1rem;
 
     --wl--field-row-gap: 0.25rem;
     --wl--field-label-color: black;
-    --wl--field-label-font: 400 0.875rem/125% IBMPlexSans;
-    --wl--field-control-height: 2rem;
+    --wl--field-label-font: 400 var(--wl--fs-s)/125% IBMPlexSans;
+    --wl--field-control-height: var(--wl--h-xs);
     --wl--field-control-height-1\/4: calc(var(--wl--field-control-height) / 4);
     --wl--field-control-height-9\/8: calc(var(--wl--field-control-height) * 1.125);
     --wl--field-control-border-width: 1px;
@@ -47,7 +63,7 @@
     --wl--field-control-color: black;
     --wl--field-control-focus-border-color: black;
     --wl--field-control-font-family: IBMPlexSans;
-    --wl--field-control-font-size: 0.8125rem;
+    --wl--field-control-font-size: var(--wl--fs-xs);
     --wl--field-control-font-weight: 400;
     --wl--field-control-line-height: 125%;
     --wl--field-control-icon-size: calc(var(--wl--field-control-height) * 0.625);
@@ -83,23 +99,23 @@
 
     --wl--tb-head-color: rgb(45, 45, 45);
     --wl--tb-head-bg-color: rgb(245, 245, 245);
-    --wl--tb-head-font: 500 0.875rem/125% IBMPlexSans;
-    --wl--tb-head-height: 2rem;
-    --wl--tb-head-height-1\/4: calc(var(--wl--field-control-height) / 4);
+    --wl--tb-head-font: 500 var(--wl--fs-s)/125% IBMPlexSans;
+    --wl--tb-head-height: var(--wl--h-s);
+    --wl--tb-head-height-1\/4: calc(var(--wl--tb-head-height) / 4);
     --wl--tb-border-width: 1px;
     --wl--tb-border-color: darkgray;
     --wl--tb-data-color: black;
     --wl--tb-data-font-family: IBMPlexSans;
-    --wl--tb-data-font-size: 0.8125rem;
+    --wl--tb-data-font-size: var(--wl--fs-xs);
     --wl--tb-data-font-weight: 400;
     --wl--tb-data-line-height: 125%;
-    --wl--tb-data-height: 2rem;
-    --wl--tb-data-height-1\/4: calc(var(--wl--field-control-height) / 4);
+    --wl--tb-data-height: var(--wl--h-xs);
+    --wl--tb-data-height-1\/4: calc(var(--wl--tb-data-height) / 4);
     --wl--tb-foot-color: rgb(45, 45, 45);
     --wl--tb-foot-bg-color: rgb(245, 245, 245);
-    --wl--tb-foot-font: 500 0.875rem/125% IBMPlexSans;
-    --wl--tb-foot-height: 2rem;
-    --wl--tb-foot-height-1\/4: calc(var(--wl--field-control-height) / 4);
+    --wl--tb-foot-font: 500 var(--wl--fs-s)/125% IBMPlexSans;
+    --wl--tb-foot-height: var(--wl--h-s);
+    --wl--tb-foot-height-1\/4: calc(var(--wl--tb-foot-height) / 4);
 
     --wl--dropdown-opt-hover-color: lightgray;
 
