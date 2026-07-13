@@ -83,14 +83,14 @@
     --wl--field-msg-warn-color: yellow;
     --wl--combo-box-deselect-icon-color: black;
 
-    --wl--btn-height: 2rem;
+    --wl--btn-height: var(--wl--h-xs);
     --wl--btn-height-1\/4: calc(var(--wl--btn-height) / 4);
     --wl--btn-border-width: 1px;
     --wl--btn-bg-color: lightgray;
     --wl--btn-border-color: lightgray;
     --wl--btn-color: black;
     --wl--btn-font-family: IBMPlexSans;
-    --wl--btn-font-size: 0.8125rem;
+    --wl--btn-font-size: var(--wl--fs-xs);
     --wl--btn-font-weight: 400;
     --wl--btn-line-height: 125%;
     --wl--btn-icon-size: calc(var(--wl--btn-height) * 0.625);
@@ -122,7 +122,7 @@
     --wl--dropdown-border-width: 1px;
     --wl--dropdown-border-color: lightgray;
 
-    --wl--loader-spinner-width: 2rem;
+    --wl--loader-spinner-width: var(--wl--h-xs);
     --wl--loader-spinner-color: black;
 }
 
