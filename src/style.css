@@ -693,6 +693,7 @@
 
 .wl--tb-wrapper {
     width: 100%;
+    overflow-x: auto;
     > table {
         table-layout: fixed;
         border-collapse: separate;
@@ -711,6 +712,7 @@
                 > td {
                     border-inline-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
                     border-block-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
+                    white-space: nowrap;
 
                     &.wl--visually-first-col {
                         border-inline-start: var(--wl--tb-border-width) solid
