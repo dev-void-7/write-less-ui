@@ -44,6 +44,7 @@ function colsFromArgs(
             const fixedLabel = arg;
             cols.push(
                 new ColLeaf(
+                    `${id}.${i}`,
                     idx[0]++,
                     {
                         label: () => fixedLabel,
@@ -54,12 +55,12 @@ function colsFromArgs(
             continue;
         }
         if (typeof arg == "function") {
-            cols.push(new ColLeaf(idx[0]++, { label: arg }, firstInRow && i === 0));
+            cols.push(new ColLeaf(`${id}.${i}`, idx[0]++, { label: arg }, firstInRow && i === 0));
             continue;
         }
 
         if (!arg.children) {
-            cols.push(new ColLeaf(idx[0]++, arg, firstInRow && i === 0));
+            cols.push(new ColLeaf(`${id}.${i}`, idx[0]++, arg, firstInRow && i === 0));
             continue;
         }
 

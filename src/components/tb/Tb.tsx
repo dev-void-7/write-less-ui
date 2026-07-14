@@ -8,6 +8,17 @@ export function Tb(props: Props) {
     return (
         <div class="wl--tb-wrapper">
             <table id={props.id}>
+                <colgroup>
+                    <For each={cols.orderedLeafs().filter((leaf) => !leaf.hidden())}>
+                        {(leaf) => (
+                            <col
+                                style={{
+                                    width: `${leaf.width()}px`,
+                                }}
+                            />
+                        )}
+                    </For>
+                </colgroup>
                 <thead>
                     <For each={cols.orderedColsAsRows()}>
                         {(row) => (
