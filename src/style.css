@@ -712,7 +712,6 @@
                 > td {
                     border-inline-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
                     border-block-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
-                    white-space: nowrap;
 
                     &.wl--visually-first-col {
                         border-inline-start: var(--wl--tb-border-width) solid
@@ -742,6 +741,9 @@
                 padding-inline: var(--wl--tb-head-height-1\/4);
                 background-color: var(--wl--tb-head-bg-color);
                 text-transform: capitalize;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             > tr:first-child {
