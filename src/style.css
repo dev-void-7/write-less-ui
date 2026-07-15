@@ -760,7 +760,7 @@
                     z-index: 999;
                     top: anchor(--th-anchor top);
                     bottom: anchor(--th-anchor bottom);
-                    inset-inline-end: calc(anchor(--th-anchor end) - 5px);
+                    inset-inline-end: calc(anchor(--th-anchor end) - 4px);
                     background-color: transparent;
                     width: 10px;
                     padding: 0;
