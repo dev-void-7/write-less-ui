@@ -75,7 +75,7 @@ export class ColLeaf {
     }
 
     computedWidth(): number {
-        return this.width() ?? parseFloat(getComputedStyle(this.thElem).width);
+        return parseFloat(getComputedStyle(this.thElem).width);
     }
 
     #setWidthAndStore(width: number) {
