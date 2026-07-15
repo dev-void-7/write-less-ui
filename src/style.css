@@ -740,10 +740,18 @@
                 text-align: start;
                 padding-inline: var(--wl--tb-head-height-1\/4);
                 background-color: var(--wl--tb-head-bg-color);
-                text-transform: capitalize;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
+
+                > .wl--th-content {
+                    display: flex;
+                    align-items: center;
+                    > .wl--th-label {
+                        margin-inline-end: auto;
+                        text-transform: capitalize;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
             }
 
             > tr:first-child {

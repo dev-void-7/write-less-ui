@@ -1,6 +1,7 @@
 import { For, Show } from "solid-js";
 import { type Props, Cols } from "./domain/index.js";
 import { Foots } from "./domain/foots/foots.js";
+import { ColLeaf } from "./domain/cols/col-leaf.js";
 
 export function Tb(props: Props) {
     const cols = new Cols(props);
@@ -35,7 +36,12 @@ export function Tb(props: Props) {
                                                     .includes(col),
                                             }}
                                         >
-                                            {col.label()}
+                                            <div class="wl--th-content">
+                                                <div class="wl--th-label">{col.label()}</div>
+                                                <Show when={(col as ColLeaf).sortable}>
+                                                    <div class="wl--th-sort"></div>
+                                                </Show>
+                                            </div>
                                         </th>
                                     )}
                                 </For>
