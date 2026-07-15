@@ -65,6 +65,10 @@ export class ColLeaf {
         return this.computedWidth() + by >= this.minWidth;
     }
 
+    canNotResizeBy(by: number): boolean {
+        return this.computedWidth() + by < this.minWidth;
+    }
+
     resizeBy(by: number) {
         const width = this.computedWidth();
         if (width + by >= this.minWidth) {

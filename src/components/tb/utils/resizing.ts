@@ -6,16 +6,17 @@ export function generateOnResizerPointerDown(col: Col) {
 
         const originX = ptrDownEvent.clientX;
         const resizerHalfWidth = this.offsetWidth / 2;
-        console.log(originX);
+        let resizeBy = 0;
         const onPointerMove = (e: PointerEvent) => {
             e.preventDefault();
+            if (col.canNotResizeBy(e.clientX - resizerHalfWidth - originX)) return;
+            resizeBy = e.clientX - resizerHalfWidth - originX;
             this.style.insetInlineStart = `${e.clientX - resizerHalfWidth}px`;
             this.style.insetInlineEnd = `unset`;
         };
-        const onPointerUp = (e: PointerEvent) => {
+        const onPointerUp = () => {
             this.classList.remove("wl--active");
-            const offset = e.clientX - originX;
-            col.resizeBy(offset);
+            if (resizeBy !== 0) col.resizeBy(resizeBy);
             document.removeEventListener("pointermove", onPointerMove);
             this.style.removeProperty("inset-inline-end");
             this.style.removeProperty("inset-inline-start");

@@ -61,6 +61,10 @@ export class ColGroup {
         return this.getLastOrderedVisibleLeaf().canResizeBy(by);
     }
 
+    canNotResizeBy(by: number): boolean {
+        return this.getLastOrderedVisibleLeaf().canNotResizeBy(by);
+    }
+
     resizeBy(by: number) {
         this.getLastOrderedVisibleLeaf().resizeBy(by);
     }
