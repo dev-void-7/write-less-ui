@@ -1,23 +1,27 @@
 import { Col } from "../domain/cols/col.js";
 
-export function generateOnResizerMouseDown(col: Col) {
-    return function (this: HTMLButtonElement, mouseDownEvent: MouseEvent) {
+export function generateOnResizerPointerDown(col: Col) {
+    return function (this: HTMLButtonElement, ptrDownEvent: PointerEvent) {
         this.classList.add("wl--active");
 
-        const originX = mouseDownEvent.clientX;
-        const onMouseMove = (e: MouseEvent) => {
+        const originX = ptrDownEvent.clientX;
+        const resizerHalfWidth = this.offsetWidth / 2;
+        console.log(originX);
+        const onPointerMove = (e: PointerEvent) => {
             e.preventDefault();
-            this.style.insetInlineEnd = `calc(anchor(--th-anchor end) + ${originX - e.clientX}px)`;
+            this.style.insetInlineStart = `${e.clientX - resizerHalfWidth}px`;
+            this.style.insetInlineEnd = `unset`;
         };
-        const onMouseUp = (e: MouseEvent) => {
+        const onPointerUp = (e: PointerEvent) => {
             this.classList.remove("wl--active");
             const offset = e.clientX - originX;
             col.resizeBy(offset);
-            document.removeEventListener("mousemove", onMouseMove);
+            document.removeEventListener("pointermove", onPointerMove);
             this.style.removeProperty("inset-inline-end");
+            this.style.removeProperty("inset-inline-start");
         };
 
-        document.addEventListener("mouseup", onMouseUp, { once: true });
-        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("pointerup", onPointerUp, { once: true });
+        document.addEventListener("pointermove", onPointerMove);
     };
 }

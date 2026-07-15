@@ -3,7 +3,7 @@ import { Cols } from "../domain/index.js";
 import { Col } from "../domain/cols/col.js";
 import { ColGroup } from "../domain/cols/col-group.js";
 import { ColLeaf } from "../domain/cols/col-leaf.js";
-import { generateOnResizerMouseDown } from "../utils/resizing.js";
+import { generateOnResizerPointerDown } from "../utils/resizing.js";
 
 export function THead(props: { cols: Cols }) {
     const cols = props.cols;
@@ -53,7 +53,7 @@ function THeadTrThGroup(props: { cols: Cols; col: ColGroup }) {
             <button
                 type="button"
                 class="wl--th-resizer"
-                onmousedown={generateOnResizerMouseDown(props.col)}
+                onpointerdown={generateOnResizerPointerDown(props.col)}
             ></button>
         </th>
     );
@@ -80,7 +80,7 @@ function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf }) {
             <button
                 type="button"
                 class="wl--th-resizer"
-                onmousedown={generateOnResizerMouseDown(props.col)}
+                onpointerdown={generateOnResizerPointerDown(props.col)}
             ></button>
         </th>
     );
