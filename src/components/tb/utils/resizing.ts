@@ -14,7 +14,7 @@ export function generateOnResizerMouseDown(col: Col) {
             const offset = e.clientX - originX;
             col.resizeBy(offset);
             document.removeEventListener("mousemove", onMouseMove);
-            this.style.insetInlineEnd = `calc(anchor(--th-anchor end) - 1.5px)`;
+            this.style.removeProperty("inset-inline-end");
         };
 
         document.addEventListener("mouseup", onMouseUp, { once: true });
