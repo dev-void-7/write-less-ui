@@ -70,7 +70,7 @@ export class ColGroup {
     }
 
     getLastOrderedVisibleLeaf(): ColLeaf {
-        for (const child of this.orderedChildren().reverse()) {
+        for (const child of this.orderedChildren().toReversed()) {
             if (child.hidden()) continue;
             if (child instanceof ColLeaf) return child;
             return child.getLastOrderedVisibleLeaf();
