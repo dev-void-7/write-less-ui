@@ -56,6 +56,28 @@ export class ColGroup {
             }
         });
     }
+
+    canResizeBy(by: number): boolean {
+        return this.getLastOrderedVisibleLeaf().canResizeBy(by);
+    }
+
+    resizeBy(by: number) {
+        this.getLastOrderedVisibleLeaf().resizeBy(by);
+    }
+
+    computedWidth(): number {
+        return this.getLastOrderedVisibleLeaf().computedWidth();
+    }
+
+    getLastOrderedVisibleLeaf(): ColLeaf {
+        for (const child of this.orderedChildren().reverse()) {
+            if (child.hidden()) continue;
+            if (child instanceof ColLeaf) return child;
+            return child.getLastOrderedVisibleLeaf();
+        }
+        // this must not happen
+        throw new Error("No visible leaf found");
+    }
 }
 
 export type ColGroupArg = {

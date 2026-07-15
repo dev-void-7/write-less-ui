@@ -699,6 +699,7 @@
         border-collapse: separate;
         border-spacing: 0;
         width: 100%;
+        anchor-name: --tb-anchor;
 
         > thead,
         > tbody,
@@ -733,23 +734,49 @@
 
         > thead {
             > tr > th {
+                anchor-scope: --th-anchor;
+                anchor-name: --th-anchor;
                 color: var(--wl--tb-head-color);
                 font: var(--wl--tb-head-font);
                 height: var(--wl--tb-head-height);
-                vertical-align: middle;
-                text-align: start;
-                padding-inline: var(--wl--tb-head-height-1\/4);
                 background-color: var(--wl--tb-head-bg-color);
 
                 > .wl--th-content {
                     display: flex;
                     align-items: center;
+                    padding-inline: var(--wl--tb-head-height-1\/4);
+
                     > .wl--th-label {
                         margin-inline-end: auto;
                         text-transform: capitalize;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
+                    }
+                }
+
+                > .wl--th-resizer {
+                    position: absolute;
+                    z-index: 999;
+                    top: anchor(--th-anchor top);
+                    bottom: anchor(--th-anchor bottom);
+                    inset-inline-end: calc(anchor(--th-anchor end) - 1.5px);
+                    background-color: transparent;
+                    width: 3px;
+                    padding: 0;
+                    border: none;
+                    outline: 0;
+                    cursor: col-resize;
+                    transition:
+                        top 0.1s ease-out,
+                        bottom 0.1s ease-out,
+                        background-color 0.1s ease-out;
+
+                    &.wl--active {
+                        background-color: color-mix(in srgb, var(--wl--tb-border-color), black 20%);
+                        top: anchor(--tb-anchor top);
+                        bottom: anchor(--tb-anchor bottom);
+                        width: 2px;
                     }
                 }
             }

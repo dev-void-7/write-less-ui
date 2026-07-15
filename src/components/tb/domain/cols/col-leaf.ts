@@ -12,12 +12,14 @@ export class ColLeaf {
     type: Type;
     hidden: Accessor<boolean>;
     #setHidden: Setter<boolean>;
+    minWidth: number;
     baseWidth?: number;
     colSpan: Accessor<undefined> = () => undefined;
     visuallyFirstInRow: boolean;
     width: Accessor<number | undefined>;
     #setWidth: Setter<number | undefined>;
     widthAsLastCol: (remainingWidth: number) => number | undefined;
+    thElem!: HTMLTableCellElement;
 
     constructor(id: string, idx: number, arg: ColLeafArg, visuallyFirstInRow: boolean) {
         this.id = id;
@@ -30,6 +32,7 @@ export class ColLeaf {
         this.unhideable = arg.unhideable || false;
         this.type = arg.type || Type.Text;
         [this.hidden, this.#setHidden] = createSignal(false);
+        this.minWidth = arg.minWidth || (arg.sortable ? 80 : 50);
         this.baseWidth = arg.baseWidth;
         this.visuallyFirstInRow = visuallyFirstInRow;
         const storedWidth = localStorage.getItem(`col-${this.id}-width`);
@@ -58,7 +61,24 @@ export class ColLeaf {
         this.#setHidden(false);
     }
 
-    setWidth(width: number) {
+    canResizeBy(by: number): boolean {
+        return this.computedWidth() + by >= this.minWidth;
+    }
+
+    resizeBy(by: number) {
+        const width = this.computedWidth();
+        if (width + by >= this.minWidth) {
+            this.#setWidthAndStore(width + by);
+        } else {
+            this.#setWidthAndStore(this.minWidth);
+        }
+    }
+
+    computedWidth(): number {
+        return this.width() ?? parseFloat(getComputedStyle(this.thElem).width);
+    }
+
+    #setWidthAndStore(width: number) {
         localStorage.setItem(`col-${this.id}-width`, width.toString());
         this.#setWidth(width);
     }
@@ -67,6 +87,7 @@ export class ColLeaf {
 export type ColLeafArg = {
     label: () => string;
     rowSpan?: number;
+    minWidth?: number;
     baseWidth?: number;
     sortable?: boolean;
     hideOnExport?: boolean;
