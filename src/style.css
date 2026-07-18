@@ -695,6 +695,8 @@
     width: 100%;
     overflow-x: auto;
     position: relative;
+    border: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
+    border-radius: 4px;
 
     > table {
         table-layout: fixed;
@@ -707,19 +709,10 @@
         > tbody,
         > tfoot {
             > tr {
-                &:first-child > th {
-                    border-block-start: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
-                }
-
                 > th,
                 > td {
                     border-inline-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
-                    border-block-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
-
-                    &.wl--visually-first-col {
-                        border-inline-start: var(--wl--tb-border-width) solid
-                            var(--wl--tb-border-color);
-                    }
+                    border-block-start: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
 
                     &.wl--hidden {
                         display: none;
@@ -785,26 +778,8 @@
                 }
             }
 
-            > tr:first-child {
-                > th:nth-child(1 of :not(.wl--hidden)) {
-                    border-start-start-radius: 4px;
-                }
-
-                > th:nth-last-child(1 of :not(.wl--hidden)) {
-                    border-start-end-radius: 4px;
-                }
-            }
-        }
-
-        &:not(:has(tfoot)) > tbody {
-            > tr:last-child {
-                > td:nth-child(1 of :not(.wl--hidden)) {
-                    border-end-start-radius: 4px;
-                }
-
-                > td:nth-last-child(1 of :not(.wl--hidden)) {
-                    border-end-end-radius: 4px;
-                }
+            > tr:first-child > th {
+                border-block-start: none;
             }
         }
 
@@ -820,10 +795,6 @@
                     vertical-align: middle;
                     text-align: start;
                     padding-inline: var(--wl--tb-data-height-1\/4);
-                }
-
-                > td:nth-child(1 of :not(.wl--hidden)) {
-                    border-inline-start: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
                 }
             }
         }
@@ -842,18 +813,6 @@
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
-                }
-            }
-
-            > tr:nth-last-child(1 of :has(> .wl--visually-first-col)) {
-                > .wl--visually-first-col {
-                    border-end-start-radius: 4px;
-                }
-            }
-
-            > tr:nth-last-child(1 of :has(> .wl--visually-last-col)) {
-                > .wl--visually-last-col {
-                    border-end-end-radius: 4px;
                 }
             }
         }
