@@ -9,7 +9,7 @@ export class Cols {
     colsOrder: Accessor<Array<number>>;
     setColsOrder: Setter<Array<number>>;
     orderedCols: Accessor<Array<Col>>;
-    firstVisibleCols: Accessor<Array<Col>>;
+    lastVisibleCols: Accessor<Array<Col>>;
     orderedColsAsRows: Accessor<Array<Array<Col>>>;
     orderedLeafs: Accessor<Array<ColLeaf>>;
     leafs: Accessor<Array<ColLeaf>>;
@@ -21,7 +21,7 @@ export class Cols {
 
         this.cols = createMemo(() => colsFromArgs(new Uint32Array([0]), props.cols, props.id));
         this.orderedCols = createMemo(() => getOrderedCols(this.cols(), this.colsOrder()));
-        this.firstVisibleCols = createMemo(() => detFirstVisibleCols(this.orderedCols()));
+        this.lastVisibleCols = createMemo(() => detLastVisibleCols(this.orderedCols()));
         this.orderedColsAsRows = createMemo(() => orderedColsIntoRows(this.orderedCols()));
         this.orderedLeafs = createMemo(() => getLeafs(this.orderedCols()));
         this.leafs = createMemo(() => getLeafs(this.cols()));
@@ -102,16 +102,17 @@ function getLeafs(cols: Array<Col>): Array<ColLeaf> {
     return leafs;
 }
 
-function detFirstVisibleCols(orderedCols: Array<Col>): Array<Col> {
-    const firstVisible: Array<Col> = [];
-    for (const col of orderedCols) {
+function detLastVisibleCols(orderedCols: Array<Col>): Array<Col> {
+    const lastVisible: Array<Col> = [];
+    let col;
+    for (let i = orderedCols.length - 1; i > -1; i--) {
+        col = orderedCols[i];
         if (col.hidden()) continue;
-        firstVisible.push(col);
-        if (col instanceof ColGroup)
-            firstVisible.push(...detFirstVisibleCols(col.orderedChildren()));
-        return firstVisible;
+        lastVisible.push(col);
+        if (col instanceof ColGroup) {
+            lastVisible.push(...detLastVisibleCols(col.orderedChildren()));
+        }
+        break;
     }
-
-    // it is possible that no visible col was found (e.g. all cols are hidden), return an empty array in that case
-    return firstVisible;
+    return lastVisible;
 }
