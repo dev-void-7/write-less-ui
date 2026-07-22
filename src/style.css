@@ -730,7 +730,7 @@
         table-layout: fixed;
         border-collapse: separate;
         border-spacing: 0;
-        width: fit-content;
+        width: max-content;
         overflow: hidden;
 
         > thead,
