@@ -9,7 +9,7 @@ export function ColGroup(props: { cols: Cols }) {
                 {(leaf) => (
                     <col
                         style={{
-                            width: `${leaf.width()}px`,
+                            "--col-width": `${leaf.width()}px`,
                         }}
                     />
                 )}

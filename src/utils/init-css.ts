@@ -9,7 +9,11 @@ outer.appendChild(inner);
 
 // 3. Measure the difference using getBoundingClientRect (returns floats)
 // The inner div will be forced smaller by the scrollbar
-const scrollbarWidth = outer.getBoundingClientRect().width - inner.getBoundingClientRect().width;
+let scrollbarWidth = outer.getBoundingClientRect().width - inner.getBoundingClientRect().width;
+if (scrollbarWidth > 0) scrollbarWidth++;
 // 4. Clean up
 outer.remove();
-document.documentElement.style.setProperty("--scrollbar-width", `${scrollbarWidth.toFixed(3)}px`);
+document.documentElement.style.setProperty(
+    "--wl--scrollbar-width",
+    `${scrollbarWidth.toFixed(3)}px`,
+);
