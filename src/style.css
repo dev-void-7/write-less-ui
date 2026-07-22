@@ -707,10 +707,22 @@
     }
 
     > .wl--tbody-only-tb-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        position: relative;
         overflow-y: auto;
         width: max-content;
         /* since `overflow-x: visible` does not work with `overflow-y: auto` and `overflow-y` causes horizontal scrolling `width: max-content` is used to extend the container causing the horizontal scrollbar to disappear */
         /*overflow-x: visible;*/
+
+        > table {
+            grid-area: 1/1;
+        }
+
+        > .wl--semi-border-end {
+            grid-area: 1/1;
+            width: 1px;
+        }
     }
 
     > table,
@@ -731,7 +743,8 @@
                     border-block-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
 
                     &.wl--visually-first-col {
-                        border-inline-start: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
+                        border-inline-start: var(--wl--tb-border-width) solid
+                            var(--wl--tb-border-color);
                     }
 
                     &.wl--hidden {
@@ -849,8 +862,19 @@
     }
 
     > .wl--tfoot-only-tb {
-        outline: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
-        outline-offset: 0;
+        position: relative;
+        overflow: visible;
+
+        &::before {
+            z-index: 100;
+            content: "";
+            position: absolute;
+            top: calc(var(--wl--tb-border-width) * -1);
+            left: 0;
+            right: 0;
+            height: var(--wl--tb-border-width);
+            background-color: var(--wl--tb-border-color);
+        }
     }
 }
 
