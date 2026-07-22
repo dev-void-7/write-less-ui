@@ -10,14 +10,33 @@ export function Tb(props: Props) {
     const foots = new Foots(props, cols.leafs, cols.orderedLeafs);
 
     return (
-        <div class="wl--tb-wrapper">
-            <table id={props.id}>
-                <ColGroup cols={cols} />
-                <THead cols={cols} />
-                <TBody cols={cols} rows={props.rows} />
-                <TFoot foots={foots} />
-            </table>
-        </div>
+        <>
+            <div class="wl--tb-wrapper wl--print">
+                <table id={props.id}>
+                    <ColGroup cols={cols} />
+                    <THead cols={cols} />
+                    <TBody cols={cols} rows={props.rows} />
+                    <TFoot foots={foots} />
+                </table>
+            </div>
+
+            <div class="wl--tb-wrapper wl--no-print">
+                <table id={props.id}>
+                    <ColGroup cols={cols} />
+                    <THead cols={cols} />
+                </table>
+                <div class="wl--tbody-only-tb-wrapper">
+                    <table id={props.id}>
+                        <ColGroup cols={cols} />
+                        <TBody cols={cols} rows={props.rows} />
+                    </table>
+                </div>
+                <table id={props.id}>
+                    <ColGroup cols={cols} />
+                    <TFoot foots={foots} />
+                </table>
+            </div>
+        </>
     );
 }
 

@@ -700,7 +700,21 @@
     outline-offset: -1px;
     border-radius: 4px;
 
-    > table {
+    &.wl--no-print {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+
+    > .wl--tbody-only-tb-wrapper {
+        overflow-y: auto;
+        width: max-content;
+        /* since `overflow-x: visible` does not work with `overflow-y: auto` and `overflow-y` causes horizontal scrolling `width: max-content` is used to extend the container causing the horizontal scrollbar to disappear */
+        /*overflow-x: visible;*/
+    }
+
+    > table,
+    > .wl--tbody-only-tb-wrapper > table {
         table-layout: fixed;
         border-collapse: separate;
         border-spacing: 0;
@@ -871,6 +885,18 @@
 @keyframes l13 {
     100% {
         transform: rotate(1turn);
+    }
+}
+
+@media print {
+    .wl--no-print {
+        display: none !important;
+    }
+}
+
+@media not print {
+    .wl--print {
+        display: none !important;
     }
 }
 
