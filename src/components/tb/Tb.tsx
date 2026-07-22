@@ -4,10 +4,15 @@ import { THead } from "./parts/THead.jsx";
 import { ColGroup } from "./parts/ColGroup.jsx";
 import { TBody } from "./parts/TBody.jsx";
 import { TFoot } from "./parts/TFoot.jsx";
+import { onMount } from "solid-js";
 
 export function Tb(props: Props) {
     const cols = new Cols(props);
     const foots = new Foots(props, cols.leafs, cols.orderedLeafs);
+
+    onMount(() => {
+        cols.distributeFreeSpaceToLeafsWithNoWidth();
+    });
 
     return (
         <>
@@ -20,8 +25,8 @@ export function Tb(props: Props) {
                 </table>
             </div>
 
-            <div class="wl--tb-wrapper wl--no-print">
-                <table id={props.id}>
+            <div class="wl--tb-wrapper wl--no-print" ref={cols.wrapper}>
+                <table id={props.id} ref={cols.tb}>
                     <ColGroup cols={cols} />
                     <THead cols={cols} />
                 </table>
@@ -31,7 +36,7 @@ export function Tb(props: Props) {
                         <TBody cols={cols} rows={props.rows} />
                     </table>
                 </div>
-                <table id={props.id}>
+                <table id={props.id} class="wl--tfoot-only-tb">
                     <ColGroup cols={cols} />
                     <TFoot foots={foots} />
                 </table>

@@ -45,6 +45,7 @@ function THeadTrThGroup(props: { cols: Cols; col: ColGroup }) {
             classList={{
                 "wl--hidden": props.col.hidden(),
                 "wl--visually-last-col": cols.lastVisibleCols().includes(props.col),
+                "wl--visually-first-col": cols.firstVisibleCols().includes(props.col),
             }}
         >
             <div class="wl--th-content">
@@ -68,6 +69,7 @@ function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf }) {
             classList={{
                 "wl--hidden": props.col.hidden(),
                 "wl--visually-last-col": cols.lastVisibleCols().includes(props.col),
+                "wl--visually-first-col": cols.firstVisibleCols().includes(props.col),
             }}
             ref={props.col.thElem}
         >

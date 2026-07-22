@@ -72,9 +72,9 @@ export class ColLeaf {
     resizeBy(by: number) {
         const width = this.computedWidth();
         if (width + by >= this.minWidth) {
-            this.#setWidthAndStore(width + by);
+            this.setWidthAndStore(width + by);
         } else {
-            this.#setWidthAndStore(this.minWidth);
+            this.setWidthAndStore(this.minWidth);
         }
     }
 
@@ -82,7 +82,7 @@ export class ColLeaf {
         return parseFloat(getComputedStyle(this.thElem).width);
     }
 
-    #setWidthAndStore(width: number) {
+    setWidthAndStore(width: number) {
         localStorage.setItem(`col-${this.id}-width`, width.toString());
         this.#setWidth(width);
     }

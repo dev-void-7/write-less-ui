@@ -9,10 +9,13 @@ export class Cols {
     colsOrder: Accessor<Array<number>>;
     setColsOrder: Setter<Array<number>>;
     orderedCols: Accessor<Array<Col>>;
+    firstVisibleCols: Accessor<Array<Col>>;
     lastVisibleCols: Accessor<Array<Col>>;
     orderedColsAsRows: Accessor<Array<Array<Col>>>;
     orderedLeafs: Accessor<Array<ColLeaf>>;
     leafs: Accessor<Array<ColLeaf>>;
+    wrapper!: HTMLDivElement;
+    tb!: HTMLTableElement;
 
     constructor(props: { id: string; cols: Array<ColArg> }) {
         [this.colsOrder, this.setColsOrder] = createSignal(
@@ -21,12 +24,24 @@ export class Cols {
 
         this.cols = createMemo(() => colsFromArgs(new Uint32Array([0]), props.cols, props.id));
         this.orderedCols = createMemo(() => getOrderedCols(this.cols(), this.colsOrder()));
+        this.firstVisibleCols = createMemo(() => detFirstVisibleCols(this.orderedCols()));
         this.lastVisibleCols = createMemo(() => detLastVisibleCols(this.orderedCols()));
         this.orderedColsAsRows = createMemo(() => orderedColsIntoRows(this.orderedCols()));
         this.orderedLeafs = createMemo(() => getLeafs(this.orderedCols()));
         this.leafs = createMemo(() => getLeafs(this.cols()));
 
         createEffect(() => this.setColsOrder(getColOrder(props.id, this.cols().length)));
+    }
+
+    distributeFreeSpaceToLeafsWithNoWidth() {
+        const leafs = this.leafs().filter((leaf) => !leaf.width());
+        if (leafs.length === 0) return;
+        const freeSpace =
+            parseFloat(getComputedStyle(this.wrapper).width) -
+            parseFloat(getComputedStyle(this.tb).width);
+        if (isNaN(freeSpace) || freeSpace <= 0) return;
+        const width = freeSpace / leafs.length;
+        leafs.forEach((leaf) => leaf.resizeBy(width));
     }
 }
 
@@ -100,6 +115,21 @@ function getLeafs(cols: Array<Col>): Array<ColLeaf> {
         else if (col instanceof ColGroup) leafs.push(...getLeafs(col.children));
     }
     return leafs;
+}
+
+function detFirstVisibleCols(orderedCols: Array<Col>): Array<Col> {
+    const lastVisible: Array<Col> = [];
+    let col;
+    for (let i = 0; i < orderedCols.length; i++) {
+        col = orderedCols[i];
+        if (col.hidden()) continue;
+        lastVisible.push(col);
+        if (col instanceof ColGroup) {
+            lastVisible.push(...detFirstVisibleCols(col.orderedChildren()));
+        }
+        break;
+    }
+    return lastVisible;
 }
 
 function detLastVisibleCols(orderedCols: Array<Col>): Array<Col> {
