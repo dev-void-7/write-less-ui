@@ -862,19 +862,17 @@
     }
 
     > .wl--tfoot-only-tb {
-        position: relative;
-        overflow: visible;
+        anchor-name: --tfoot-only-tb-anchor;
+    }
 
-        &::before {
-            z-index: 100;
-            content: "";
-            position: absolute;
-            top: calc(var(--wl--tb-border-width) * -1);
-            left: 0;
-            right: 0;
-            height: var(--wl--tb-border-width);
-            background-color: var(--wl--tb-border-color);
-        }
+    > .wl--tfoot-semi-border-top {
+        position: absolute;
+        position-anchor: --tfoot-only-tb-anchor;
+        top: calc(anchor(top) - var(--wl--tb-border-width));
+        left: anchor(left);
+        right: anchor(right);
+        height: var(--wl--tb-border-width);
+        background-color: var(--wl--tb-border-color);
     }
 }
 

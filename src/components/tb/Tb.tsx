@@ -40,6 +40,7 @@ export function Tb(props: Props) {
                     <ColGroup cols={cols} />
                     <TFoot foots={foots} />
                 </table>
+                <div class="wl--tfoot-semi-border-top"></div>
             </div>
         </>
     );
