@@ -61,14 +61,6 @@ function footsFromArgsRecursively(
     let arg: FootArg;
     for (let i = 0; i < args.length; i++) {
         arg = args[i];
-        console.log(
-            "arg",
-            arg,
-            ", colLeafIdx:",
-            colLeafIdx[0],
-            "target col",
-            colLeafs[colLeafIdx[0]],
-        );
         if (typeof arg == "string") {
             const fixedLabel = arg;
             foots.push(
@@ -211,8 +203,6 @@ function detFirstVisibleFoots(
     while (colLeafIdx < colLeafsOrder.length) {
         foot = getFootThatCoverts(foots, colLeafsOrder[colLeafIdx] - start);
         if (!foot) {
-            console.log(foots.length);
-            console.log(colLeafsOrder, colLeafsOrder[colLeafIdx], start, colLeafIdx);
             return firstVisible;
         }
         if (foot.hidden()) {
@@ -248,8 +238,6 @@ function detLastVisibleFoots(
     while (colLeafIdx > -1) {
         foot = getFootThatCoverts(foots, colLeafsOrder[colLeafIdx] - start);
         if (!foot) {
-            console.log(foots.length);
-            console.log(colLeafsOrder, colLeafsOrder[colLeafIdx], start, colLeafIdx);
             return firstVisible;
         }
         if (foot.hidden()) {

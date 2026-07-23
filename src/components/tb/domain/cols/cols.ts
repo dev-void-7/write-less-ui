@@ -23,7 +23,6 @@ export class Cols {
             getColOrder(props.id, props.cols.length),
         );
         this.depth = () => highestColsDepth(props.cols);
-        console.log("depth", this.depth());
         this.cols = createMemo(() =>
             colsFromArgs(new Uint32Array([0]), props.cols, props.id, this.depth()),
         );
