@@ -6,13 +6,19 @@ import { TBody } from "./parts/TBody.jsx";
 import { TFoot } from "./parts/TFoot.jsx";
 import { onMount } from "solid-js";
 import { scrollbarThickness } from "../../state.js";
+import { watchScrollbarVisibility } from "./utils/watch-scrollbar-visibility.js";
 
 export function Tb(props: Props) {
     const cols = new Cols(props);
     const foots = new Foots(props, cols.leafs, cols.orderedLeafs);
+    let tBodyOnlyTbWrapper!: HTMLDivElement;
+    let tBodyOnlyTb!: HTMLTableElement;
 
     onMount(() => {
         cols.distributeFreeSpaceToLeafsWithNoWidth();
+        if (scrollbarThickness > 0) {
+            watchScrollbarVisibility(tBodyOnlyTbWrapper, tBodyOnlyTb);
+        }
     });
 
     return (
@@ -36,8 +42,9 @@ export function Tb(props: Props) {
                     classList={{
                         "wl--scrollbar-is-block": scrollbarThickness > 0,
                     }}
+                    ref={tBodyOnlyTbWrapper}
                 >
-                    <table id={props.id}>
+                    <table id={props.id} ref={tBodyOnlyTb}>
                         <ColGroup cols={cols} />
                         <TBody cols={cols} rows={props.rows} />
                     </table>
