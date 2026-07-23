@@ -872,6 +872,7 @@
 
     > .wl--tfoot-semi-border-top {
         position: absolute;
+        z-index: 1000;
         position-anchor: --tfoot-only-tb-anchor;
         top: calc(anchor(top) - var(--wl--tb-border-width));
         left: anchor(left);
