@@ -707,15 +707,20 @@
     }
 
     > .wl--tbody-only-tb-wrapper {
-        border-inline-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
         overflow-y: auto;
         width: max-content;
         /* since `overflow-x: visible` does not work with `overflow-y: auto` and `overflow-y` causes horizontal scrolling `width: max-content` is used to extend the container causing the horizontal scrollbar to disappear */
         /*overflow-x: visible;*/
 
-        > table > colgroup > col:last-child {
-            /* the `-1px` at the end is to fix the layout! */
-            width: calc(var(--col-width) - var(--wl--scrollbar-width));
+        &.wl--scrollbar-is-block {
+            border-inline-end: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
+            scrollbar-gutter: stable;
+
+            > table > colgroup > col:last-child {
+                width: calc(
+                    var(--col-width) - var(--wl--scrollbar-thickness) - var(--wl--tb-border-width)
+                );
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import { ColGroup } from "./parts/ColGroup.jsx";
 import { TBody } from "./parts/TBody.jsx";
 import { TFoot } from "./parts/TFoot.jsx";
 import { onMount } from "solid-js";
+import { scrollbarThickness } from "../../state.js";
 
 export function Tb(props: Props) {
     const cols = new Cols(props);
@@ -30,7 +31,12 @@ export function Tb(props: Props) {
                     <ColGroup cols={cols} />
                     <THead cols={cols} />
                 </table>
-                <div class="wl--tbody-only-tb-wrapper">
+                <div
+                    class="wl--tbody-only-tb-wrapper"
+                    classList={{
+                        "wl--scrollbar-is-block": scrollbarThickness > 0,
+                    }}
+                >
                     <table id={props.id}>
                         <ColGroup cols={cols} />
                         <TBody cols={cols} rows={props.rows} />
