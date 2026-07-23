@@ -11,7 +11,9 @@ import { watchScrollbarVisibility } from "./utils/watch-scrollbar-visibility.js"
 export function Tb(props: Props) {
     const cols = new Cols(props);
     const foots = new Foots(props, cols.leafs, cols.orderedLeafs);
+    // eslint-disable-next-line no-unassigned-vars
     let tBodyOnlyTbWrapper!: HTMLDivElement;
+    // eslint-disable-next-line no-unassigned-vars
     let tBodyOnlyTb!: HTMLTableElement;
 
     onMount(() => {
