@@ -25,7 +25,7 @@ export function Tb(props: Props) {
 
     return (
         <>
-            <div class="wl--tb-wrapper wl--print">
+            <div class="wl--tb-wrapper">
                 <table id={props.id}>
                     <ColGroup cols={cols} />
                     <THead cols={cols} />
@@ -34,7 +34,7 @@ export function Tb(props: Props) {
                 </table>
             </div>
 
-            <div class="wl--tb-wrapper wl--no-print" ref={cols.wrapper}>
+            {/*<div class="wl--tb-wrapper wl--no-print" ref={cols.wrapper}>
                 <table id={props.id} ref={cols.tb}>
                     <ColGroup cols={cols} />
                     <THead cols={cols} />
@@ -56,7 +56,7 @@ export function Tb(props: Props) {
                     <TFoot foots={foots} />
                 </table>
                 <div class="wl--tfoot-semi-border-top"></div>
-            </div>
+            </div>*/}
         </>
     );
 }
