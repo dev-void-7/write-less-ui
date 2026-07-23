@@ -14,6 +14,7 @@ export class Cols {
     orderedColsAsRows: Accessor<Array<Array<Col>>>;
     orderedLeafs: Accessor<Array<ColLeaf>>;
     leafs: Accessor<Array<ColLeaf>>;
+    depth: Accessor<number>;
     wrapper!: HTMLDivElement;
     tb!: HTMLTableElement;
 
@@ -21,8 +22,11 @@ export class Cols {
         [this.colsOrder, this.setColsOrder] = createSignal(
             getColOrder(props.id, props.cols.length),
         );
-
-        this.cols = createMemo(() => colsFromArgs(new Uint32Array([0]), props.cols, props.id));
+        this.depth = () => highestColsDepth(props.cols);
+        console.log("depth", this.depth());
+        this.cols = createMemo(() =>
+            colsFromArgs(new Uint32Array([0]), props.cols, props.id, this.depth()),
+        );
         this.orderedCols = createMemo(() => getOrderedCols(this.cols(), this.colsOrder()));
         this.firstVisibleCols = createMemo(() => detFirstVisibleCols(this.orderedCols()));
         this.lastVisibleCols = createMemo(() => detLastVisibleCols(this.orderedCols()));
@@ -49,6 +53,8 @@ function colsFromArgs(
     idx: Uint32Array,
     args: Array<ColArg>,
     id: string,
+    depth: number,
+    curLvl: number = 0,
     firstInRow: boolean = true,
 ): Array<Col> {
     const cols = [];
@@ -61,6 +67,7 @@ function colsFromArgs(
                 new ColLeaf(
                     `${id}.${i}`,
                     idx[0]++,
+                    depth - curLvl,
                     {
                         label: () => fixedLabel,
                     },
@@ -70,19 +77,35 @@ function colsFromArgs(
             continue;
         }
         if (typeof arg == "function") {
-            cols.push(new ColLeaf(`${id}.${i}`, idx[0]++, { label: arg }, firstInRow && i === 0));
+            cols.push(
+                new ColLeaf(
+                    `${id}.${i}`,
+                    idx[0]++,
+                    depth - curLvl,
+                    { label: arg },
+                    firstInRow && i === 0,
+                ),
+            );
             continue;
         }
 
         if (!arg.children) {
-            cols.push(new ColLeaf(`${id}.${i}`, idx[0]++, arg, firstInRow && i === 0));
+            cols.push(
+                new ColLeaf(`${id}.${i}`, idx[0]++, depth - curLvl, arg, firstInRow && i === 0),
+            );
             continue;
         }
 
-        const children = colsFromArgs(idx, arg.children, `${id}.${i}`, firstInRow && i === 0);
-        cols.push(
-            new ColGroup(`${id}.${i}`, arg.label, arg.rowSpan, children, firstInRow && i === 0),
+        const children = colsFromArgs(
+            idx,
+            arg.children,
+            `${id}.${i}`,
+            depth,
+            curLvl + 1,
+            firstInRow && i === 0,
         );
+
+        cols.push(new ColGroup(`${id}.${i}`, arg.label, 1, children, firstInRow && i === 0));
     }
 
     return cols;
@@ -145,4 +168,18 @@ function detLastVisibleCols(orderedCols: Array<Col>): Array<Col> {
         break;
     }
     return lastVisible;
+}
+
+function highestColsDepth(cols: Array<ColArg>, depth = 1) {
+    let col,
+        i,
+        newDepth,
+        highestDepth = depth;
+    for (i = 0; i < cols.length; i++) {
+        col = cols[i];
+        if (typeof col == "string" || typeof col == "function" || !col.children) continue;
+        newDepth = highestColsDepth(col.children, depth + 1);
+        if (newDepth > highestDepth) highestDepth = newDepth;
+    }
+    return highestDepth;
 }

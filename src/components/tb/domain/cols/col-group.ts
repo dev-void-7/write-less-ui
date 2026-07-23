@@ -87,7 +87,6 @@ export class ColGroup {
 export type ColGroupArg = {
     label: () => string;
     children: Array<ColArg>;
-    rowSpan?: number;
     width?: never;
     sortable?: never;
     hideOnExport?: never;

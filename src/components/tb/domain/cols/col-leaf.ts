@@ -21,11 +21,17 @@ export class ColLeaf {
     widthAsLastCol: (remainingWidth: number) => number | undefined;
     thElem!: HTMLTableCellElement;
 
-    constructor(id: string, idx: number, arg: ColLeafArg, visuallyFirstInRow: boolean) {
+    constructor(
+        id: string,
+        idx: number,
+        rowSpan: number | undefined,
+        arg: ColLeafArg,
+        visuallyFirstInRow: boolean,
+    ) {
         this.id = id;
         this.idx = idx;
         this.label = arg.label;
-        this.rowSpan = arg.rowSpan;
+        this.rowSpan = rowSpan;
         this.sortable = arg.sortable || false;
         this.hideOnExport = arg.hideOnExport || false;
         this.hideOnPrint = arg.hideOnPrint || false;
@@ -90,7 +96,6 @@ export class ColLeaf {
 
 export type ColLeafArg = {
     label: () => string;
-    rowSpan?: number;
     minWidth?: number;
     baseWidth?: number;
     sortable?: boolean;
