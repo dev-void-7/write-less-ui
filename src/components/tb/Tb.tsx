@@ -25,13 +25,25 @@ export function Tb(props: Props) {
 
     return (
         <>
-            <div class="wl--tb-wrapper">
-                <table id={props.id}>
-                    <ColGroup cols={cols} />
-                    <THead cols={cols} />
-                    <TBody cols={cols} rows={props.rows} />
-                    <TFoot foots={foots} />
-                </table>
+            <div class="wl--tb-frame">
+                <div class="wl--tb-wrapper">
+                    <table id={props.id}>
+                        <ColGroup cols={cols} />
+                        <THead cols={cols} />
+                        <TBody cols={cols} rows={props.rows} />
+                        <TFoot foots={foots} />
+                    </table>
+                </div>
+                <div class="wl--tb-thead-placeholder"></div>
+                <div class="wl--tb-tfoot-placeholder"></div>
+                <div class="wl--v-scrollbar">
+                    <button type="button" class="wl--arrow-up"></button>
+                    <div class="wl--thumb-wrapper">
+                        <button type="button" class="wl--thumb"></button>
+                    </div>
+                    <button type="button" class="wl--arrow-down"></button>
+                </div>
+                {/*<div class="wl--h-scrollbar"></div>*/}
             </div>
 
             {/*<div class="wl--tb-wrapper wl--no-print" ref={cols.wrapper}>
