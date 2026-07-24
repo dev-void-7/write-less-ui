@@ -1,6 +1,6 @@
 import { Props, Vars } from "./common.jsx";
 
-export function ArrowUpFill(props: Props) {
+export function ArrowUpFillIcon(props: Props) {
     return (
         <svg
             viewBox="0 0 24 24"
