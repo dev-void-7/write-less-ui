@@ -7,6 +7,8 @@ import { TFoot } from "./parts/TFoot.jsx";
 import { onMount } from "solid-js";
 import { scrollbarThickness } from "../../state.js";
 import { watchScrollbarVisibility } from "./utils/watch-scrollbar-visibility.js";
+import { ArrowUpFillIcon } from "../icons/ArrowUpFill.jsx";
+import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
 
 export function Tb(props: Props) {
     const cols = new Cols(props);
@@ -37,11 +39,15 @@ export function Tb(props: Props) {
                 <div class="wl--tb-thead-placeholder"></div>
                 <div class="wl--tb-tfoot-placeholder"></div>
                 <div class="wl--v-scrollbar">
-                    <button type="button" class="wl--arrow-up"></button>
+                    <button type="button" class="wl--arrow-up">
+                        <ArrowUpFillIcon />
+                    </button>
                     <div class="wl--thumb-wrapper">
                         <button type="button" class="wl--thumb"></button>
                     </div>
-                    <button type="button" class="wl--arrow-down"></button>
+                    <button type="button" class="wl--arrow-down">
+                        <ArrowDownFillIcon />
+                    </button>
                 </div>
                 {/*<div class="wl--h-scrollbar"></div>*/}
             </div>
