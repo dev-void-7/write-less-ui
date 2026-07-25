@@ -26,15 +26,13 @@ export function Tb(props: Props) {
 
     onMount(() => {
         cols.distributeFreeSpaceToLeafsWithNoWidth();
-        if (scrollbarThickness > 0) {
-            watchScrollbarVisibility(
-                tbWrapper,
-                tb,
-                verticalScrollBar,
-                verticalThumbWrapper,
-                verticalThumb,
-            );
-        }
+        watchScrollbarVisibility(
+            tbWrapper,
+            tb,
+            verticalScrollBar,
+            verticalThumbWrapper,
+            verticalThumb,
+        );
     });
 
     return (
