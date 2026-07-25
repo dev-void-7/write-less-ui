@@ -5,7 +5,7 @@ import { ColGroup } from "./parts/ColGroup.jsx";
 import { TBody } from "./parts/TBody.jsx";
 import { TFoot } from "./parts/TFoot.jsx";
 import { onMount } from "solid-js";
-import { watchScrollbarVisibility } from "./utils/scrolling.js";
+import { scrollTopBy, scrollTopByPage, watchScrollbarVisibility } from "./utils/scrolling.js";
 import { ArrowUpFillIcon } from "../icons/ArrowUpFill.jsx";
 import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
 
@@ -48,10 +48,19 @@ export function Tb(props: Props) {
                 <div class="wl--tb-thead-placeholder"></div>
                 <div class="wl--tb-tfoot-placeholder"></div>
                 <div class="wl--v-scrollbar" ref={verticalScrollBar}>
-                    <button type="button" class="wl--arrow-up" tabIndex="-1">
+                    <button
+                        type="button"
+                        class="wl--arrow-up"
+                        onclick={() => scrollTopBy(tbWrapper, -45)}
+                        tabIndex="-1"
+                    >
                         <ArrowUpFillIcon />
                     </button>
-                    <div class="wl--thumb-wrapper" ref={verticalThumbWrapper}>
+                    <div
+                        class="wl--thumb-wrapper"
+                        onclick={(e) => scrollTopByPage(verticalThumb, tbWrapper, e)}
+                        ref={verticalThumbWrapper}
+                    >
                         <button
                             type="button"
                             class="wl--thumb"
@@ -59,7 +68,12 @@ export function Tb(props: Props) {
                             tabIndex="-1"
                         ></button>
                     </div>
-                    <button type="button" class="wl--arrow-down" tabIndex="-1">
+                    <button
+                        type="button"
+                        class="wl--arrow-down"
+                        onclick={() => scrollTopBy(tbWrapper, 45)}
+                        tabIndex="-1"
+                    >
                         <ArrowDownFillIcon />
                     </button>
                 </div>

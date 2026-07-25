@@ -47,6 +47,41 @@ export function watchScrollbarVisibility(
     observer.observe(tb);
 }
 
+export function scrollTopBy(tbWrapper: HTMLDivElement, by: number) {
+    tbWrapper.scrollBy({
+        top: by,
+        behavior: "smooth",
+    });
+}
+
+export function scrollTopByPage(
+    thumb: HTMLButtonElement,
+    tbWrapper: HTMLDivElement,
+    e: MouseEvent,
+) {
+    if (e.target == thumb) return;
+    const thumbRect = thumb.getBoundingClientRect();
+    const pageJump = tbWrapper.clientHeight - 20;
+
+    if (e.clientY < thumbRect.top) {
+        // Scroll up smoothly
+        tbWrapper.scrollBy({
+            top: -pageJump,
+            behavior: "smooth",
+        });
+    } else {
+        // Scroll down smoothly
+        tbWrapper.scrollBy({
+            top: pageJump,
+            behavior: "smooth",
+        });
+    }
+    // tbWrapper.scrollBy({
+    //     top: by,
+    //     behavior: "smooth",
+    // });
+}
+
 function isTrulyScrollable(element: HTMLElement) {
     if (!element || element.scrollTop > 0) return true;
 
