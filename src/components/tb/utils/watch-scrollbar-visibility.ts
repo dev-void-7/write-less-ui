@@ -24,7 +24,7 @@ export function watchScrollbarVisibility(
             );
             wheelHandler = generateWheelHandler(tbWrapper);
             tbWrapper.addEventListener("scroll", scrollHandler);
-            verticalScrollbar.addEventListener("wheel", wheelHandler);
+            verticalScrollbar.addEventListener("wheel", wheelHandler, { passive: false });
         } else {
             verticalScrollbar.classList.remove("wl--show");
             if (scrollHandler) tbWrapper.removeEventListener("scroll", scrollHandler);
