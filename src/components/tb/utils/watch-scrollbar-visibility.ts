@@ -61,7 +61,6 @@ function generateScrollHandler(
 function generateWheelHandler(contentWrapper: HTMLDivElement) {
     return function (e: WheelEvent) {
         e.preventDefault();
-        console.log(e);
         contentWrapper.scrollTop += e.deltaY;
     };
 }
