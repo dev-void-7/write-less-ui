@@ -5,7 +5,6 @@ import { ColGroup } from "./parts/ColGroup.jsx";
 import { TBody } from "./parts/TBody.jsx";
 import { TFoot } from "./parts/TFoot.jsx";
 import { onMount } from "solid-js";
-import { scrollbarThickness } from "../../state.js";
 import { watchScrollbarVisibility } from "./utils/scrolling.js";
 import { ArrowUpFillIcon } from "../icons/ArrowUpFill.jsx";
 import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
