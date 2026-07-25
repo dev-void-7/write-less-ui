@@ -1105,7 +1105,7 @@
         border-top: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
     }
 
-    &:not(:has(> .wl--tb-wrapper > table > tfoot)) {
+    &:not(:has(> .wl--tb-wrapper > table > tfoot)) > .wl--tb-tfoot-placeholder {
         display: none;
     }
 
