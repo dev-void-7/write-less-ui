@@ -1111,7 +1111,8 @@
 
     .wl--v-scrollbar {
         position: absolute;
-        inset-block: 1px;
+        top: anchor-size(--tb-thead-anchor height, 0);
+        bottom: anchor-size(--tb-tfoot-anchor height, 0);
         inset-inline-end: 1px;
         width: 0.375rem;
         padding: 0.125rem 0.1rem;
