@@ -158,14 +158,8 @@ export function scrollTopByPage(
     const pageJump = tbWrapper.clientHeight - 20;
 
     if (e.clientY < thumbRect.top) {
-        // Scroll up smoothly
         scrollTopBy(tbWrapper, -pageJump);
     } else {
-        // Scroll down smoothly
         scrollTopBy(tbWrapper, pageJump);
     }
-    // tbWrapper.scrollBy({
-    //     top: by,
-    //     behavior: "smooth",
-    // });
 }
