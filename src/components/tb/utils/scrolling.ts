@@ -7,159 +7,208 @@ export function initVerticalScrolling(
     thumbWrapper: HTMLDivElement,
     thumb: HTMLButtonElement,
 ) {
-    watchScrollbarVisibility(tbWrapper, tb, verticalScrollbar, thumbWrapper, thumb);
-    setScrollTopByContinuously(tbWrapper, verticalScrollbarArrowUp, -1);
-    setScrollTopByContinuously(tbWrapper, verticalScrollbarArrowDown, 1);
-    setScrollTopByPageContinuously(tbWrapper, thumbWrapper, thumb);
+    new VerticalScrolling(
+        tbWrapper,
+        tb,
+        verticalScrollbar,
+        verticalScrollbarArrowUp,
+        thumbWrapper,
+        thumb,
+        verticalScrollbarArrowDown,
+    );
 }
 
-function watchScrollbarVisibility(
-    tbWrapper: HTMLDivElement,
-    tb: HTMLTableElement,
-    verticalScrollbar: HTMLDivElement,
-    thumbWrapper: HTMLDivElement,
-    thumb: HTMLButtonElement,
-) {
-    let scrollHandler: ((e: Event) => void) | undefined;
-    let thumbWrapperWheelHandler: ((e: WheelEvent) => void) | undefined;
-    const observer = new ResizeObserver((_) => {
-        if (isTrulyScrollable(tbWrapper)) {
-            verticalScrollbar.classList.add("wl--show");
-
-            const wrapperHeight = parseFloat(getComputedStyle(tbWrapper).height);
-            const contentHeight = parseFloat(getComputedStyle(tb).height);
-            const thumbWrapperHeight = parseFloat(getComputedStyle(thumbWrapper).height);
-            const thumbHeight = thumbWrapperHeight * (wrapperHeight / contentHeight);
-            const availableWrapperScrolling = contentHeight - wrapperHeight;
-
-            thumb.style.height = `${thumbHeight}px`;
-
-            if (scrollHandler) tbWrapper.removeEventListener("scroll", scrollHandler);
-            if (thumbWrapperWheelHandler)
-                tbWrapper.removeEventListener("wheel", thumbWrapperWheelHandler);
-
-            scrollHandler = generateScrollHandler(
-                availableWrapperScrolling,
-                thumbWrapperHeight - thumbHeight,
-                thumb,
-            );
-            thumbWrapperWheelHandler = generateThumbWrapperWheelHandler(tbWrapper);
-
-            tbWrapper.addEventListener("scroll", scrollHandler);
-            verticalScrollbar.addEventListener("wheel", thumbWrapperWheelHandler, {
-                passive: false,
-            });
-        } else {
-            verticalScrollbar.classList.remove("wl--show");
-
-            if (scrollHandler) tbWrapper.removeEventListener("scroll", scrollHandler);
-            if (thumbWrapperWheelHandler)
-                verticalScrollbar.removeEventListener("wheel", thumbWrapperWheelHandler);
-        }
-    });
-
-    observer.observe(tbWrapper);
-    observer.observe(tb);
-}
-
-function setScrollTopByContinuously(
-    tbWrapper: HTMLDivElement,
-    arrow: HTMLButtonElement,
-    sign: 1 | -1,
-) {
-    let interval: number | undefined;
-    arrow.addEventListener("pointerdown", (_e: PointerEvent) => {
-        scrollTopBy(tbWrapper, 45 * sign);
-        if (interval) clearInterval(interval);
-        interval = setInterval(() => {
-            scrollTopBy(tbWrapper, 45 * sign);
+class VerticalScrolling {
+    tbWrapper: HTMLDivElement;
+    tb: HTMLTableElement;
+    scrollbar: HTMLDivElement;
+    scrollbarArrowUp: HTMLButtonElement;
+    thumbWrapper: HTMLDivElement;
+    thumb: HTMLButtonElement;
+    scrollbarArrowDown: HTMLButtonElement;
+    tbWrapperHeight: number;
+    tbHeight: number;
+    tbWrapperOverflowingHeight: number;
+    thumbWrapperHeight: number;
+    thumbHeight: number;
+    thumbTranslateY: number = 0;
+    onThumbWrapperWheel: (e: WheelEvent) => void;
+    onTbWrapperScroll: (e: Event) => void;
+    observer: ResizeObserver;
+    arrowUpInterval?: number;
+    arrowDownInterval?: number;
+    thumbInterval?: number;
+    clearArrowUpInterval = () => clearInterval(this.arrowUpInterval);
+    clearArrowDownInterval = () => clearInterval(this.arrowDownInterval);
+    clearThumbInterval = () => clearInterval(this.thumbInterval);
+    onArrowUpPointerDown = () => {
+        this.scrollTbWrapper(-45);
+        this.clearArrowUpInterval();
+        this.arrowUpInterval = setInterval(() => {
+            this.scrollTbWrapper(-45);
         }, 50);
-    });
-    arrow.addEventListener("pointerup", () => {
-        if (interval) clearInterval(interval);
-    });
-    arrow.addEventListener("pointerleave", () => {
-        if (interval) clearInterval(interval);
-    });
-}
-
-function setScrollTopByPageContinuously(
-    tbWrapper: HTMLDivElement,
-    thumbWrapper: HTMLDivElement,
-    thumb: HTMLButtonElement,
-) {
-    let interval: number | undefined;
-    thumbWrapper.addEventListener("pointerdown", (e: PointerEvent) => {
-        scrollTopByPage(tbWrapper, thumb, e);
-        if (interval) clearInterval(interval);
-        interval = setInterval(() => {
-            scrollTopByPage(tbWrapper, thumb, e);
-        }, 100);
-    });
-    thumbWrapper.addEventListener("pointerup", () => {
-        if (interval) clearInterval(interval);
-    });
-    thumbWrapper.addEventListener("pointerleave", () => {
-        if (interval) clearInterval(interval);
-    });
-}
-
-function isTrulyScrollable(element: HTMLElement) {
-    if (!element || element.scrollTop > 0) return true;
-
-    element.scrollTop = 1;
-    const scrolls = element.scrollTop > 0;
-    element.scrollTop = 0; // Reset immediately
-
-    return scrolls;
-}
-
-function generateScrollHandler(
-    availableWrapperScrolling: number,
-    availableThumbScrolling: number,
-    thumb: HTMLButtonElement,
-) {
-    return function (this: HTMLElement, _e: Event) {
-        const percent = this.scrollTop / availableWrapperScrolling;
-        const thumbTranslateY = availableThumbScrolling * percent;
-        thumb.style.transform = `translateY(${thumbTranslateY}px)`;
     };
-}
-
-function generateThumbWrapperWheelHandler(contentWrapper: HTMLDivElement) {
-    return function (e: WheelEvent) {
-        e.preventDefault();
-        contentWrapper.scrollTop += e.deltaY;
+    onArrowDownPointerDown = () => {
+        this.scrollTbWrapper(45);
+        this.clearArrowDownInterval();
+        this.arrowDownInterval = setInterval(() => {
+            this.scrollTbWrapper(45);
+        }, 50);
     };
-}
+    onThumbWrapperPointerDown = (e: PointerEvent) => {
+        this.scrollTBWrapperByPage(e);
+        this.clearThumbInterval();
+        this.thumbInterval = setInterval(() => {
+            this.scrollTBWrapperByPage(e);
+        }, 50);
+    };
+    onThumbPointerDown = (pointerDownEvent: PointerEvent) => {
+        pointerDownEvent.preventDefault();
+        pointerDownEvent.stopPropagation();
+        let thumbTranslateYAtStart = this.thumbTranslateY;
+        const onPointerMove = (pointerMoveEvent: PointerEvent) => {
+            const percent =
+                (thumbTranslateYAtStart + (pointerMoveEvent.clientY - pointerDownEvent.clientY)) /
+                (this.thumbWrapperHeight - this.thumbHeight);
+            console.log((this.tbWrapperHeight - this.tbHeight) * -percent);
+            this.tbWrapper.scrollTop = (this.tbWrapperHeight - this.tbHeight) * -percent;
+        };
+        document.addEventListener("pointermove", onPointerMove);
+        document.addEventListener(
+            "pointerup",
+            () => {
+                document.removeEventListener("pointermove", onPointerMove);
+            },
+            { once: true },
+        );
+    };
 
-export function scrollTopBy(tbWrapper: HTMLDivElement, by: number) {
-    tbWrapper.scrollBy({
-        top: by,
-        behavior: "smooth",
-    });
-}
-
-export function scrollTopByPage(
-    tbWrapper: HTMLDivElement,
-    thumb: HTMLButtonElement,
-    e: PointerEvent,
-) {
-    const thumbRect = thumb.getBoundingClientRect();
-    if (
-        e.clientX >= thumbRect.left &&
-        e.clientX <= thumbRect.right &&
-        e.clientY >= thumbRect.top &&
-        e.clientY <= thumbRect.bottom
+    constructor(
+        tbWrapper: HTMLDivElement,
+        tb: HTMLTableElement,
+        scrollbar: HTMLDivElement,
+        scrollbarArrowUp: HTMLButtonElement,
+        thumbWrapper: HTMLDivElement,
+        thumb: HTMLButtonElement,
+        scrollbarArrowDown: HTMLButtonElement,
     ) {
-        return;
-    }
-    if (e.target == thumb) return;
-    const pageJump = tbWrapper.clientHeight - 20;
+        this.tbWrapper = tbWrapper;
+        this.tb = tb;
+        this.scrollbar = scrollbar;
+        this.scrollbarArrowUp = scrollbarArrowUp;
+        this.thumbWrapper = thumbWrapper;
+        this.thumb = thumb;
+        this.scrollbarArrowDown = scrollbarArrowDown;
 
-    if (e.clientY < thumbRect.top) {
-        scrollTopBy(tbWrapper, -pageJump);
-    } else {
-        scrollTopBy(tbWrapper, pageJump);
+        this.tbWrapperHeight = parseFloat(getComputedStyle(tbWrapper).height);
+        this.tbHeight = parseFloat(getComputedStyle(tb).height);
+        this.thumbWrapperHeight = parseFloat(getComputedStyle(thumbWrapper).height);
+        this.thumbHeight = this.thumbWrapperHeight * (this.tbWrapperHeight / this.tbHeight);
+        this.tbWrapperOverflowingHeight = this.tbHeight - this.tbWrapperHeight;
+        thumb.style.height = `${this.thumbHeight}px`;
+
+        this.onThumbWrapperWheel = (e: WheelEvent) => {
+            this.handleThumbWrapperWheel(e);
+        };
+        this.onTbWrapperScroll = (_e: Event) => {
+            this.handleTbWrapperScroll();
+        };
+
+        this.tbWrapper.addEventListener("scroll", this.onTbWrapperScroll);
+        this.observer = this.showScrollbarWhenOverflow();
+        this.initScrollbarFunctionality();
+    }
+
+    showScrollbarWhenOverflow() {
+        const observer = new ResizeObserver(() => {
+            if (this.isTbWrapperScrollable()) {
+                this.scrollbar.classList.add("wl--show");
+
+                this.tbWrapperHeight = parseFloat(getComputedStyle(this.tbWrapper).height);
+                this.tbHeight = parseFloat(getComputedStyle(this.tb).height);
+                this.thumbWrapperHeight = parseFloat(getComputedStyle(this.thumbWrapper).height);
+                this.thumbHeight = this.thumbWrapperHeight * (this.tbWrapperHeight / this.tbHeight);
+                this.tbWrapperOverflowingHeight = this.tbHeight - this.tbWrapperHeight;
+                this.thumb.style.height = `${this.thumbHeight}px`;
+
+                this.thumbWrapper.addEventListener("wheel", this.onThumbWrapperWheel, {
+                    passive: false,
+                });
+            } else {
+                this.scrollbar.classList.remove("wl--show");
+                this.thumbWrapper.removeEventListener("wheel", this.onThumbWrapperWheel);
+            }
+        });
+
+        observer.observe(this.tbWrapper);
+        observer.observe(this.tb);
+
+        return observer;
+    }
+
+    isTbWrapperScrollable() {
+        if (this.tbWrapper.scrollTop > 0) return true;
+        this.tbWrapper.scrollTop = 1;
+        const scrolls = this.tbWrapper.scrollTop > 0;
+        this.tbWrapper.scrollTop = 0; // Reset immediately
+        return scrolls;
+    }
+
+    handleTbWrapperScroll() {
+        const percent = this.tbWrapper.scrollTop / this.tbWrapperOverflowingHeight;
+        this.thumbTranslateY = (this.thumbWrapperHeight - this.thumbHeight) * percent;
+        this.thumb.style.transform = `translateY(${this.thumbTranslateY}px)`;
+    }
+
+    handleThumbWrapperWheel(e: WheelEvent) {
+        e.preventDefault();
+        this.tbWrapper.scrollTop += e.deltaY;
+    }
+
+    initScrollbarFunctionality() {
+        this.scrollbarArrowUp.addEventListener("pointerdown", this.onArrowUpPointerDown);
+        this.scrollbarArrowDown.addEventListener("pointerdown", this.onArrowDownPointerDown);
+        this.thumbWrapper.addEventListener("pointerdown", this.onThumbWrapperPointerDown);
+        this.thumb.addEventListener("pointerdown", this.onThumbPointerDown);
+
+        this.scrollbarArrowUp.addEventListener("pointerup", this.clearArrowUpInterval);
+        this.scrollbarArrowDown.addEventListener("pointerup", this.clearArrowDownInterval);
+        this.thumbWrapper.addEventListener("pointerup", this.clearThumbInterval);
+
+        this.scrollbarArrowUp.addEventListener("pointerleave", this.clearArrowUpInterval);
+        this.scrollbarArrowDown.addEventListener("pointerleave", this.clearArrowDownInterval);
+        this.thumbWrapper.addEventListener("pointerleave", this.clearThumbInterval);
+    }
+
+    scrollTbWrapper(top: number) {
+        this.tbWrapper.scrollBy({
+            top,
+            behavior: "smooth",
+        });
+    }
+
+    scrollTBWrapperByPage(e: PointerEvent) {
+        const thumbRect = this.thumb.getBoundingClientRect();
+        if (
+            e.clientX >= thumbRect.left &&
+            e.clientX <= thumbRect.right &&
+            e.clientY >= thumbRect.top &&
+            e.clientY <= thumbRect.bottom
+        ) {
+            return;
+        }
+        const pageJump = this.tbWrapper.clientHeight - 20;
+
+        if (e.clientY < thumbRect.top) {
+            this.scrollTbWrapper(-pageJump);
+        } else {
+            this.scrollTbWrapper(pageJump);
+        }
+    }
+
+    destroy() {
+        this.tbWrapper.removeEventListener("scroll", this.onTbWrapperScroll);
+        this.thumbWrapper.removeEventListener("wheel", this.onThumbWrapperWheel);
+        this.observer.disconnect();
     }
 }
