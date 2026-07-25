@@ -5,30 +5,32 @@ import { ColGroup } from "./parts/ColGroup.jsx";
 import { TBody } from "./parts/TBody.jsx";
 import { TFoot } from "./parts/TFoot.jsx";
 import { onMount } from "solid-js";
-import { scrollTopBy, scrollTopByPage, watchScrollbarVisibility } from "./utils/scrolling.js";
+import { initVerticalScrolling } from "./utils/scrolling.js";
 import { ArrowUpFillIcon } from "../icons/ArrowUpFill.jsx";
 import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
 
 export function Tb(props: Props) {
-    const cols = new Cols(props);
-    const foots = new Foots(props, cols.leafs, cols.orderedLeafs);
-    // eslint-disable-next-line no-unassigned-vars
-    let tbWrapper!: HTMLDivElement;
-    // eslint-disable-next-line no-unassigned-vars
-    let tb!: HTMLTableElement;
-    // eslint-disable-next-line no-unassigned-vars
-    let verticalScrollBar!: HTMLDivElement;
-    // eslint-disable-next-line no-unassigned-vars
-    let verticalThumbWrapper!: HTMLDivElement;
-    // eslint-disable-next-line no-unassigned-vars
-    let verticalThumb!: HTMLButtonElement;
+    const cols = new Cols(props),
+        foots = new Foots(props, cols.leafs, cols.orderedLeafs);
+
+    // eslint-disable no-unassigned-vars
+    let tbWrapper!: HTMLDivElement,
+        tb!: HTMLTableElement,
+        verticalScrollbar!: HTMLDivElement,
+        verticalScrollbarArrowUp!: HTMLButtonElement,
+        verticalScrollbarArrowDown!: HTMLButtonElement,
+        verticalThumbWrapper!: HTMLDivElement,
+        verticalThumb!: HTMLButtonElement;
+    // eslint-enable no-unassigned-vars
 
     onMount(() => {
         cols.distributeFreeSpaceToLeafsWithNoWidth();
-        watchScrollbarVisibility(
+        initVerticalScrolling(
             tbWrapper,
             tb,
-            verticalScrollBar,
+            verticalScrollbar,
+            verticalScrollbarArrowUp,
+            verticalScrollbarArrowDown,
             verticalThumbWrapper,
             verticalThumb,
         );
@@ -47,20 +49,16 @@ export function Tb(props: Props) {
                 </div>
                 <div class="wl--tb-thead-placeholder"></div>
                 <div class="wl--tb-tfoot-placeholder"></div>
-                <div class="wl--v-scrollbar" ref={verticalScrollBar}>
+                <div class="wl--v-scrollbar" ref={verticalScrollbar}>
                     <button
                         type="button"
                         class="wl--arrow-up"
-                        onclick={() => scrollTopBy(tbWrapper, -45)}
                         tabIndex="-1"
+                        ref={verticalScrollbarArrowUp}
                     >
                         <ArrowUpFillIcon />
                     </button>
-                    <div
-                        class="wl--thumb-wrapper"
-                        onclick={(e) => scrollTopByPage(verticalThumb, tbWrapper, e)}
-                        ref={verticalThumbWrapper}
-                    >
+                    <div class="wl--thumb-wrapper" ref={verticalThumbWrapper}>
                         <button
                             type="button"
                             class="wl--thumb"
@@ -71,7 +69,7 @@ export function Tb(props: Props) {
                     <button
                         type="button"
                         class="wl--arrow-down"
-                        onclick={() => scrollTopBy(tbWrapper, 45)}
+                        ref={verticalScrollbarArrowDown}
                         tabIndex="-1"
                     >
                         <ArrowDownFillIcon />
