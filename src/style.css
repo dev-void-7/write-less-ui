@@ -1125,8 +1125,10 @@
         transition: width 0.05s ease-out;
         display: none;
 
-        &.wl--show {
-            display: flex;
+        @media not print {
+            &.wl--show {
+                display: flex;
+            }
         }
 
         &:hover {
