@@ -1,17 +1,39 @@
 export function watchScrollbarVisibility(
-    tBodyOnlyTbWrapper: HTMLDivElement,
-    tBodyOnlyTb: HTMLTableElement,
+    tbWrapper: HTMLDivElement,
+    tb: HTMLTableElement,
+    verticalScrollbar: HTMLDivElement,
+    thumbWrapper: HTMLDivElement,
+    thumb: HTMLButtonElement,
 ) {
+    let scrollHandler: ((e: Event) => void) | undefined;
+    let wheelHandler: ((e: WheelEvent) => void) | undefined;
     const observer = new ResizeObserver((_) => {
-        if (isTrulyScrollable(tBodyOnlyTbWrapper)) {
-            tBodyOnlyTbWrapper.classList.add("wl--scrollbar-is-visible");
+        if (isTrulyScrollable(tbWrapper)) {
+            verticalScrollbar.classList.add("wl--show");
+            const wrapperHeight = parseFloat(getComputedStyle(tbWrapper).height);
+            const contentHeight = parseFloat(getComputedStyle(tb).height);
+            const thumbWrapperHeight = parseFloat(getComputedStyle(thumbWrapper).height);
+            const thumbHeight = thumbWrapperHeight * (wrapperHeight / contentHeight);
+            thumb.style.height = `${thumbHeight}px`;
+            if (scrollHandler) tbWrapper.removeEventListener("scroll", scrollHandler);
+            if (wheelHandler) tbWrapper.removeEventListener("wheel", wheelHandler);
+            scrollHandler = generateScrollHandler(
+                contentHeight - wrapperHeight,
+                thumbWrapperHeight - thumbHeight,
+                thumb,
+            );
+            wheelHandler = generateWheelHandler(tbWrapper);
+            tbWrapper.addEventListener("scroll", scrollHandler);
+            verticalScrollbar.addEventListener("wheel", wheelHandler);
         } else {
-            tBodyOnlyTbWrapper.classList.remove("wl--scrollbar-is-visible");
+            verticalScrollbar.classList.remove("wl--show");
+            if (scrollHandler) tbWrapper.removeEventListener("scroll", scrollHandler);
+            if (wheelHandler) verticalScrollbar.removeEventListener("wheel", wheelHandler);
         }
     });
 
-    observer.observe(tBodyOnlyTbWrapper);
-    observer.observe(tBodyOnlyTb);
+    observer.observe(tbWrapper);
+    observer.observe(tb);
 }
 
 function isTrulyScrollable(element: HTMLElement) {
@@ -22,4 +44,24 @@ function isTrulyScrollable(element: HTMLElement) {
     element.scrollTop = 0; // Reset immediately
 
     return scrolls;
+}
+
+function generateScrollHandler(
+    availableWrapperScrolling: number,
+    availableThumbScrolling: number,
+    thumb: HTMLButtonElement,
+) {
+    return function (this: HTMLElement, _e: Event) {
+        const percent = this.scrollTop / availableWrapperScrolling;
+        const thumbTranslateY = availableThumbScrolling * percent;
+        thumb.style.transform = `translateY(${thumbTranslateY}px)`;
+    };
+}
+
+function generateWheelHandler(contentWrapper: HTMLDivElement) {
+    return function (e: WheelEvent) {
+        e.preventDefault();
+        console.log(e);
+        contentWrapper.scrollTop += e.deltaY;
+    };
 }

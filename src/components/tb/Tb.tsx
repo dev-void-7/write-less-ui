@@ -14,22 +14,34 @@ export function Tb(props: Props) {
     const cols = new Cols(props);
     const foots = new Foots(props, cols.leafs, cols.orderedLeafs);
     // eslint-disable-next-line no-unassigned-vars
-    let tBodyOnlyTbWrapper!: HTMLDivElement;
+    let tbWrapper!: HTMLDivElement;
     // eslint-disable-next-line no-unassigned-vars
-    let tBodyOnlyTb!: HTMLTableElement;
+    let tb!: HTMLTableElement;
+    // eslint-disable-next-line no-unassigned-vars
+    let verticalScrollBar!: HTMLDivElement;
+    // eslint-disable-next-line no-unassigned-vars
+    let verticalThumbWrapper!: HTMLDivElement;
+    // eslint-disable-next-line no-unassigned-vars
+    let verticalThumb!: HTMLButtonElement;
 
     onMount(() => {
         cols.distributeFreeSpaceToLeafsWithNoWidth();
         if (scrollbarThickness > 0) {
-            watchScrollbarVisibility(tBodyOnlyTbWrapper, tBodyOnlyTb);
+            watchScrollbarVisibility(
+                tbWrapper,
+                tb,
+                verticalScrollBar,
+                verticalThumbWrapper,
+                verticalThumb,
+            );
         }
     });
 
     return (
         <>
             <div class="wl--tb-frame">
-                <div class="wl--tb-wrapper">
-                    <table id={props.id}>
+                <div class="wl--tb-wrapper" ref={tbWrapper}>
+                    <table id={props.id} ref={tb}>
                         <ColGroup cols={cols} />
                         <THead cols={cols} />
                         <TBody cols={cols} rows={props.rows} />
@@ -38,14 +50,19 @@ export function Tb(props: Props) {
                 </div>
                 <div class="wl--tb-thead-placeholder"></div>
                 <div class="wl--tb-tfoot-placeholder"></div>
-                <div class="wl--v-scrollbar">
-                    <button type="button" class="wl--arrow-up">
+                <div class="wl--v-scrollbar" ref={verticalScrollBar}>
+                    <button type="button" class="wl--arrow-up" tabIndex="-1">
                         <ArrowUpFillIcon />
                     </button>
-                    <div class="wl--thumb-wrapper">
-                        <button type="button" class="wl--thumb"></button>
+                    <div class="wl--thumb-wrapper" ref={verticalThumbWrapper}>
+                        <button
+                            type="button"
+                            class="wl--thumb"
+                            ref={verticalThumb}
+                            tabIndex="-1"
+                        ></button>
                     </div>
-                    <button type="button" class="wl--arrow-down">
+                    <button type="button" class="wl--arrow-down" tabIndex="-1">
                         <ArrowDownFillIcon />
                     </button>
                 </div>
