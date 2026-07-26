@@ -4,6 +4,7 @@ import { Col } from "../domain/cols/col.js";
 import { ColGroup } from "../domain/cols/col-group.js";
 import { ColLeaf } from "../domain/cols/col-leaf.js";
 import { generateOnResizerPointerDown } from "../utils/resizing.js";
+import { MoreIcon } from "../../icons/More.jsx";
 
 export function THead(props: { cols: Cols }) {
     const cols = props.cols;
@@ -50,6 +51,9 @@ function THeadTrThGroup(props: { cols: Cols; col: ColGroup }) {
         >
             <div class="wl--th-content">
                 <div class="wl--th-label">{props.col.label()}</div>
+                <button class="wl--more">
+                    <MoreIcon />
+                </button>
             </div>
             <button
                 type="button"
@@ -75,6 +79,9 @@ function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf }) {
         >
             <div class="wl--th-content">
                 <div class="wl--th-label">{props.col.label()}</div>
+                <button class="wl--more">
+                    <MoreIcon />
+                </button>
                 <Show when={props.col.sortable}>
                     <div class="wl--th-sort"></div>
                 </Show>

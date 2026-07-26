@@ -785,6 +785,7 @@
                         display: flex;
                         align-items: center;
                         padding-inline: var(--wl--tb-head-height-1\/4);
+                        column-gap: 0.5rem;
 
                         > .wl--th-label {
                             margin-inline-end: auto;
@@ -792,6 +793,35 @@
                             white-space: nowrap;
                             overflow: hidden;
                             text-overflow: ellipsis;
+                        }
+
+                        > .wl--more {
+                            cursor: pointer;
+                            padding: 0;
+                            background: none;
+                            border: none;
+                            display: none;
+                            line-height: 0;
+                            border-radius: 4px;
+                            padding-block: 0.0625rem;
+
+                            @media not print {
+                                display: block;
+                            }
+
+                            &:hover {
+                                background-color: color-mix(
+                                    in srgb,
+                                    var(--wl--tb-head-bg-color),
+                                    black 7%
+                                );
+                            }
+
+                            > .wl--icon {
+                                --wl--icon-weight: 1.25;
+                                --wl--icon-color: var(--wl--tb-head-color);
+                                height: 1.25rem;
+                            }
                         }
                     }
 
