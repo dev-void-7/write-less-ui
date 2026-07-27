@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { Props } from "./domain/props.js";
 import { Groups } from "./parts/Groups.jsx";
 import { CtxMenuContext } from "./CtxMenueContext.js";
@@ -9,19 +9,27 @@ export function CtxMenu<T>(props: Props<T>) {
     // eslint-enable no-unassigned-vars
     const [data, setData] = createSignal<T>(undefined as T);
     const [anchorName, setAnchorName] = createSignal<string | undefined>(undefined);
+    let onHide: (() => void) | undefined;
 
     // @ts-ignore
     props.ref({
-        show: (data: T, anchorName: string) => {
+        show: (data: T, anchorName: string, pOnHide?: () => void) => {
             // @ts-ignore
             setData(data);
             setAnchorName(anchorName);
+            onHide = pOnHide;
             setTimeout(() => popover.showPopover());
         },
         hide: () => {
             setAnchorName(undefined);
             popover.hidePopover();
         },
+    });
+
+    onMount(() => {
+        popover.addEventListener("toggle", (e) => {
+            if (onHide && e.newState == "closed") onHide();
+        });
     });
 
     return (
