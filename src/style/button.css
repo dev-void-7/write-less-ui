@@ -1,0 +1,42 @@
+.wl--btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--wl--btn-height);
+    padding-inline: var(--wl--btn-height-1\/4);
+    column-gap: var(--wl--btn-height-1\/4);
+    background-color: var(--wl--btn-bg-color);
+    border: var(--wl--btn-border-width) solid var(--wl--btn-border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    filter: brightness(1);
+    scale: 1;
+    transition:
+        filter 0.2s ease-out,
+        scale 0.2s ease-out;
+    /* TODO: add focus style */
+
+    &:hover {
+        filter: brightness(0.85);
+    }
+
+    &:active {
+        scale: 0.97;
+    }
+
+    & > :first-child:not(.wl--children),
+    & > :last-child:not(.wl--children) {
+        --wl--icon-color: var(--wl--btn-icon-color);
+        --wl--icon-weight: var(--wl--btn-icon-weight);
+        width: var(--wl--btn-icon-size);
+        height: var(--wl--btn-icon-size);
+    }
+
+    & > .wl--children * {
+        color: var(--wl--btn-color);
+        font-family: var(--wl--btn-font-family);
+        font-size: var(--wl--btn-font-size);
+        font-weight: var(--wl--btn-font-weight);
+        line-height: var(--wl--btn-line-height);
+    }
+}

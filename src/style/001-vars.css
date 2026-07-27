@@ -1,0 +1,98 @@
+:root {
+    --wl--fs-base: clamp(0.9375rem, 0.875rem + 0.135vw, 1.0625rem);
+    --wl--fs-2xs: calc(var(--wl--fs-base) * 0.8125);
+    --wl--fs-xs: calc(var(--wl--fs-base) * 0.875);
+    --wl--fs-s: calc(var(--wl--fs-base) * 0.9375);
+    --wl--fs-r: var(--wl--fs-base);
+
+    --wl--s-base: 0.25rem;
+    --wl--s1: var(--wl--s-base);
+    --wl--s2: calc(var(--wl--s-base) * 2);
+    --wl--s3: calc(var(--wl--s-base) * 3);
+    --wl--s4: calc(var(--wl--s-base) * 4);
+    --wl--s5: calc(var(--wl--s-base) * 5);
+    --wl--s6: calc(var(--wl--s-base) * 6);
+    --wl--s7: calc(var(--wl--s-base) * 7);
+    --wl--s8: calc(var(--wl--s-base) * 8);
+    --wl--s9: calc(var(--wl--s-base) * 9);
+    --wl--s10: calc(var(--wl--s-base) * 10);
+
+    /* BUTTON */
+    --wl--btn-height: var(--wl--s8);
+    --wl--btn-height-1\/4: calc(var(--wl--btn-height) / 4);
+    --wl--btn-border-width: 1px;
+    --wl--btn-bg-color: lightgray;
+    --wl--btn-border-color: lightgray;
+    --wl--btn-color: black;
+    --wl--btn-font-family: IBMPlexSans;
+    --wl--btn-font-size: var(--wl--fs-2xs);
+    --wl--btn-font-weight: 400;
+    --wl--btn-line-height: 125%;
+    --wl--btn-icon-size: calc(var(--wl--btn-height) * 0.625);
+    --wl--btn-icon-color: black;
+    --wl--btn-icon-weight: 1.25;
+
+    /* DROPDOWN */
+    --wl--dropdown-opt-hover-color: lightgray;
+    --wl--dropdown-border-width: 1px;
+    --wl--dropdown-border-color: lightgray;
+
+    /* FIELD */
+    --wl--field-row-gap: 0.25rem;
+    --wl--field-label-color: black;
+    --wl--field-label-font: 400 var(--wl--fs-xs)/125% IBMPlexSans;
+    --wl--field-control-height: var(--wl--s8);
+    --wl--field-control-height-1\/4: calc(var(--wl--field-control-height) / 4);
+    --wl--field-control-height-9\/8: calc(var(--wl--field-control-height) * 1.125);
+    --wl--field-control-border-width: 1px;
+    --wl--field-control-border-color: darkgray;
+    --wl--field-control-color: black;
+    --wl--field-control-focus-border-color: black;
+    --wl--field-control-font-family: IBMPlexSans;
+    --wl--field-control-font-size: var(--wl--fs-2xs);
+    --wl--field-control-font-weight: 400;
+    --wl--field-control-line-height: 125%;
+    --wl--field-control-icon-size: calc(var(--wl--field-control-height) * 0.625);
+    --wl--field-control-icon-color: black;
+    --wl--field-control-icon-weight: 1.25;
+    --wl--field-control-dropdown-opt-min-height: calc(var(--wl--field-control-height) * 0.8125);
+    --wl--field-control-dropdown-opt-min-height-1\/4: calc(
+        var(--wl--field-control-dropdown-opt-min-height) / 4
+    );
+    --wl--field-control-dropdown-opt-icon-size: calc(
+        var(--wl--field-control-dropdown-opt-min-height) * 0.625
+    );
+    --wl--field-msg-font: 400 0.75rem/100% IBMPlexSans;
+    --wl--field-msg-err-color: red;
+    --wl--field-msg-scs-color: green;
+    --wl--field-msg-info-color: blue;
+    --wl--field-msg-warn-color: yellow;
+
+    /* FORM */
+    --wl--form-gap: 0.5rem 1rem;
+
+    /* SPINNER */
+    --wl--loader-spinner-width: var(--wl--s8);
+    --wl--loader-spinner-color: black;
+
+    /* TABLE */
+    --wl--tb-head-color: rgb(45, 45, 45);
+    --wl--tb-head-bg-color: rgb(245, 245, 245);
+    --wl--tb-head-font: 500 var(--wl--fs-2xs)/125% IBMPlexSans;
+    --wl--tb-head-height: var(--wl--s8);
+    --wl--tb-head-height-1\/4: calc(var(--wl--tb-head-height) / 4);
+    --wl--tb-border-width: 1px;
+    --wl--tb-border-color: darkgray;
+    --wl--tb-data-color: black;
+    --wl--tb-data-font-family: IBMPlexSans;
+    --wl--tb-data-font-size: var(--wl--fs-2xs);
+    --wl--tb-data-font-weight: 400;
+    --wl--tb-data-line-height: 125%;
+    --wl--tb-data-height: var(--wl--s8);
+    --wl--tb-data-height-1\/4: calc(var(--wl--tb-data-height) / 4);
+    --wl--tb-foot-color: rgb(45, 45, 45);
+    --wl--tb-foot-bg-color: rgb(245, 245, 245);
+    --wl--tb-foot-font: 500 var(--wl--fs-2xs)/125% IBMPlexSans;
+    --wl--tb-foot-height: var(--wl--s8);
+    --wl--tb-foot-height-1\/4: calc(var(--wl--tb-foot-height) / 4);
+}

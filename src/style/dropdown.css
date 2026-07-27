@@ -1,0 +1,31 @@
+.wl--dropdown {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 4px;
+    border: var(--wl--dropdown-border-width) solid var(--wl--dropdown-border-color);
+    padding: 0.25rem 0;
+    margin: 0;
+    opacity: 0;
+    transform: scale(0.95);
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease-out,
+        display 0.2s allow-discrete,
+        overlay 0.2s allow-discrete;
+    top: anchor(bottom);
+    inset-inline-start: anchor(start);
+    min-width: anchor-size(width);
+    width: max-content;
+    max-height: 40vh;
+
+    &:popover-open {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+
+        @starting-style {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    }
+}
