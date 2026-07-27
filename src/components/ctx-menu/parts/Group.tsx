@@ -2,12 +2,9 @@ import { ItemNormalArgs, ItemsNormal } from "./items/Normal.jsx";
 import { ItemRadioArgs, ItemsRadio } from "./items/Radio.jsx";
 import { JSXElement, Match, Switch } from "solid-js";
 
-export function Group<T>(props: {
-    group: GroupArgs<T>;
-    iconPlaceholder?: JSXElement;
-}) {
+export function Group<T>(props: { group: GroupArgs<T>; iconPlaceholder?: JSXElement }) {
     return (
-        <div class="wl--group">
+        <div class="wl--group" classList={{ "wl--hidden": props.group.hidden?.() }}>
             <Switch>
                 <Match when={props.group.type == undefined || props.group.type == GroupType.Normal}>
                     <ItemsNormal
@@ -26,17 +23,18 @@ export function Group<T>(props: {
     );
 }
 
-
 export type GroupArgs<T> = GroupNormalArgs<T> | GroupRadioArgs<T>;
 
 export interface GroupNormalArgs<T> {
     title?: () => string;
+    hidden?: () => boolean;
     type?: GroupType.Normal;
     items: Array<ItemNormalArgs<T>>;
 }
 
 export interface GroupRadioArgs<T> {
     title?: () => string;
+    hidden?: () => boolean;
     type?: GroupType.Radio;
     items: Array<ItemRadioArgs<T>>;
 }
