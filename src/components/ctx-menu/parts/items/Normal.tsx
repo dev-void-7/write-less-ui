@@ -1,8 +1,8 @@
 import { For, JSXElement, Show } from "solid-js";
-import { type Item as ItemType } from "../../domain/props.js";
+import { GroupArgs } from "../Group.jsx";
 
 export function ItemsNormal<T>(props: {
-    items: Array<ItemType<T>>;
+    items: Array<ItemNormalArgs<T>>;
     state: { data: T };
     iconPlaceholder?: JSXElement;
 }) {
@@ -16,7 +16,7 @@ export function ItemsNormal<T>(props: {
 }
 
 function ItemNormal<T>(props: {
-    item: ItemType<T>;
+    item: ItemNormalArgs<T>;
     state: { data: T };
     iconPlaceholder?: JSXElement;
 }) {
@@ -37,4 +37,12 @@ function Shortcut(props: { items?: Array<string> }) {
             </div>
         </Show>
     );
+}
+
+export interface ItemNormalArgs<T> {
+    icon?: JSXElement;
+    label: () => string;
+    shortcut?: Array<string>;
+    onclick: (data: T) => any;
+    sub?: Array<GroupArgs<T>>;
 }

@@ -1,10 +1,9 @@
-import { ItemsNormal } from "./items/Normal.jsx";
-import { ItemsRadio } from "./items/Radio.jsx";
-import { Group, Type as GroupType } from "../domain/props.js";
+import { ItemNormalArgs, ItemsNormal } from "./items/Normal.jsx";
+import { ItemRadioArgs, ItemsRadio } from "./items/Radio.jsx";
 import { JSXElement, Match, Switch } from "solid-js";
 
 export function Group<T>(props: {
-    group: Group<T>;
+    group: GroupArgs<T>;
     state: { data: T };
     iconPlaceholder?: JSXElement;
 }) {
@@ -20,7 +19,7 @@ export function Group<T>(props: {
                 </Match>
                 <Match when={props.group.type == GroupType.Radio}>
                     <ItemsRadio
-                        items={props.group.items}
+                        items={props.group.items as Array<ItemRadioArgs<T>>}
                         state={props.state}
                         iconPlaceholder={props.iconPlaceholder}
                     />
@@ -28,4 +27,24 @@ export function Group<T>(props: {
             </Switch>
         </div>
     );
+}
+
+
+export type GroupArgs<T> = GroupNormalArgs<T> | GroupRadioArgs<T>;
+
+export interface GroupNormalArgs<T> {
+    title?: () => string;
+    type?: GroupType.Normal;
+    items: Array<ItemNormalArgs<T>>;
+}
+
+export interface GroupRadioArgs<T> {
+    title?: () => string;
+    type?: GroupType.Radio;
+    items: Array<ItemRadioArgs<T>>;
+}
+
+export enum GroupType {
+    Normal,
+    Radio,
 }
