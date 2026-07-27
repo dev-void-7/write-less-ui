@@ -6,6 +6,7 @@
     --wl--fs-r: var(--wl--fs-base);
 
     --wl--s-base: 0.25rem;
+    --wl--s1\/2: calc(var(--wl--s-base) * 0.5);
     --wl--s1: var(--wl--s-base);
     --wl--s2: calc(var(--wl--s-base) * 2);
     --wl--s3: calc(var(--wl--s-base) * 3);
@@ -16,6 +17,8 @@
     --wl--s8: calc(var(--wl--s-base) * 8);
     --wl--s9: calc(var(--wl--s-base) * 9);
     --wl--s10: calc(var(--wl--s-base) * 10);
+
+    --wl--border-radius: 4px;
 
     /* BUTTON */
     --wl--btn-height: var(--wl--s8);
@@ -31,6 +34,21 @@
     --wl--btn-icon-size: calc(var(--wl--btn-height) * 0.625);
     --wl--btn-icon-color: black;
     --wl--btn-icon-weight: 1.25;
+
+    /* CONTEXT-MENU */
+    --wl--ctx-menu-border-width: 1px;
+    --wl--ctx-menu-border-color: lightgray;
+    --wl--ctx-menu-bg-color: white;
+    --wl--ctx-menu-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+    --wl--ctx-menu-group-border-width: 1px;
+    --wl--ctx-menu-group-border-color: lightgray;
+    --wl--ctx-menu-item-height: var(--wl--s8);
+    --wl--ctx-menu-item-hover-bg-color: lightgray;
+    --wl--ctx-menu-item-active-bg-color: darkgray;
+    --wl--ctx-menu-item-icon-color: rgb(45, 45, 45);
+    --wl--ctx-menu-item-icon-size: calc(var(--wl--ctx-menu-item-height) * 0.625);
+    --wl--ctx-menu-item-label-color: rgb(45, 45, 45);
+    --wl--ctx-menu-item-label-fs: var(--wl--fs-2xs);
 
     /* DROPDOWN */
     --wl--dropdown-opt-hover-color: lightgray;

@@ -1,0 +1,72 @@
+.wl--ctx-menu {
+    margin: 0;
+    inset: auto;
+    position-area: block-end span-inline-start;
+    position-try: flip-block;
+    align-items: center;
+    border-radius: var(--wl--border-radius);
+    border: var(--wl--ctx-menu-group-border-width) solid var(--wl--ctx-menu-group-border-color);
+    box-shadow: var(--wl--ctx-menu-box-shadow);
+    flex-direction: column;
+    padding: 0;
+
+    &:popover-open {
+        display: flex;
+    }
+
+    > .wl--group {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: stretch;
+        border-block-end: var(--wl--ctx-menu-group-border-width) solid var(--wl--ctx-menu-group-border-color);
+        padding-block: var(--wl--s1);
+
+        &:last-child {
+            border-inline-end: none;
+        }
+
+        > .wl--item {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            padding-block: 0;
+            padding-inline: var(--wl--s1);
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            height: var(--wl--ctx-menu-item-height);
+            gap: var(--wl--s1);
+
+            &:hover {
+                background-color: var(--wl--ctx-menu-item-hover-bg-color);
+            }
+
+            &:active {
+                background-color: var(--wl--ctx-menu-item-active-bg-color);
+            }
+
+            > .wl--icon {
+                --wl--icon-color: var(--wl--ctx-menu-item-icon-color);
+                width: var(--wl--ctx-menu-item-icon-size);
+            }
+
+            > .label {
+                color: var(--wl--ctx-menu-item-label-color);
+                font-size: var(--wl--ctx-menu-item-label-fs);
+                text-transform: capitalize;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-inline-end: var(--wl--s10);
+            }
+
+            > .wl--shortcut {
+                display: flex;
+                align-items: center;
+                margin-inline-start: auto;
+                gap: var(--wl--s1);
+            }
+        }
+    }
+}

@@ -17,15 +17,29 @@ export function CtxMenu<T>(props: Props<T>) {
         },
     });
 
+    const iconPlaceholder = props.groups.some((group) => group.items.some((item) => item.icon)) ? (
+        <span class="wl--icon-placeholder"></span>
+    ) : undefined;
+
     return (
         <div class="wl--ctx-menu" popover ref={popover}>
-            <For each={props.items}>
-                {(item) => (
-                    <button type="button" class="wl--item" onclick={() => item.onclick(data)}>
-                        {item.icon}
-                        <div class="label">{item.label()}</div>
-                        <Shortcut items={item.shortcut} />
-                    </button>
+            <For each={props.groups}>
+                {(group) => (
+                    <div class="wl--group">
+                        <For each={group.items}>
+                            {(item) => (
+                                <button
+                                    type="button"
+                                    class="wl--item"
+                                    onclick={() => item.onclick(data)}
+                                >
+                                    {item.icon || iconPlaceholder}
+                                    <div class="label">{item.label()}</div>
+                                    <Shortcut items={item.shortcut} />
+                                </button>
+                            )}
+                        </For>
+                    </div>
                 )}
             </For>
         </div>
