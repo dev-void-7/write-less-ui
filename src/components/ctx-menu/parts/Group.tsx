@@ -1,10 +1,13 @@
 import { ItemNormalArgs, ItemsNormal } from "./items/Normal.jsx";
 import { ItemRadioArgs, ItemsRadio } from "./items/Radio.jsx";
-import { JSXElement, Match, Switch } from "solid-js";
+import { JSXElement, Match, Show, Switch } from "solid-js";
 
 export function Group<T>(props: { group: GroupArgs<T>; iconPlaceholder?: JSXElement }) {
     return (
         <div class="wl--group" classList={{ "wl--hidden": props.group.hidden?.() }}>
+            <Show when={props.group.title}>
+                <div class="wl--title">{(props.group.title as () => string)()}</div>
+            </Show>
             <Switch>
                 <Match when={props.group.type == undefined || props.group.type == GroupType.Normal}>
                     <ItemsNormal
