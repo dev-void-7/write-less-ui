@@ -1,4 +1,4 @@
-import { Accessor, createSignal, For, JSXElement, Setter, Show } from "solid-js";
+import { Accessor, createMemo, createSignal, For, JSXElement, Setter, Show } from "solid-js";
 import { CheckIcon } from "../../../icons/CheckIcon.jsx";
 import { useCtxMenuContext } from "../../CtxMenueContext.js";
 
@@ -33,15 +33,15 @@ function ItemRadio<T>(props: {
     setSelected: Setter<{ index: number; value: T }>;
 }) {
     const data = useCtxMenuContext<T>();
-    const showCheck = () => {
+    const selected = createMemo(() => {
         const selected = props.selected();
         return selected.index === props.index && data() == selected.value;
-    };
+    });
     return (
         <button
             type="button"
             class="wl--item"
-            classList={{ "wl--hidden": props.item.hidden?.() }}
+            classList={{ "wl--hidden": props.item.hidden?.(), "wl--selected": selected() }}
             onclick={() => {
                 const value = data();
                 props.setSelected({ index: props.index, value });
@@ -51,7 +51,7 @@ function ItemRadio<T>(props: {
             {props.item.icon || props.iconPlaceholder}
             <div class="label">{props.item.label()}</div>
             <Shortcut items={props.item.shortcut} />
-            <Show when={showCheck()}>
+            <Show when={selected()}>
                 <CheckIcon classList={{ "wl--check-icon": true }} />
             </Show>
         </button>
