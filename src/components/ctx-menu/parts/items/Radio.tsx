@@ -50,6 +50,7 @@ function ItemRadio<T>(props: {
         >
             {props.item.icon || props.iconPlaceholder}
             <div class="label">{props.item.label()}</div>
+            <div class="wl--expander"></div>
             <Shortcut items={props.item.shortcut} />
             <Show when={selected()}>
                 <CheckIcon classList={{ "wl--check-icon": true }} />

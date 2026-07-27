@@ -24,6 +24,7 @@ function ItemNormal<T>(props: { item: ItemNormalArgs<T>; iconPlaceholder?: JSXEl
         >
             {props.item.icon || props.iconPlaceholder}
             <div class="label">{props.item.label()}</div>
+            <div class="wl--expander"></div>
             <Shortcut items={props.item.shortcut} />
         </button>
     );

@@ -19,7 +19,8 @@
         width: 100%;
         flex-direction: column;
         justify-content: stretch;
-        border-block-end: var(--wl--ctx-menu-group-border-width) solid var(--wl--ctx-menu-group-border-color);
+        border-block-end: var(--wl--ctx-menu-group-border-width) solid
+            var(--wl--ctx-menu-group-border-color);
         padding-block: var(--wl--s1);
 
         &:last-child {
@@ -75,17 +76,14 @@
                 margin-inline-end: var(--wl--s10);
             }
 
+            > .wl--expander {
+                flex-grow: 1;
+            }
+
             > .wl--shortcut {
                 display: flex;
                 align-items: center;
-                margin-inline-start: auto;
                 gap: var(--wl--s1);
-            }
-
-            &:not(:has(.wl--shortcut)) {
-                > .wl--check-icon {
-                    margin-inline-start: auto;
-                }
             }
         }
     }
