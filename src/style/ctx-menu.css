@@ -66,7 +66,7 @@
                 width: var(--wl--ctx-menu-item-icon-size);
             }
 
-            > .label {
+            > .wl--label {
                 color: var(--wl--ctx-menu-item-label-color);
                 font-size: var(--wl--ctx-menu-item-label-fs);
                 text-transform: capitalize;
