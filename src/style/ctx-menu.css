@@ -81,6 +81,12 @@
                 margin-inline-start: auto;
                 gap: var(--wl--s1);
             }
+
+            &:not(:has(.wl--shortcut)) {
+                > .wl--check-icon {
+                    margin-inline-start: auto;
+                }
+            }
         }
     }
 }
