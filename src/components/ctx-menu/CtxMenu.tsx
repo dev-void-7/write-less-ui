@@ -8,21 +8,32 @@ export function CtxMenu<T>(props: Props<T>) {
     let popover!: HTMLDivElement;
     // eslint-enable no-unassigned-vars
     const [data, setData] = createSignal<T>(undefined as T);
+    const [anchorName, setAnchorName] = createSignal<string | undefined>(undefined);
+
     // @ts-ignore
     props.ref({
-        show: (data: T) => {
+        show: (data: T, anchorName: string) => {
             // @ts-ignore
             setData(data);
-            popover.showPopover();
+            setAnchorName(anchorName);
+            setTimeout(() => popover.showPopover());
         },
         hide: () => {
+            setAnchorName(undefined);
             popover.hidePopover();
         },
     });
 
     return (
         <CtxMenuContext.Provider value={data}>
-            <div class="wl--ctx-menu" popover ref={popover}>
+            <div
+                class="wl--ctx-menu"
+                style={{
+                    "anchor-name": anchorName(),
+                }}
+                popover
+                ref={popover}
+            >
                 <Groups groups={props.groups} />
             </div>
         </CtxMenuContext.Provider>

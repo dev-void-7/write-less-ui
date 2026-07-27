@@ -6,5 +6,6 @@ export interface Props<T> {
 }
 
 export interface Api<T> {
-    show: (item: T) => {};
+    show: (item: T, anchorName: string) => {};
+    hide: () => {};
 }
