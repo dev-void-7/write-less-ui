@@ -1,18 +1,24 @@
-import { For, JSXElement, Show } from "solid-js";
+import { Accessor, createSignal, For, JSXElement, Setter, Show } from "solid-js";
 import { CheckIcon } from "../../../icons/CheckIcon.jsx";
+import { useCtxMenuContext } from "../../CtxMenueContext.js";
 
 export function ItemsRadio<T>(props: {
     items: Array<ItemRadioArgs<T>>;
-    state: { data: T };
     iconPlaceholder?: JSXElement;
 }) {
+    const [selected, setSelected] = createSignal({
+        index: -1,
+        value: undefined as T,
+    });
     return (
         <For each={props.items}>
-            {(item) => (
+            {(item, index) => (
                 <ItemRadio
+                    index={index()}
                     item={item}
-                    state={props.state}
                     iconPlaceholder={props.iconPlaceholder}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
             )}
         </For>
@@ -20,22 +26,31 @@ export function ItemsRadio<T>(props: {
 }
 
 function ItemRadio<T>(props: {
+    index: number;
     item: ItemRadioArgs<T>;
-    state: { data: T };
     iconPlaceholder?: JSXElement;
+    selected: Accessor<{ index: number; value: T }>;
+    setSelected: Setter<{ index: number; value: T }>;
 }) {
+    const data = useCtxMenuContext<T>();
+    const showCheck = () => {
+        const selected = props.selected();
+        return selected.index === props.index && data() == selected.value;
+    };
     return (
         <button
             type="button"
             class="wl--item"
             onclick={() => {
-                props.item.onclick(props.state.data);
+                const value = data();
+                props.setSelected({ index: props.index, value });
+                props.item.onclick(value);
             }}
         >
             {props.item.icon || props.iconPlaceholder}
             <div class="label">{props.item.label()}</div>
             <Shortcut items={props.item.shortcut} />
-            <Show when={props.item.selected}>
+            <Show when={showCheck()}>
                 <CheckIcon classList={{ "wl--check-icon": true }} />
             </Show>
         </button>
@@ -57,5 +72,4 @@ export interface ItemRadioArgs<T> {
     label: () => string;
     shortcut?: Array<string>;
     onclick: (data: T) => any;
-    selected: boolean;
 }

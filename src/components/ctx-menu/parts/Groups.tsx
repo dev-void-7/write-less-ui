@@ -1,22 +1,17 @@
 import { For } from "solid-js";
-import { Group } from "./Group.jsx";
-import { type Group as GroupType } from "../domain/props.js";
+import { Group, GroupArgs } from "./Group.jsx";
 
-export function Groups<T>(props: { groups: Array<GroupType<T>>; state: { data: T } }) {
+export function Groups<T>(props: { groups: Array<GroupArgs<T>> }) {
     return (
         <For each={props.groups}>
             {(group) => (
-                <Group
-                    group={group}
-                    state={props.state}
-                    iconPlaceholder={<IconPlaceHolder groups={props.groups} />}
-                />
+                <Group group={group} iconPlaceholder={<IconPlaceHolder groups={props.groups} />} />
             )}
         </For>
     );
 }
 
-function IconPlaceHolder<T>(props: { groups: Array<GroupType<T>> }) {
+function IconPlaceHolder<T>(props: { groups: Array<GroupArgs<T>> }) {
     return props.groups.some((group) => group.items.some((item) => item.icon)) ? (
         <span class="wl--icon-placeholder"></span>
     ) : undefined;

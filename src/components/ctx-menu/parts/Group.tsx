@@ -4,7 +4,6 @@ import { JSXElement, Match, Switch } from "solid-js";
 
 export function Group<T>(props: {
     group: GroupArgs<T>;
-    state: { data: T };
     iconPlaceholder?: JSXElement;
 }) {
     return (
@@ -13,14 +12,12 @@ export function Group<T>(props: {
                 <Match when={props.group.type == undefined || props.group.type == GroupType.Normal}>
                     <ItemsNormal
                         items={props.group.items}
-                        state={props.state}
                         iconPlaceholder={props.iconPlaceholder}
                     />
                 </Match>
                 <Match when={props.group.type == GroupType.Radio}>
                     <ItemsRadio
                         items={props.group.items as Array<ItemRadioArgs<T>>}
-                        state={props.state}
                         iconPlaceholder={props.iconPlaceholder}
                     />
                 </Match>

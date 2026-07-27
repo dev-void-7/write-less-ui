@@ -1,27 +1,22 @@
 import { For, JSXElement, Show } from "solid-js";
 import { GroupArgs } from "../Group.jsx";
+import { useCtxMenuContext } from "../../CtxMenueContext.js";
 
 export function ItemsNormal<T>(props: {
     items: Array<ItemNormalArgs<T>>;
-    state: { data: T };
     iconPlaceholder?: JSXElement;
 }) {
     return (
         <For each={props.items}>
-            {(item) => (
-                <ItemNormal item={item} state={props.state} iconPlaceholder={props.iconPlaceholder} />
-            )}
+            {(item) => <ItemNormal item={item} iconPlaceholder={props.iconPlaceholder} />}
         </For>
     );
 }
 
-function ItemNormal<T>(props: {
-    item: ItemNormalArgs<T>;
-    state: { data: T };
-    iconPlaceholder?: JSXElement;
-}) {
+function ItemNormal<T>(props: { item: ItemNormalArgs<T>; iconPlaceholder?: JSXElement }) {
+    const data = useCtxMenuContext<T>();
     return (
-        <button type="button" class="wl--item" onclick={() => props.item.onclick(props.state.data)}>
+        <button type="button" class="wl--item" onclick={() => props.item.onclick(data())}>
             {props.item.icon || props.iconPlaceholder}
             <div class="label">{props.item.label()}</div>
             <Shortcut items={props.item.shortcut} />
