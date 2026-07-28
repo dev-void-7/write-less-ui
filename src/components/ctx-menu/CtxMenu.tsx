@@ -37,7 +37,7 @@ export function CtxMenu<T>(props: Props<T>) {
             <div
                 class="wl--ctx-menu"
                 style={{
-                    "anchor-name": anchorName(),
+                    "position-anchor": anchorName(),
                 }}
                 popover
                 ref={popover}
