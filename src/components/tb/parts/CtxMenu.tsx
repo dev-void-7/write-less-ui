@@ -1,5 +1,6 @@
 import { CtxMenu as CtxMenuComponent } from "../../ctx-menu/CtxMenu.jsx";
 import { Api as ContextMenuApi } from "../../ctx-menu/domain/props.js";
+import { GroupType } from "../../ctx-menu/parts/Group.jsx";
 import { Col } from "../domain/cols/col.js";
 
 export function CtxMenu(props: { api: ContextMenuApi<Col> }) {
@@ -15,6 +16,7 @@ export function CtxMenu(props: { api: ContextMenuApi<Col> }) {
                 },
                 {
                     title: () => "ORDER",
+                    type: GroupType.Radio,
                     items: [
                         { label: () => "Ascending", onclick: () => {} },
                         { label: () => "Descending", onclick: () => {} },
