@@ -57,7 +57,7 @@ function THeadTrThGroup(props: { cols: Cols; col: ColGroup; ctxMenu: CtxMenuApi<
         const anchorName = `--${createUniqueId()}`;
         this.style.anchorName = anchorName;
         props.ctxMenu.show(props.col, anchorName, () => {
-            this.style.removeProperty("anchor-name");
+            if (this.style.anchorName == anchorName) this.style.removeProperty("anchor-name");
         });
     }
 
@@ -92,7 +92,7 @@ function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf; ctxMenu: CtxMenuApi<Co
         const anchorName = `--${createUniqueId()}`;
         this.style.anchorName = anchorName;
         props.ctxMenu.show(props.col, anchorName, () => {
-            this.style.removeProperty("anchor-name");
+            if (this.style.anchorName == anchorName) this.style.removeProperty("anchor-name");
         });
     }
     return (
