@@ -9,9 +9,23 @@
     box-shadow: var(--wl--ctx-menu-box-shadow);
     flex-direction: column;
     padding: 0;
+    opacity: 0;
+    scale: 0.9;
 
     &:popover-open {
         display: flex;
+        scale: 1;
+        opacity: 1;
+        transition:
+            opacity 0.2s ease-out,
+            scale 0.2s ease-out,
+            overlay 0.2s allow-discrete,
+            display 0.2s allow-discrete;
+
+        @starting-style {
+            scale: 0.9;
+            opacity: 0;
+        }
     }
 
     > .wl--group {
