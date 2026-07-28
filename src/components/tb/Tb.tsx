@@ -8,10 +8,14 @@ import { onMount } from "solid-js";
 import { initVerticalScrolling } from "./utils/scrolling.js";
 import { ArrowUpFillIcon } from "../icons/ArrowUpFill.jsx";
 import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
+import { Api as CtxMenuApi } from "../ctx-menu/domain/props.js";
+import { CtxMenu } from "./parts/CtxMenu.jsx";
+import { Col } from "./domain/cols/col.js";
 
 export function Tb(props: Props) {
     const cols = new Cols(props),
-        foots = new Foots(props, cols.leafs, cols.orderedLeafs);
+        foots = new Foots(props, cols.leafs, cols.orderedLeafs),
+        ctxMenu = {} as CtxMenuApi<Col>;
 
     // eslint-disable no-unassigned-vars
     let tbWrapper!: HTMLDivElement,
@@ -42,10 +46,11 @@ export function Tb(props: Props) {
                 <div class="wl--tb-wrapper" ref={tbWrapper}>
                     <table id={props.id} ref={tb}>
                         <ColGroup cols={cols} />
-                        <THead cols={cols} />
+                        <THead cols={cols} ctxMenu={ctxMenu} />
                         <TBody cols={cols} rows={props.rows} />
                         <TFoot foots={foots} />
                     </table>
+                    <CtxMenu api={ctxMenu} />
                 </div>
                 <div class="wl--tb-thead-placeholder"></div>
                 <div class="wl--tb-tfoot-placeholder"></div>

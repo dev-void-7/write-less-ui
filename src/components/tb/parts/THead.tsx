@@ -1,44 +1,67 @@
-import { For, Match, Show, Switch } from "solid-js";
+import { createUniqueId, For, Match, Show, Switch } from "solid-js";
 import { Cols } from "../domain/index.js";
 import { Col } from "../domain/cols/col.js";
 import { ColGroup } from "../domain/cols/col-group.js";
 import { ColLeaf } from "../domain/cols/col-leaf.js";
 import { generateOnResizerPointerDown } from "../utils/resizing.js";
 import { MoreIcon } from "../../icons/More.jsx";
+import { Api as CtxMenuApi } from "../../ctx-menu/domain/props.js";
 
-export function THead(props: { cols: Cols }) {
+export function THead(props: { cols: Cols; ctxMenu: CtxMenuApi<Col> }) {
     const cols = props.cols;
     return (
         <thead>
-            <For each={cols.orderedColsAsRows()}>{(row) => <THeadTr cols={cols} row={row} />}</For>
+            <For each={cols.orderedColsAsRows()}>
+                {(row) => <THeadTr cols={cols} row={row} ctxMenu={props.ctxMenu} />}
+            </For>
         </thead>
     );
 }
 
-function THeadTr(props: { cols: Cols; row: Col[] }) {
+function THeadTr(props: { cols: Cols; row: Col[]; ctxMenu: CtxMenuApi<Col> }) {
     const cols = props.cols;
     return (
         <tr>
-            <For each={props.row}>{(col) => <THeadTrTh cols={cols} col={col} />}</For>
+            <For each={props.row}>
+                {(col) => <THeadTrTh cols={cols} col={col} ctxMenu={props.ctxMenu} />}
+            </For>
         </tr>
     );
 }
 
-function THeadTrTh(props: { cols: Cols; col: Col }) {
+function THeadTrTh(props: { cols: Cols; col: Col; ctxMenu: CtxMenuApi<Col> }) {
     return (
         <Switch>
             <Match when={props.col instanceof ColGroup}>
-                <THeadTrThGroup cols={props.cols} col={props.col as ColGroup} />
+                <THeadTrThGroup
+                    cols={props.cols}
+                    col={props.col as ColGroup}
+                    ctxMenu={props.ctxMenu}
+                />
             </Match>
             <Match when={props.col instanceof ColLeaf}>
-                <THeadTrThLeaf cols={props.cols} col={props.col as ColLeaf} />
+                <THeadTrThLeaf
+                    cols={props.cols}
+                    col={props.col as ColLeaf}
+                    ctxMenu={props.ctxMenu}
+                />
             </Match>
         </Switch>
     );
 }
 
-function THeadTrThGroup(props: { cols: Cols; col: ColGroup }) {
+function THeadTrThGroup(props: { cols: Cols; col: ColGroup; ctxMenu: CtxMenuApi<Col> }) {
     const cols = props.cols;
+
+    function onMoreClick(this: HTMLButtonElement) {
+        const anchorName = createUniqueId();
+        this.style.anchorName = anchorName;
+        console.log("anchor is being clicked", anchorName);
+        props.ctxMenu.show(props.col, anchorName, () => {
+            this.style.removeProperty("anchor-name");
+        });
+    }
+
     return (
         <th
             colspan={props.col.colSpan()}
@@ -51,7 +74,7 @@ function THeadTrThGroup(props: { cols: Cols; col: ColGroup }) {
         >
             <div class="wl--th-content">
                 <div class="wl--th-label">{props.col.label()}</div>
-                <button class="wl--more">
+                <button type="button" class="wl--more" onclick={onMoreClick}>
                     <MoreIcon />
                 </button>
             </div>
@@ -64,8 +87,15 @@ function THeadTrThGroup(props: { cols: Cols; col: ColGroup }) {
     );
 }
 
-function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf }) {
+function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf; ctxMenu: CtxMenuApi<Col> }) {
     const cols = props.cols;
+    function onMoreClick(this: HTMLButtonElement) {
+        const anchorName = `--${createUniqueId()}`;
+        this.style.anchorName = anchorName;
+        props.ctxMenu.show(props.col, anchorName, () => {
+            this.style.removeProperty("anchor-name");
+        });
+    }
     return (
         <th
             colspan={props.col.colSpan()}
@@ -79,7 +109,7 @@ function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf }) {
         >
             <div class="wl--th-content">
                 <div class="wl--th-label">{props.col.label()}</div>
-                <button class="wl--more">
+                <button type="button" class="wl--more" onclick={onMoreClick}>
                     <MoreIcon />
                 </button>
                 <Show when={props.col.sortable}>
