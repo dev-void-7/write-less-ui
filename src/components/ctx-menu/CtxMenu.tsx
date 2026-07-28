@@ -9,26 +9,43 @@ export function CtxMenu<T>(props: Props<T>) {
     // eslint-enable no-unassigned-vars
     const [data, setData] = createSignal<T>(undefined as T);
     const [anchorName, setAnchorName] = createSignal<string | undefined>(undefined);
+    let open = false;
     let onHide: (() => void) | undefined;
 
-    console.log(props);
-    props.api.show = (data: T, anchorName: string, pOnHide?: () => void) => {
-        // @ts-ignore
-        setData(data);
-        setAnchorName(anchorName);
-        onHide = pOnHide;
-        setTimeout(() => popover.showPopover());
-    };
+    function show(data: T, anchorName: string, pOnHide?: () => void) {
+        if (open) {
+            popover.hidePopover();
+        }
+        setTimeout(() => {
+            // @ts-ignore
+            setData(data);
+            setAnchorName(anchorName);
+            onHide = pOnHide;
+            popover.showPopover();
+        });
+    }
 
-    // @ts-ignore
-    props.api.hide = () => {
-        setAnchorName(undefined);
+    function hide() {
         popover.hidePopover();
-    };
+    }
+
+    function isOpen() {
+        return open;
+    }
+
+    props.api.show = show;
+    props.api.hide = hide;
+    props.api.isOpen = isOpen;
 
     onMount(() => {
         popover.addEventListener("toggle", (e) => {
-            if (onHide && e.newState == "closed") onHide();
+            if (e.newState == "closed") {
+                setAnchorName(undefined);
+                onHide?.();
+                open = false;
+            } else {
+                open = true;
+            }
         });
     });
 

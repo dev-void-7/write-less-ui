@@ -8,4 +8,5 @@ export interface Props<T> {
 export interface Api<T> {
     show: (item: T, anchorName: string, onHide?: () => void) => void;
     hide: () => void;
+    isOpen: () => boolean;
 }
