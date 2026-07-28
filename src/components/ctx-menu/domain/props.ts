@@ -2,10 +2,10 @@ import { GroupArgs } from "../parts/Group.jsx";
 
 export interface Props<T> {
     groups: Array<GroupArgs<T>>;
-    ref: Api<T>;
+    api: Api<T>;
 }
 
 export interface Api<T> {
-    show: (item: T, anchorName: string, onHide?: () => void) => {};
-    hide: () => {};
+    show: (item: T, anchorName: string, onHide?: () => void) => void;
+    hide: () => void;
 }

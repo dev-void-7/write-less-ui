@@ -11,20 +11,20 @@ export function CtxMenu<T>(props: Props<T>) {
     const [anchorName, setAnchorName] = createSignal<string | undefined>(undefined);
     let onHide: (() => void) | undefined;
 
+    console.log(props);
+    props.api.show = (data: T, anchorName: string, pOnHide?: () => void) => {
+        // @ts-ignore
+        setData(data);
+        setAnchorName(anchorName);
+        onHide = pOnHide;
+        setTimeout(() => popover.showPopover());
+    };
+
     // @ts-ignore
-    props.ref({
-        show: (data: T, anchorName: string, pOnHide?: () => void) => {
-            // @ts-ignore
-            setData(data);
-            setAnchorName(anchorName);
-            onHide = pOnHide;
-            setTimeout(() => popover.showPopover());
-        },
-        hide: () => {
-            setAnchorName(undefined);
-            popover.hidePopover();
-        },
-    });
+    props.api.hide = () => {
+        setAnchorName(undefined);
+        popover.hidePopover();
+    };
 
     onMount(() => {
         popover.addEventListener("toggle", (e) => {
