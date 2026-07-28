@@ -14,13 +14,16 @@ export function ItemsNormal<T>(props: {
 }
 
 function ItemNormal<T>(props: { item: ItemNormalArgs<T>; iconPlaceholder?: JSXElement }) {
-    const data = useCtxMenuContext<T>();
+    const state = useCtxMenuContext<T>();
     return (
         <button
             type="button"
             class="wl--item"
             classList={{ "wl--hidden": props.item.hidden?.() }}
-            onclick={() => props.item.onclick(data())}
+            onclick={() => {
+                props.item.onclick(state.data());
+                state.hidePopover();
+            }}
         >
             {props.item.icon || props.iconPlaceholder}
             <div class="wl--label">{props.item.label()}</div>

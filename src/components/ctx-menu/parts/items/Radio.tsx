@@ -32,20 +32,22 @@ function ItemRadio<T>(props: {
     selected: Accessor<{ index: number; value: T }>;
     setSelected: Setter<{ index: number; value: T }>;
 }) {
-    const data = useCtxMenuContext<T>();
+    const state = useCtxMenuContext<T>();
     const selected = createMemo(() => {
         const selected = props.selected();
-        return selected.index === props.index && data() == selected.value;
+        return selected.index === props.index && state.data() == selected.value;
     });
+
     return (
         <button
             type="button"
             class="wl--item"
             classList={{ "wl--hidden": props.item.hidden?.(), "wl--selected": selected() }}
             onclick={() => {
-                const value = data();
+                const value = state.data();
                 props.setSelected({ index: props.index, value });
                 props.item.onclick(value);
+                state.hidePopover();
             }}
         >
             {props.item.icon || props.iconPlaceholder}

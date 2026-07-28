@@ -1,5 +1,6 @@
-import { Accessor, Context, createContext, useContext } from "solid-js";
+import { Context, createContext, useContext } from "solid-js";
+import { State } from "./domain/state.js";
 
-export const CtxMenuContext = createContext<Accessor<any>>();
+export const CtxMenuContext = createContext<State<any>>();
 
-export const useCtxMenuContext = <T>() => useContext(CtxMenuContext as Context<Accessor<T>>);
+export const useCtxMenuContext = <T>() => useContext(CtxMenuContext as Context<State<T>>);
