@@ -54,9 +54,8 @@ function THeadTrThGroup(props: { cols: Cols; col: ColGroup; ctxMenu: CtxMenuApi<
     const cols = props.cols;
 
     function onMoreClick(this: HTMLButtonElement) {
-        const anchorName = createUniqueId();
+        const anchorName = `--${createUniqueId()}`;
         this.style.anchorName = anchorName;
-        console.log("anchor is being clicked", anchorName);
         props.ctxMenu.show(props.col, anchorName, () => {
             this.style.removeProperty("anchor-name");
         });
