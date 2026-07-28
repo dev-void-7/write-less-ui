@@ -4,6 +4,8 @@ import { GroupType } from "../../ctx-menu/parts/Group.jsx";
 import { Col } from "../domain/cols/col.js";
 import { StachExpandVerticalIcon } from "../../icons/StachExpandVertical.jsx";
 import { StachShrinkVerticalIcon } from "../../icons/StachShrinkVertical.jsx";
+import { BarsArrowDownIcon } from "../../icons/BarsArrowDown.jsx";
+import { BarsArrowUpIcon } from "../../icons/BarsArrowUp.jsx";
 
 export function CtxMenu(props: { api: ContextMenuApi<Col> }) {
     console.log(props.api);
@@ -25,11 +27,15 @@ export function CtxMenu(props: { api: ContextMenuApi<Col> }) {
                     ],
                 },
                 {
-                    title: () => "ORDER",
+                    title: () => "SORT",
                     type: GroupType.Radio,
                     items: [
-                        { label: () => "Ascending", onclick: () => {} },
-                        { label: () => "Descending", onclick: () => {} },
+                        { label: () => "Ascending", onclick: () => {}, icon: <BarsArrowUpIcon /> },
+                        {
+                            label: () => "Descending",
+                            onclick: () => {},
+                            icon: <BarsArrowDownIcon />,
+                        },
                     ],
                 },
             ]}
