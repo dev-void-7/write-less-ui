@@ -1,7 +1,7 @@
 .wl--ctx-menu {
     margin: 0;
     inset: auto;
-    position-area: block-end span-inline-start;
+    position-area: block-end span-inline-end;
     position-try: flip-block;
     align-items: center;
     border-radius: var(--wl--border-radius);

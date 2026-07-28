@@ -1,5 +1,6 @@
 :root {
     --wl--fs-base: clamp(0.9375rem, 0.875rem + 0.135vw, 1.0625rem);
+    --wl--fs-3xs: calc(var(--wl--fs-base) * 0.75);
     --wl--fs-2xs: calc(var(--wl--fs-base) * 0.8125);
     --wl--fs-xs: calc(var(--wl--fs-base) * 0.875);
     --wl--fs-s: calc(var(--wl--fs-base) * 0.9375);
@@ -44,7 +45,7 @@
     --wl--ctx-menu-group-border-color: lightgray;
     --wl--ctx-menu-group-title-height: var(--wl--s6);
     --wl--ctx-menu-group-title-color: rgb(90,90,90);
-    --wl--ctx-menu-group-title-fs: var(--wl--fs-2xs);
+    --wl--ctx-menu-group-title-fs: var(--wl--fs-3xs);
     --wl--ctx-menu-group-title-fw: 600;
     --wl--ctx-menu-item-height: var(--wl--s8);
     --wl--ctx-menu-item-hover-bg-color: lightgray;
