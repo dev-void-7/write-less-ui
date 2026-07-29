@@ -84,7 +84,7 @@
                         display: flex;
                         align-items: center;
                         padding-inline: var(--wl--tb-head-height-1\/4);
-                        column-gap: 0.5rem;
+                        column-gap: var(--wl--s1\/2);
 
                         > .wl--th-label {
                             text-transform: capitalize;

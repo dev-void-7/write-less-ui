@@ -7,8 +7,8 @@ import { MoreIcon } from "../../icons/More.jsx";
 import { Api as CtxMenuApi } from "../../ctx-menu/domain/props.js";
 import { State } from "../domain/state.js";
 import { SortDir } from "../../common/types.js";
-import { BarsArrowUpIcon } from "../../icons/BarsArrowUp.jsx";
-import { BarsArrowDownIcon } from "../../icons/BarsArrowDown.jsx";
+import { ArrowLongDownIcon } from "../../icons/ArrowLongDown.jsx";
+import { ArrowLongUpIcon } from "../../icons/ArrowLongUp.jsx";
 
 export function THead<S>(props: { state: State<S>; ctxMenu: CtxMenuApi<Col<S>> }) {
     return (
@@ -110,8 +110,8 @@ function THeadTrThLeaf<S>(props: {
         if (!sorted) return;
         const by = sorted.by();
         if (by === undefined || by.key !== props.col.sortKey) return;
-        if (by.dir == SortDir.Asc) return <BarsArrowUpIcon />;
-        else return <BarsArrowDownIcon />;
+        if (by.dir == SortDir.Asc) return <ArrowLongUpIcon/>;
+        else return <ArrowLongDownIcon />;
     };
 
     return (
