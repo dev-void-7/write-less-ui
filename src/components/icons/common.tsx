@@ -1,5 +1,5 @@
 export const enum Vars {
-    IconColor = "var(--wl--icon-color, black)",
+    IconColor = "var(--wl--icon-color, currentColor)",
     IconWeight = "var(--wl--icon-weight, 1.25)",
 }
 
