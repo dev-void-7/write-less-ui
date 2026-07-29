@@ -42,7 +42,7 @@ function ItemRadio<T>(props: {
         <button
             type="button"
             class="wl--item"
-            classList={{ "wl--hidden": props.item.hidden?.(), "wl--selected": selected() }}
+            classList={{ "wl--hidden": props.item.hidden?.(state.data()), "wl--selected": selected() }}
             onclick={() => {
                 const value = state.data();
                 props.setSelected({ index: props.index, value });
@@ -76,5 +76,5 @@ export interface ItemRadioArgs<T> {
     label: () => string;
     shortcut?: Array<string>;
     onclick: (data: T) => any;
-    hidden?: () => boolean;
+    hidden?: (data: T) => boolean;
 }

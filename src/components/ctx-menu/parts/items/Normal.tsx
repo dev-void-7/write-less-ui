@@ -19,7 +19,7 @@ function ItemNormal<T>(props: { item: ItemNormalArgs<T>; iconPlaceholder?: JSXEl
         <button
             type="button"
             class="wl--item"
-            classList={{ "wl--hidden": props.item.hidden?.() }}
+            classList={{ "wl--hidden": props.item.hidden?.(state.data()) }}
             onclick={() => {
                 props.item.onclick(state.data());
                 state.hidePopover();
@@ -48,6 +48,6 @@ export interface ItemNormalArgs<T> {
     label: () => string;
     shortcut?: Array<string>;
     onclick: (data: T) => any;
-    hidden?: () => boolean;
+    hidden?: (data: T) => boolean;
     sub?: Array<GroupArgs<T>>;
 }
