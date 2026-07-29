@@ -4,21 +4,21 @@ import { ColLeaf } from "./col-leaf.js";
 import { ColGroup } from "./col-group.js";
 import { getColOrder, getOrderedCols } from "./common.js";
 
-export class Cols {
-    cols: Accessor<Array<Col>>;
+export class Cols<S = any> {
+    cols: Accessor<Array<Col<S>>>;
     colsOrder: Accessor<Array<number>>;
     setColsOrder: Setter<Array<number>>;
-    orderedCols: Accessor<Array<Col>>;
-    firstVisibleCols: Accessor<Array<Col>>;
-    lastVisibleCols: Accessor<Array<Col>>;
-    orderedColsAsRows: Accessor<Array<Array<Col>>>;
-    orderedLeafs: Accessor<Array<ColLeaf>>;
-    leafs: Accessor<Array<ColLeaf>>;
+    orderedCols: Accessor<Array<Col<S>>>;
+    firstVisibleCols: Accessor<Array<Col<S>>>;
+    lastVisibleCols: Accessor<Array<Col<S>>>;
+    orderedColsAsRows: Accessor<Array<Array<Col<S>>>>;
+    orderedLeafs: Accessor<Array<ColLeaf<S>>>;
+    leafs: Accessor<Array<ColLeaf<S>>>;
     depth: Accessor<number>;
     wrapper!: HTMLDivElement;
     tb!: HTMLTableElement;
 
-    constructor(props: { id: string; cols: Array<ColArg> }) {
+    constructor(props: { id: string; cols: Array<ColArg<S>> }) {
         [this.colsOrder, this.setColsOrder] = createSignal(
             getColOrder(props.id, props.cols.length),
         );
@@ -48,22 +48,22 @@ export class Cols {
     }
 }
 
-function colsFromArgs(
+function colsFromArgs<S>(
     idx: Uint32Array,
-    args: Array<ColArg>,
+    args: Array<ColArg<S>>,
     id: string,
     depth: number,
     curLvl: number = 0,
     firstInRow: boolean = true,
-): Array<Col> {
+): Array<Col<S>> {
     const cols = [];
-    let arg: ColArg;
+    let arg: ColArg<S>;
     for (let i = 0; i < args.length; i++) {
         arg = args[i];
         if (typeof arg == "string") {
             const fixedLabel = arg;
             cols.push(
-                new ColLeaf(
+                new ColLeaf<S>(
                     `${id}.${i}`,
                     idx[0]++,
                     depth - curLvl,
@@ -77,7 +77,7 @@ function colsFromArgs(
         }
         if (typeof arg == "function") {
             cols.push(
-                new ColLeaf(
+                new ColLeaf<S>(
                     `${id}.${i}`,
                     idx[0]++,
                     depth - curLvl,
@@ -90,7 +90,7 @@ function colsFromArgs(
 
         if (!arg.children) {
             cols.push(
-                new ColLeaf(`${id}.${i}`, idx[0]++, depth - curLvl, arg, firstInRow && i === 0),
+                new ColLeaf<S>(`${id}.${i}`, idx[0]++, depth - curLvl, arg, firstInRow && i === 0),
             );
             continue;
         }
@@ -110,13 +110,17 @@ function colsFromArgs(
     return cols;
 }
 
-function orderedColsIntoRows(cols: Array<Col>): Array<Array<Col>> {
-    const rows: Array<Array<Col>> = [];
+function orderedColsIntoRows<S>(cols: Array<Col<S>>): Array<Array<Col<S>>> {
+    const rows: Array<Array<Col<S>>> = [];
     orderedColsIntoRowsRecursively(cols, rows, 0);
     return rows;
 }
 
-function orderedColsIntoRowsRecursively(cols: Array<Col>, rows: Array<Array<Col>>, rowIdx: number) {
+function orderedColsIntoRowsRecursively<S>(
+    cols: Array<Col<S>>,
+    rows: Array<Array<Col<S>>>,
+    rowIdx: number,
+) {
     let row = rows[rowIdx];
     if (!row) row = rows[rowIdx] = [];
     let col;
@@ -130,8 +134,8 @@ function orderedColsIntoRowsRecursively(cols: Array<Col>, rows: Array<Array<Col>
     }
 }
 
-function getLeafs(cols: Array<Col>): Array<ColLeaf> {
-    const leafs: Array<ColLeaf> = [];
+function getLeafs<S>(cols: Array<Col<S>>): Array<ColLeaf<S>> {
+    const leafs: Array<ColLeaf<S>> = [];
     for (let col of cols) {
         if (col instanceof ColLeaf) leafs.push(col);
         else if (col instanceof ColGroup) leafs.push(...getLeafs(col.children));
@@ -139,8 +143,8 @@ function getLeafs(cols: Array<Col>): Array<ColLeaf> {
     return leafs;
 }
 
-function detFirstVisibleCols(orderedCols: Array<Col>): Array<Col> {
-    const lastVisible: Array<Col> = [];
+function detFirstVisibleCols<S>(orderedCols: Array<Col<S>>): Array<Col<S>> {
+    const lastVisible: Array<Col<S>> = [];
     let col;
     for (let i = 0; i < orderedCols.length; i++) {
         col = orderedCols[i];
@@ -154,8 +158,8 @@ function detFirstVisibleCols(orderedCols: Array<Col>): Array<Col> {
     return lastVisible;
 }
 
-function detLastVisibleCols(orderedCols: Array<Col>): Array<Col> {
-    const lastVisible: Array<Col> = [];
+function detLastVisibleCols<S>(orderedCols: Array<Col<S>>): Array<Col<S>> {
+    const lastVisible: Array<Col<S>> = [];
     let col;
     for (let i = orderedCols.length - 1; i > -1; i--) {
         col = orderedCols[i];
@@ -169,7 +173,7 @@ function detLastVisibleCols(orderedCols: Array<Col>): Array<Col> {
     return lastVisible;
 }
 
-function highestColsDepth(cols: Array<ColArg>, depth = 1) {
+function highestColsDepth<S>(cols: Array<ColArg<S>>, depth = 1) {
     let col,
         i,
         newDepth,

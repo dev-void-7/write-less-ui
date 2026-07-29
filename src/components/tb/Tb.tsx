@@ -10,7 +10,7 @@ import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
 import { CtxMenu } from "./parts/CtxMenu.jsx";
 import { State } from "./domain/state.js";
 
-export function Tb(props: Props) {
+export function Tb<S>(props: Props<S>) {
     const state = new State(props);
 
     onMount(() => {
@@ -32,7 +32,7 @@ export function Tb(props: Props) {
                 <div class="wl--tb-wrapper" ref={state.tbWrapper}>
                     <table id={props.id} ref={state.tb}>
                         <ColGroup cols={state.cols} />
-                        <THead cols={state.cols} ctxMenu={state.ctxMenu} />
+                        <THead state={state} ctxMenu={state.ctxMenu} />
                         <TBody cols={state.cols} rows={props.rows} />
                         <TFoot foots={state.foots} />
                     </table>

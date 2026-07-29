@@ -3,22 +3,22 @@ import { Col, ColArg } from "./col.js";
 import { getColOrder, getOrderedCols } from "./common.js";
 import { ColLeaf } from "./col-leaf.js";
 
-export class ColGroup {
+export class ColGroup<S = unknown> {
     label: () => string;
     rowSpan?: number;
-    children: Array<Col>;
+    children: Array<Col<S>>;
     colSpan: Accessor<number>;
     hidden: Accessor<boolean>;
     colsOrder: Accessor<Array<number>>;
     setColsOrder: Setter<Array<number>>;
-    orderedChildren: Accessor<Array<Col>>;
+    orderedChildren: Accessor<Array<Col<S>>>;
     visuallyFirstInRow: boolean;
 
     constructor(
         id: string,
         label: () => string,
         rowSpan: number | undefined,
-        children: Array<Col>,
+        children: Array<Col<S>>,
         visuallyFirstInRow: boolean,
     ) {
         this.label = label;
@@ -91,7 +91,7 @@ export class ColGroup {
         }
     }
 
-    getLastOrderedVisibleLeaf(): ColLeaf {
+    getLastOrderedVisibleLeaf(): ColLeaf<S> {
         for (const child of this.orderedChildren().toReversed()) {
             if (child.hidden()) continue;
             if (child instanceof ColLeaf) return child;
@@ -101,7 +101,7 @@ export class ColGroup {
         throw new Error("No visible leaf found");
     }
 
-    getVisibleCols(): Array<Col> {
+    getVisibleCols(): Array<Col<S>> {
         const visible = [];
         for (const child of this.children) {
             if (!child.hidden()) visible.push(child);
@@ -110,9 +110,9 @@ export class ColGroup {
     }
 }
 
-export type ColGroupArg = {
+export type ColGroupArg<S> = {
     label: () => string;
-    children: Array<ColArg>;
+    children: Array<ColArg<S>>;
     width?: never;
     sortable?: never;
     hideOnExport?: never;

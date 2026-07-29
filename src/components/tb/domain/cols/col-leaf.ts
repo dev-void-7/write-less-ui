@@ -1,11 +1,11 @@
 import { Accessor, createSignal, Setter } from "solid-js";
 
-export class ColLeaf {
+export class ColLeaf<S = unknown> {
     id: string;
     idx: number;
     label: () => string;
     rowSpan?: number;
-    sortable: boolean;
+    sortKey?: S;
     hideOnExport: boolean;
     hideOnPrint: boolean;
     unhideable: boolean;
@@ -25,20 +25,20 @@ export class ColLeaf {
         id: string,
         idx: number,
         rowSpan: number | undefined,
-        arg: ColLeafArg,
+        arg: ColLeafArg<S>,
         visuallyFirstInRow: boolean,
     ) {
         this.id = id;
         this.idx = idx;
         this.label = arg.label;
         this.rowSpan = rowSpan;
-        this.sortable = arg.sortable || false;
+        this.sortKey = arg.sortKey;
         this.hideOnExport = arg.hideOnExport || false;
         this.hideOnPrint = arg.hideOnPrint || false;
         this.unhideable = arg.unhideable || false;
         this.type = arg.type || Type.Text;
         [this.hidden, this.#setHidden] = createSignal(false);
-        this.minWidth = arg.minWidth || (arg.sortable ? 80 : 50);
+        this.minWidth = arg.minWidth || (arg.sortKey ? 80 : 50);
         this.baseWidth = arg.baseWidth;
         this.visuallyFirstInRow = visuallyFirstInRow;
         const storedWidth = localStorage.getItem(`col-${this.id}-width`);
@@ -102,11 +102,11 @@ export class ColLeaf {
     }
 }
 
-export type ColLeafArg = {
+export type ColLeafArg<S> = {
     label: () => string;
     minWidth?: number;
     baseWidth?: number;
-    sortable?: boolean;
+    sortKey?: S;
     hideOnExport?: boolean;
     hideOnPrint?: boolean;
     unhideable?: boolean;

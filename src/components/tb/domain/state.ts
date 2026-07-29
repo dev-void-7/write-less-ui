@@ -1,13 +1,19 @@
 import { Cols } from "./cols/cols.js";
 import { Foots } from "./foots/foots.js";
 import { Api as CtxMenuApi } from "../../ctx-menu/domain/props.js";
-import { Col } from "./cols/col.js";
 import { Props } from "./props.js";
+import { Accessor, createSignal, Setter } from "solid-js";
+import { SortedBy } from "./sorted-by.js";
+import { Col } from "./cols/col.js";
 
-export class State {
-    cols: Cols;
+export class State<S = any> {
+    cols: Cols<S>;
     foots: Foots;
-    ctxMenu = {} as CtxMenuApi<Col>;
+    ctxMenu = {} as CtxMenuApi<Col<S>>;
+    sorted?: {
+        by: Accessor<SortedBy<S> | undefined>;
+        setBy: Setter<SortedBy<S> | undefined>;
+    };
     tbWrapper!: HTMLDivElement;
     tb!: HTMLTableElement;
     verticalScrollbar!: HTMLDivElement;
@@ -16,9 +22,13 @@ export class State {
     verticalThumbWrapper!: HTMLDivElement;
     verticalThumb!: HTMLButtonElement;
 
-    constructor(props: Props) {
+    constructor(props: Props<S>) {
         this.cols = new Cols(props);
         this.foots = new Foots(props, this.cols.leafs, this.cols.orderedLeafs);
+        if (props.onSort) {
+            const [by, setBy] = createSignal<SortedBy<S> | undefined>(undefined);
+            this.sorted = { by, setBy };
+        }
     }
 
     computeTbWrapperAndTbWidthDiff(): number {

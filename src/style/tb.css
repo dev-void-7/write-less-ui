@@ -87,14 +87,20 @@
                         column-gap: 0.5rem;
 
                         > .wl--th-label {
-                            margin-inline-end: auto;
                             text-transform: capitalize;
                             white-space: nowrap;
                             overflow: hidden;
                             text-overflow: ellipsis;
                         }
 
+                        > .wl--icon {
+                            --wl--icon-weight: 1.25;
+                            --wl--icon-color: var(--wl--tb-head-color);
+                            height: 1.25rem;
+                        }
+
                         > .wl--more {
+                            margin-inline-start: auto;
                             cursor: pointer;
                             padding: 0;
                             background: none;

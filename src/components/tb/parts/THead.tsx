@@ -1,48 +1,49 @@
-import { createUniqueId, For, Match, Show, Switch } from "solid-js";
-import { Cols } from "../domain/index.js";
+import { createUniqueId, For, Match, Switch } from "solid-js";
 import { Col } from "../domain/cols/col.js";
 import { ColGroup } from "../domain/cols/col-group.js";
 import { ColLeaf } from "../domain/cols/col-leaf.js";
 import { generateOnResizerPointerDown } from "../utils/resizing.js";
 import { MoreIcon } from "../../icons/More.jsx";
 import { Api as CtxMenuApi } from "../../ctx-menu/domain/props.js";
+import { State } from "../domain/state.js";
+import { SortDir } from "../../common/types.js";
+import { BarsArrowUpIcon } from "../../icons/BarsArrowUp.jsx";
+import { BarsArrowDownIcon } from "../../icons/BarsArrowDown.jsx";
 
-export function THead(props: { cols: Cols; ctxMenu: CtxMenuApi<Col> }) {
-    const cols = props.cols;
+export function THead<S>(props: { state: State<S>; ctxMenu: CtxMenuApi<Col<S>> }) {
     return (
         <thead>
-            <For each={cols.orderedColsAsRows()}>
-                {(row) => <THeadTr cols={cols} row={row} ctxMenu={props.ctxMenu} />}
+            <For each={props.state.cols.orderedColsAsRows()}>
+                {(row) => <THeadTr state={props.state} row={row} ctxMenu={props.ctxMenu} />}
             </For>
         </thead>
     );
 }
 
-function THeadTr(props: { cols: Cols; row: Col[]; ctxMenu: CtxMenuApi<Col> }) {
-    const cols = props.cols;
+function THeadTr<S>(props: { state: State<S>; row: Col<S>[]; ctxMenu: CtxMenuApi<Col<S>> }) {
     return (
         <tr>
             <For each={props.row}>
-                {(col) => <THeadTrTh cols={cols} col={col} ctxMenu={props.ctxMenu} />}
+                {(col) => <THeadTrTh state={props.state} col={col} ctxMenu={props.ctxMenu} />}
             </For>
         </tr>
     );
 }
 
-function THeadTrTh(props: { cols: Cols; col: Col; ctxMenu: CtxMenuApi<Col> }) {
+function THeadTrTh<S>(props: { state: State<S>; col: Col<S>; ctxMenu: CtxMenuApi<Col<S>> }) {
     return (
         <Switch>
             <Match when={props.col instanceof ColGroup}>
                 <THeadTrThGroup
-                    cols={props.cols}
-                    col={props.col as ColGroup}
+                    state={props.state}
+                    col={props.col as ColGroup<S>}
                     ctxMenu={props.ctxMenu}
                 />
             </Match>
             <Match when={props.col instanceof ColLeaf}>
                 <THeadTrThLeaf
-                    cols={props.cols}
-                    col={props.col as ColLeaf}
+                    state={props.state}
+                    col={props.col as ColLeaf<S>}
                     ctxMenu={props.ctxMenu}
                 />
             </Match>
@@ -50,8 +51,12 @@ function THeadTrTh(props: { cols: Cols; col: Col; ctxMenu: CtxMenuApi<Col> }) {
     );
 }
 
-function THeadTrThGroup(props: { cols: Cols; col: ColGroup; ctxMenu: CtxMenuApi<Col> }) {
-    const cols = props.cols;
+function THeadTrThGroup<S>(props: {
+    state: State<S>;
+    col: ColGroup<S>;
+    ctxMenu: CtxMenuApi<Col<S>>;
+}) {
+    const cols = props.state.cols;
 
     function onMoreClick(this: HTMLButtonElement) {
         const anchorName = `--${createUniqueId()}`;
@@ -86,8 +91,12 @@ function THeadTrThGroup(props: { cols: Cols; col: ColGroup; ctxMenu: CtxMenuApi<
     );
 }
 
-function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf; ctxMenu: CtxMenuApi<Col> }) {
-    const cols = props.cols;
+function THeadTrThLeaf<S>(props: {
+    state: State<S>;
+    col: ColLeaf<S>;
+    ctxMenu: CtxMenuApi<Col<S>>;
+}) {
+    const cols = props.state.cols;
     function onMoreClick(this: HTMLButtonElement) {
         const anchorName = `--${createUniqueId()}`;
         this.style.anchorName = anchorName;
@@ -95,6 +104,16 @@ function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf; ctxMenu: CtxMenuApi<Co
             if (this.style.anchorName == anchorName) this.style.removeProperty("anchor-name");
         });
     }
+
+    const sortedIcon = () => {
+        const sorted = props.state.sorted;
+        if (!sorted) return;
+        const by = sorted.by();
+        if (by === undefined || by.key !== props.col.sortKey) return;
+        if (by.dir == SortDir.Asc) return <BarsArrowUpIcon />;
+        else return <BarsArrowDownIcon />;
+    };
+
     return (
         <th
             colspan={props.col.colSpan()}
@@ -108,12 +127,10 @@ function THeadTrThLeaf(props: { cols: Cols; col: ColLeaf; ctxMenu: CtxMenuApi<Co
         >
             <div class="wl--th-content">
                 <div class="wl--th-label">{props.col.label()}</div>
+                {sortedIcon()}
                 <button type="button" class="wl--more" onclick={onMoreClick}>
                     <MoreIcon />
                 </button>
-                <Show when={props.col.sortable}>
-                    <div class="wl--th-sort"></div>
-                </Show>
             </div>
             <button
                 type="button"

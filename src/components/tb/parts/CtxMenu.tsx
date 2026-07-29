@@ -10,24 +10,27 @@ import { BarsArrowUpIcon } from "../../icons/BarsArrowUp.jsx";
 import { State } from "../domain/state.js";
 import { batch } from "solid-js";
 import { ColLeaf } from "../domain/cols/col-leaf.js";
-import { ColGroup } from "../domain/cols/col-group.js";
+import { SortDir } from "../../common/types.js";
 
-export function CtxMenu(props: { state: State; api: ContextMenuApi<Col> }) {
-    const expandCol = (col: Col) => {
+export function CtxMenu<S>(props: { state: State<S>; api: ContextMenuApi<Col<S>> }) {
+    const expandCol = (col: Col<S>) => {
         const by = props.state.computeTbWrapperAndTbWidthDiff();
         if (by <= 0) return;
         if (col instanceof ColLeaf) col.increaseSizeBy(by);
         else batch(() => col.increaseSizeBy(by));
     };
-    const shrinkCol = (col: Col) => {
+    const shrinkCol = (col: Col<S>) => {
         if (col instanceof ColLeaf) col.shrinkToMin();
         else batch(() => col.shrinkToMin());
     };
 
-    const autoFitCol = (col: Col) => {
+    const autoFitCol = (col: Col<S>) => {
         const by = props.state.computeTbWrapperAndTbWidthDiff();
         col.resizeBy(by);
     };
+
+    const sortHidden = props.state.sorted ? hideIfNoSort : alwaysReturnTrue;
+
     return (
         <CtxMenuComponent
             groups={[
@@ -52,16 +55,29 @@ export function CtxMenu(props: { state: State; api: ContextMenuApi<Col> }) {
                 },
                 {
                     title: () => "SORT",
-                    hidden: (col: Col) => {
-                        if (col instanceof ColGroup) return true;
-                        return !col?.sortable;
-                    },
+                    hidden: sortHidden,
                     type: GroupType.Radio,
                     items: [
-                        { label: () => "Ascending", onclick: () => {}, icon: <BarsArrowUpIcon /> },
+                        {
+                            label: () => "Ascending",
+                            onclick: (col) => {
+                                // if sorted is `undefined` then these items will be hidden and won't be reached
+                                props.state.sorted!.setBy({
+                                    key: (col as ColLeaf<S>).sortKey as S,
+                                    dir: SortDir.Asc,
+                                });
+                            },
+                            icon: <BarsArrowUpIcon />,
+                        },
                         {
                             label: () => "Descending",
-                            onclick: () => {},
+                            onclick: (col) => {
+                                // if sorted is `undefined` then these items will be hidden and won't be reached
+                                props.state.sorted!.setBy({
+                                    key: (col as ColLeaf<S>).sortKey as S,
+                                    dir: SortDir.Desc,
+                                });
+                            },
                             icon: <BarsArrowDownIcon />,
                         },
                     ],
@@ -70,4 +86,12 @@ export function CtxMenu(props: { state: State; api: ContextMenuApi<Col> }) {
             api={props.api}
         />
     );
+}
+
+function hideIfNoSort<S>(col: Col<S>) {
+    return !col || !("sortKey" in col) || col.sortKey === undefined;
+}
+
+function alwaysReturnTrue() {
+    return true;
 }

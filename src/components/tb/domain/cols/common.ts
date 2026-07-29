@@ -22,8 +22,8 @@ function allItemsAreInteger(items: Array<number>): boolean {
     return items.every((item) => Number.isInteger(item));
 }
 
-export function getOrderedCols(cols: Array<Col>, order: Array<number>): Array<Col> {
-    const ordered: Array<Col> = [];
+export function getOrderedCols<S>(cols: Array<Col<S>>, order: Array<number>): Array<Col<S>> {
+    const ordered: Array<Col<S>> = [];
     for (let i = 0; i < cols.length; i++) {
         ordered.push(cols[order[i]]);
     }
