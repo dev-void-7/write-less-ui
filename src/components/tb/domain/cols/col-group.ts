@@ -69,8 +69,22 @@ export class ColGroup {
         this.getLastOrderedVisibleLeaf().resizeBy(by);
     }
 
+    increaseSizeBy(by: number) {
+        const visible = this.getVisibleCols();
+        const perChild = by / visible.length;
+        for (const child of visible) {
+            child.increaseSizeBy(perChild);
+        }
+    }
+
     computedWidth(): number {
         return this.getLastOrderedVisibleLeaf().computedWidth();
+    }
+
+    shrinkToMin() {
+        for (const child of this.children) {
+            child.shrinkToMin();
+        }
     }
 
     getLastOrderedVisibleLeaf(): ColLeaf {
@@ -81,6 +95,14 @@ export class ColGroup {
         }
         // this must not happen
         throw new Error("No visible leaf found");
+    }
+
+    getVisibleCols(): Array<Col> {
+        const visible = [];
+        for (const child of this.children) {
+            if (!child.hidden()) visible.push(child);
+        }
+        return visible;
     }
 }
 

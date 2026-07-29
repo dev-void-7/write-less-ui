@@ -1,5 +1,4 @@
-import { type Props, Cols } from "./domain/index.js";
-import { Foots } from "./domain/foots/foots.js";
+import { type Props } from "./domain/index.js";
 import { THead } from "./parts/THead.jsx";
 import { ColGroup } from "./parts/ColGroup.jsx";
 import { TBody } from "./parts/TBody.jsx";
@@ -8,73 +7,60 @@ import { onMount } from "solid-js";
 import { initVerticalScrolling } from "./utils/scrolling.js";
 import { ArrowUpFillIcon } from "../icons/ArrowUpFill.jsx";
 import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
-import { Api as CtxMenuApi } from "../ctx-menu/domain/props.js";
 import { CtxMenu } from "./parts/CtxMenu.jsx";
-import { Col } from "./domain/cols/col.js";
+import { State } from "./domain/state.js";
 
 export function Tb(props: Props) {
-    const cols = new Cols(props),
-        foots = new Foots(props, cols.leafs, cols.orderedLeafs),
-        ctxMenu = {} as CtxMenuApi<Col>;
-
-    // eslint-disable no-unassigned-vars
-    let tbWrapper!: HTMLDivElement,
-        tb!: HTMLTableElement,
-        verticalScrollbar!: HTMLDivElement,
-        verticalScrollbarArrowUp!: HTMLButtonElement,
-        verticalScrollbarArrowDown!: HTMLButtonElement,
-        verticalThumbWrapper!: HTMLDivElement,
-        verticalThumb!: HTMLButtonElement;
-    // eslint-enable no-unassigned-vars
+    const state = new State(props);
 
     onMount(() => {
-        cols.distributeFreeSpaceToLeafsWithNoWidth();
+        state.cols.distributeFreeSpaceToLeafsWithNoWidth();
         initVerticalScrolling(
-            tbWrapper,
-            tb,
-            verticalScrollbar,
-            verticalScrollbarArrowUp,
-            verticalScrollbarArrowDown,
-            verticalThumbWrapper,
-            verticalThumb,
+            state.tbWrapper,
+            state.tb,
+            state.verticalScrollbar,
+            state.verticalScrollbarArrowUp,
+            state.verticalScrollbarArrowDown,
+            state.verticalThumbWrapper,
+            state.verticalThumb,
         );
     });
 
     return (
         <>
             <div class="wl--tb-frame">
-                <div class="wl--tb-wrapper" ref={tbWrapper}>
-                    <table id={props.id} ref={tb}>
-                        <ColGroup cols={cols} />
-                        <THead cols={cols} ctxMenu={ctxMenu} />
-                        <TBody cols={cols} rows={props.rows} />
-                        <TFoot foots={foots} />
+                <div class="wl--tb-wrapper" ref={state.tbWrapper}>
+                    <table id={props.id} ref={state.tb}>
+                        <ColGroup cols={state.cols} />
+                        <THead cols={state.cols} ctxMenu={state.ctxMenu} />
+                        <TBody cols={state.cols} rows={props.rows} />
+                        <TFoot foots={state.foots} />
                     </table>
-                    <CtxMenu api={ctxMenu} />
+                    <CtxMenu state={state} api={state.ctxMenu} />
                 </div>
                 <div class="wl--tb-thead-placeholder"></div>
                 <div class="wl--tb-tfoot-placeholder"></div>
-                <div class="wl--v-scrollbar" ref={verticalScrollbar}>
+                <div class="wl--v-scrollbar" ref={state.verticalScrollbar}>
                     <button
                         type="button"
                         class="wl--arrow-up"
                         tabIndex="-1"
-                        ref={verticalScrollbarArrowUp}
+                        ref={state.verticalScrollbarArrowUp}
                     >
                         <ArrowUpFillIcon />
                     </button>
-                    <div class="wl--thumb-wrapper" ref={verticalThumbWrapper}>
+                    <div class="wl--thumb-wrapper" ref={state.verticalThumbWrapper}>
                         <button
                             type="button"
                             class="wl--thumb"
-                            ref={verticalThumb}
+                            ref={state.verticalThumb}
                             tabIndex="-1"
                         ></button>
                     </div>
                     <button
                         type="button"
                         class="wl--arrow-down"
-                        ref={verticalScrollbarArrowDown}
+                        ref={state.verticalScrollbarArrowDown}
                         tabIndex="-1"
                     >
                         <ArrowDownFillIcon />

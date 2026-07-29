@@ -4,25 +4,48 @@ import { GroupType } from "../../ctx-menu/parts/Group.jsx";
 import { Col } from "../domain/cols/col.js";
 import { StachExpandVerticalIcon } from "../../icons/StachExpandVertical.jsx";
 import { StachShrinkVerticalIcon } from "../../icons/StachShrinkVertical.jsx";
+import { AutoFitVerticalIcon } from "../../icons/AutoFitVertical.jsx";
 import { BarsArrowDownIcon } from "../../icons/BarsArrowDown.jsx";
 import { BarsArrowUpIcon } from "../../icons/BarsArrowUp.jsx";
+import { State } from "../domain/state.js";
+import { batch } from "solid-js";
+import { ColLeaf } from "../domain/cols/col-leaf.js";
 
-export function CtxMenu(props: { api: ContextMenuApi<Col> }) {
-    console.log(props.api);
+export function CtxMenu(props: { state: State; api: ContextMenuApi<Col> }) {
+    const expandCol = (col: Col) => {
+        const by = props.state.computeTbWrapperAndTbWidthDiff();
+        if (by <= 0) return;
+        if (col instanceof ColLeaf) col.increaseSizeBy(by);
+        else batch(() => col.increaseSizeBy(by));
+    };
+    const shrinkCol = (col: Col) => {
+        if (col instanceof ColLeaf) col.shrinkToMin();
+        else batch(() => col.shrinkToMin());
+    };
+
+    const autoFitCol = (col: Col) => {
+        const by = props.state.computeTbWrapperAndTbWidthDiff();
+        col.resizeBy(by);
+    };
     return (
         <CtxMenuComponent
             groups={[
                 {
                     items: [
                         {
-                            label: () => "extend column",
-                            onclick: () => {},
+                            label: () => "expand column",
+                            onclick: expandCol,
                             icon: <StachExpandVerticalIcon />,
                         },
                         {
                             label: () => "shrink column",
-                            onclick: () => {},
+                            onclick: shrinkCol,
                             icon: <StachShrinkVerticalIcon />,
+                        },
+                        {
+                            label: () => "auto fit",
+                            onclick: autoFitCol,
+                            icon: <AutoFitVerticalIcon />,
                         },
                     ],
                 },

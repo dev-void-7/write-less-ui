@@ -84,8 +84,16 @@ export class ColLeaf {
         }
     }
 
+    increaseSizeBy(by: number) {
+        this.setWidthAndStore(this.computedWidth() + by);
+    }
+
     computedWidth(): number {
         return parseFloat(getComputedStyle(this.thElem).width);
+    }
+
+    shrinkToMin() {
+        this.setWidthAndStore(this.minWidth);
     }
 
     setWidthAndStore(width: number) {
