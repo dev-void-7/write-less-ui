@@ -14,6 +14,7 @@ export class State<S = any> {
         by: Accessor<SortedBy<S> | undefined>;
         setBy: (val: SortedBy<S> | undefined) => void;
     };
+    dfltSort?: SortedBy<S>;
     tbWrapper!: HTMLDivElement;
     tb!: HTMLTableElement;
     verticalScrollbar!: HTMLDivElement;
@@ -34,6 +35,7 @@ export class State<S = any> {
                     setBy(val);
                 },
             };
+            this.dfltSort = props.dfltSort;
         }
     }
 

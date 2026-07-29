@@ -13,4 +13,5 @@ export interface Props<S> {
     foots?: Array<FootArg>;
     onRowClick?: (rowIndex: number) => void;
     onSort?: (sortedBy: SortedBy<S> | undefined) => void;
+    dfltSort?: SortedBy<S>;
 }

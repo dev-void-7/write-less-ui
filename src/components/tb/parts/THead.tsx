@@ -109,8 +109,15 @@ function THeadTrThLeaf<S>(props: {
         const sorted = props.state.sorted;
         if (!sorted) return;
         const by = sorted.by();
-        if (by === undefined || by.key !== props.col.sortKey) return;
-        if (by.dir == SortDir.Asc) return <ArrowLongUpIcon/>;
+        if (by === undefined) {
+            const dfltSort = props.state.dfltSort;
+            if (!dfltSort) return;
+            if (dfltSort.key !== props.col.sortKey) return;
+            if (dfltSort.dir == SortDir.Asc) return <ArrowLongUpIcon />;
+            else return <ArrowLongDownIcon />;
+        }
+        if (by.key !== props.col.sortKey) return;
+        if (by.dir == SortDir.Asc) return <ArrowLongUpIcon />;
         else return <ArrowLongDownIcon />;
     };
 
