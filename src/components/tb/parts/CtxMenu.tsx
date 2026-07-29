@@ -52,7 +52,10 @@ export function CtxMenu(props: { state: State; api: ContextMenuApi<Col> }) {
                 },
                 {
                     title: () => "SORT",
-                    hidden: (col: Col) => col instanceof ColGroup,
+                    hidden: (col: Col) => {
+                        if (col instanceof ColGroup) return true;
+                        return !col?.sortable;
+                    },
                     type: GroupType.Radio,
                     items: [
                         { label: () => "Ascending", onclick: () => {}, icon: <BarsArrowUpIcon /> },
