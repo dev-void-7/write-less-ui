@@ -10,6 +10,7 @@ import { BarsArrowUpIcon } from "../../icons/BarsArrowUp.jsx";
 import { State } from "../domain/state.js";
 import { batch } from "solid-js";
 import { ColLeaf } from "../domain/cols/col-leaf.js";
+import { ColGroup } from "../domain/cols/col-group.js";
 
 export function CtxMenu(props: { state: State; api: ContextMenuApi<Col> }) {
     const expandCol = (col: Col) => {
@@ -51,6 +52,7 @@ export function CtxMenu(props: { state: State; api: ContextMenuApi<Col> }) {
                 },
                 {
                     title: () => "SORT",
+                    hidden: (col: Col) => col instanceof ColGroup,
                     type: GroupType.Radio,
                     items: [
                         { label: () => "Ascending", onclick: () => {}, icon: <BarsArrowUpIcon /> },
