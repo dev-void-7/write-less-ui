@@ -12,6 +12,10 @@
     opacity: 0;
     scale: 0.9;
 
+    @media print {
+        display: none !important;
+    }
+
     &:popover-open {
         display: flex;
         scale: 1;
