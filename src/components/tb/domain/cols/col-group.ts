@@ -66,7 +66,11 @@ export class ColGroup {
     }
 
     resizeBy(by: number) {
-        this.getLastOrderedVisibleLeaf().resizeBy(by);
+        const visible = this.getVisibleCols();
+        const perChild = by / visible.length;
+        for (const child of visible) {
+            child.resizeBy(perChild);
+        }
     }
 
     increaseSizeBy(by: number) {
