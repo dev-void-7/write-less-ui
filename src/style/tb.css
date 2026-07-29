@@ -4,16 +4,14 @@
     position: relative;
     overflow: hidden;
 
-    @media not print {
-        &::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
-            z-index: 3000;
-            pointer-events: none;
-            border-radius: 4px;
-        }
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: var(--wl--tb-border-width) solid var(--wl--tb-border-color);
+        z-index: 3000;
+        pointer-events: none;
+        border-radius: 4px;
     }
 
     .wl--tb-wrapper {
