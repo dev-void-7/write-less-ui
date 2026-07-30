@@ -1,7 +1,7 @@
 import { For } from "solid-js";
 import { Group, GroupArgs } from "./Group.jsx";
 
-export function Groups<T>(props: { groups: Array<GroupArgs<T>> }) {
+export function Groups<T, V>(props: { groups: Array<GroupArgs<T, V>> }) {
     return (
         <For each={props.groups}>
             {(group) => (
@@ -11,7 +11,7 @@ export function Groups<T>(props: { groups: Array<GroupArgs<T>> }) {
     );
 }
 
-function IconPlaceHolder<T>(props: { groups: Array<GroupArgs<T>> }) {
+function IconPlaceHolder<T, V>(props: { groups: Array<GroupArgs<T, V>> }) {
     return props.groups.some((group) => group.items.some((item) => item.icon)) ? (
         <span class="wl--icon-placeholder"></span>
     ) : undefined;

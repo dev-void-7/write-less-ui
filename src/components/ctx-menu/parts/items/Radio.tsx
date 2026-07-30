@@ -2,8 +2,9 @@ import { Accessor, createMemo, createSignal, For, JSXElement, Setter, Show } fro
 import { CheckIcon } from "../../../icons/CheckIcon.jsx";
 import { useCtxMenuContext } from "../../CtxMenueContext.js";
 
-export function ItemsRadio<T>(props: {
-    items: Array<ItemRadioArgs<T>>;
+export function ItemsRadio<T, V>(props: {
+    items: Array<ItemRadioArgs<T, V>>;
+    onclick: (data: T, val: V) => void;
     iconPlaceholder?: JSXElement;
 }) {
     const [selected, setSelected] = createSignal({
@@ -19,18 +20,20 @@ export function ItemsRadio<T>(props: {
                     iconPlaceholder={props.iconPlaceholder}
                     selected={selected}
                     setSelected={setSelected}
+                    onclick={props.onclick}
                 />
             )}
         </For>
     );
 }
 
-function ItemRadio<T>(props: {
+function ItemRadio<T, V>(props: {
     index: number;
-    item: ItemRadioArgs<T>;
+    item: ItemRadioArgs<T, V>;
     iconPlaceholder?: JSXElement;
     selected: Accessor<{ index: number; value: T }>;
     setSelected: Setter<{ index: number; value: T }>;
+    onclick: (data: T, val: V) => void;
 }) {
     const state = useCtxMenuContext<T>();
     const selected = createMemo(() => {
@@ -46,7 +49,7 @@ function ItemRadio<T>(props: {
             onclick={() => {
                 const value = state.data();
                 props.setSelected({ index: props.index, value });
-                props.item.onclick(value);
+                props.onclick(value, props.item.value);
                 state.hidePopover();
             }}
         >
@@ -71,10 +74,10 @@ function Shortcut(props: { items?: Array<string> }) {
     );
 }
 
-export interface ItemRadioArgs<T> {
+export interface ItemRadioArgs<T, V> {
     icon?: JSXElement;
     label: () => string;
     shortcut?: Array<string>;
-    onclick: (data: T) => any;
+    value: V;
     hidden?: (data: T) => boolean;
 }

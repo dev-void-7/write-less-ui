@@ -57,27 +57,22 @@ export function CtxMenu<S>(props: { state: State<S>; api: ContextMenuApi<Col<S>>
                     title: () => "SORT",
                     hidden: sortHidden,
                     type: GroupType.Radio,
+                    onclick: (col: Col<S>, dir: SortDir) => {
+                        // if sorted is `undefined` then this item will be hidden and won't be reached
+                        props.state.sorted!.setBy({
+                            key: (col as ColLeaf<S>).sortKey as S,
+                            dir,
+                        });
+                    },
                     items: [
                         {
                             label: () => "Ascending",
-                            onclick: (col) => {
-                                // if sorted is `undefined` then these items will be hidden and won't be reached
-                                props.state.sorted!.setBy({
-                                    key: (col as ColLeaf<S>).sortKey as S,
-                                    dir: SortDir.Asc,
-                                });
-                            },
+                            value: SortDir.Asc,
                             icon: <BarsArrowUpIcon />,
                         },
                         {
                             label: () => "Descending",
-                            onclick: (col) => {
-                                // if sorted is `undefined` then these items will be hidden and won't be reached
-                                props.state.sorted!.setBy({
-                                    key: (col as ColLeaf<S>).sortKey as S,
-                                    dir: SortDir.Desc,
-                                });
-                            },
+                            value: SortDir.Desc,
                             icon: <BarsArrowDownIcon />,
                         },
                     ],
