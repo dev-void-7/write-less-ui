@@ -34,9 +34,20 @@
             border-spacing: 0;
             width: max-content;
 
+            @media print {
+                & {
+                    width: 100% !important;
+                    > colgroup > col {
+                        width: calc(
+                            calc(var(--col-width) / var(--total-col-widths)) * 100%
+                        ) !important;
+                    }
+                }
+            }
+
             > colgroup {
                 > col {
-                    width: var(--col-width);
+                    width: calc(var(--col-width) * 1px);
                 }
             }
 

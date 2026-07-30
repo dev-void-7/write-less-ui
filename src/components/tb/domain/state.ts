@@ -37,6 +37,11 @@ export class State<S = any> {
         }
     }
 
+    distributeFreeSpaceToLeafsWithNoWidth() {
+        const freeSpace = this.computeTbWrapperAndTbWidthDiff();
+        this.cols.distributeFreeSpaceToLeafsWithNoWidth(freeSpace);
+    }
+
     computeTbWrapperAndTbWidthDiff(): number {
         return (
             parseFloat(getComputedStyle(this.tbWrapper).width) -

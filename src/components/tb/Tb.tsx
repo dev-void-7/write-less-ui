@@ -14,7 +14,7 @@ export function Tb<S>(props: Props<S>) {
     const state = new State(props);
 
     onMount(() => {
-        state.cols.distributeFreeSpaceToLeafsWithNoWidth();
+        state.distributeFreeSpaceToLeafsWithNoWidth();
         initVerticalScrolling(
             state.tbWrapper,
             state.tb,

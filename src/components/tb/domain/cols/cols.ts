@@ -13,10 +13,9 @@ export class Cols<S = any> {
     lastVisibleCols: Accessor<Array<Col<S>>>;
     orderedColsAsRows: Accessor<Array<Array<Col<S>>>>;
     orderedLeafs: Accessor<Array<ColLeaf<S>>>;
+    orderedVisibleLeafs: Accessor<Array<ColLeaf<S>>>;
     leafs: Accessor<Array<ColLeaf<S>>>;
     depth: Accessor<number>;
-    wrapper!: HTMLDivElement;
-    tb!: HTMLTableElement;
 
     constructor(props: { id: string; cols: Array<ColArg<S>> }) {
         [this.colsOrder, this.setColsOrder] = createSignal(
@@ -31,17 +30,17 @@ export class Cols<S = any> {
         this.lastVisibleCols = createMemo(() => detLastVisibleCols(this.orderedCols()));
         this.orderedColsAsRows = createMemo(() => orderedColsIntoRows(this.orderedCols()));
         this.orderedLeafs = createMemo(() => getLeafs(this.orderedCols()));
+        this.orderedVisibleLeafs = createMemo(() =>
+            getLeafs(this.orderedCols().filter((leaf) => !leaf.hidden())),
+        );
         this.leafs = createMemo(() => getLeafs(this.cols()));
 
         createEffect(() => this.setColsOrder(getColOrder(props.id, this.cols().length)));
     }
 
-    distributeFreeSpaceToLeafsWithNoWidth() {
+    distributeFreeSpaceToLeafsWithNoWidth(freeSpace: number) {
         const leafs = this.leafs().filter((leaf) => !leaf.width());
         if (leafs.length === 0) return;
-        const freeSpace =
-            parseFloat(getComputedStyle(this.wrapper).width) -
-            parseFloat(getComputedStyle(this.tb).width);
         if (isNaN(freeSpace) || freeSpace <= 0) return;
         const width = freeSpace / leafs.length;
         leafs.forEach((leaf) => leaf.resizeBy(width));
