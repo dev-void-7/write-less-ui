@@ -1,16 +1,13 @@
-import { Accessor, createMemo, createSignal, For, JSXElement, Setter, Show } from "solid-js";
+import {  createMemo, For, JSXElement, Show } from "solid-js";
 import { CheckIcon } from "../../../icons/CheckIcon.jsx";
 import { useCtxMenuContext } from "../../CtxMenueContext.js";
 
 export function ItemsRadio<T, V>(props: {
     items: Array<ItemRadioArgs<T, V>>;
     onclick: (data: T, val: V) => void;
+    selected: (data: T, val: V) => boolean;
     iconPlaceholder?: JSXElement;
 }) {
-    const [selected, setSelected] = createSignal({
-        index: -1,
-        value: undefined as T,
-    });
     return (
         <For each={props.items}>
             {(item, index) => (
@@ -18,9 +15,8 @@ export function ItemsRadio<T, V>(props: {
                     index={index()}
                     item={item}
                     iconPlaceholder={props.iconPlaceholder}
-                    selected={selected}
-                    setSelected={setSelected}
                     onclick={props.onclick}
+                    selected={props.selected}
                 />
             )}
         </For>
@@ -31,14 +27,12 @@ function ItemRadio<T, V>(props: {
     index: number;
     item: ItemRadioArgs<T, V>;
     iconPlaceholder?: JSXElement;
-    selected: Accessor<{ index: number; value: T }>;
-    setSelected: Setter<{ index: number; value: T }>;
     onclick: (data: T, val: V) => void;
+    selected: (data: T, val: V) => boolean;
 }) {
     const state = useCtxMenuContext<T>();
     const selected = createMemo(() => {
-        const selected = props.selected();
-        return selected.index === props.index && state.data() == selected.value;
+        return props.selected(state.data(), props.item.value);
     });
 
     return (
@@ -48,7 +42,6 @@ function ItemRadio<T, V>(props: {
             classList={{ "wl--hidden": props.item.hidden?.(state.data()), "wl--selected": selected() }}
             onclick={() => {
                 const value = state.data();
-                props.setSelected({ index: props.index, value });
                 props.onclick(value, props.item.value);
                 state.hidePopover();
             }}

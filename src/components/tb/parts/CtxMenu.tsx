@@ -64,6 +64,13 @@ export function CtxMenu<S>(props: { state: State<S>; api: ContextMenuApi<Col<S>>
                             dir,
                         });
                     },
+                    selected: (col: Col<S>, dir: SortDir) => {
+                        if (!col) return false;
+                        const sorted = props.state.sorted!;
+                        const by = sorted.by();
+                        if (!by) return false;
+                        return by.key === (col as ColLeaf<S>).sortKey && by.dir === dir;
+                    },
                     items: [
                         {
                             label: () => "Ascending",

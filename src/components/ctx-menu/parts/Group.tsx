@@ -21,6 +21,7 @@ export function Group<T, V>(props: { group: GroupArgs<T, V>; iconPlaceholder?: J
                     <ItemsRadio
                         items={props.group.items as Array<ItemRadioArgs<T, V>>}
                         onclick={(props.group as GroupRadioArgs<T, V>).onclick}
+                        selected={(props.group as GroupRadioArgs<T, V>).selected}
                         iconPlaceholder={props.iconPlaceholder}
                     />
                 </Match>
@@ -35,6 +36,7 @@ export interface GroupNormalArgs<T> {
     title?: () => string;
     hidden?: (data: T) => boolean;
     onclick?: never;
+    selected?: never;
     type?: GroupType.Normal;
     items: Array<ItemNormalArgs<T>>;
 }
@@ -43,6 +45,7 @@ export interface GroupRadioArgs<T, V> {
     title?: () => string;
     hidden?: (data: T) => boolean;
     onclick: (data: T, val: V) => void;
+    selected: (data: T, val: V) => boolean;
     type?: GroupType.Radio;
     items: Array<ItemRadioArgs<T, V>>;
 }
