@@ -8,9 +8,11 @@ import { ArrowUpFillIcon } from "../icons/ArrowUpFill.jsx";
 import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
 import { CtxMenu } from "./parts/CtxMenu.jsx";
 import { State } from "./domain/state.js";
+import { TbContext } from "./contexts/state.js";
 
 export function Tb<S>(props: Props<S>) {
     const state = new State(props);
+    const cols = state.cols;
     const elems = state.elems;
 
     onMount(() => {
@@ -20,13 +22,13 @@ export function Tb<S>(props: Props<S>) {
     });
 
     return (
-        <>
+        <TbContext.Provider value={state}>
             <div class="wl--tb-frame">
                 <div class="wl--tb-wrapper" ref={elems.tbWrapper}>
                     <table id={props.id} ref={elems.tb}>
-                        <ColGroup cols={state.cols} />
-                        <THead state={state} ctxMenu={state.ctxMenu} />
-                        <TBody cols={state.cols} rows={props.rows} />
+                        <ColGroup cols={cols} />
+                        <THead cols={cols} />
+                        <TBody cols={cols} rows={props.rows} />
                         <TFoot foots={state.foots} />
                     </table>
                     <CtxMenu state={state} api={state.ctxMenu} />
@@ -89,7 +91,7 @@ export function Tb<S>(props: Props<S>) {
                     </button>
                 </div>
             </div>
-        </>
+        </TbContext.Provider>
     );
 }
 

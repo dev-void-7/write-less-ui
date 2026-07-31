@@ -3,4 +3,4 @@ import { State } from "../domain/state.js";
 
 export const TbContext = createContext<State>();
 
-export const useTbContext = <S>() => useContext(TbContext as Context<State<S> | undefined>);
+export const useTbContext = <S>() => useContext(TbContext as Context<State<S>>);
