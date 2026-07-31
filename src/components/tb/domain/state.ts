@@ -7,6 +7,7 @@ import { SortedBy } from "./sorted-by.js";
 import { Col } from "./cols/col.js";
 import { Elems } from "./elems.js";
 import { VerticalScrolling } from "./scrolling/vertical.js";
+import { HorizontalScrolling } from "./scrolling/horizontal.js";
 
 export class State<S = any> {
     cols: Cols<S>;
@@ -18,6 +19,7 @@ export class State<S = any> {
     };
     elems: Elems = new Elems();
     verticalScrolling = new VerticalScrolling(this.elems);
+    horizontalScrolling = new HorizontalScrolling(this.elems);
 
     constructor(props: Props<S>) {
         this.cols = new Cols(props);
@@ -45,5 +47,6 @@ export class State<S = any> {
 
     initScrolling() {
         this.verticalScrolling.init();
+        this.horizontalScrolling.init();
     }
 }

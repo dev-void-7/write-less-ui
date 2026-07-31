@@ -1,4 +1,6 @@
 :root {
+    --dir-factor: 1;
+
     --wl--fs-base: clamp(0.9375rem, 0.875rem + 0.135vw, 1.0625rem);
     --wl--fs-3xs: calc(var(--wl--fs-base) * 0.75);
     --wl--fs-2xs: calc(var(--wl--fs-base) * 0.8125);
@@ -44,7 +46,7 @@
     --wl--ctx-menu-group-border-width: 1px;
     --wl--ctx-menu-group-border-color: lightgray;
     --wl--ctx-menu-group-title-height: var(--wl--s6);
-    --wl--ctx-menu-group-title-color: rgb(90,90,90);
+    --wl--ctx-menu-group-title-color: rgb(90, 90, 90);
     --wl--ctx-menu-group-title-fs: var(--wl--fs-3xs);
     --wl--ctx-menu-group-title-fw: 600;
     --wl--ctx-menu-item-height: var(--wl--s8);
@@ -118,4 +120,8 @@
     --wl--tb-foot-font: 500 var(--wl--fs-2xs)/125% IBMPlexSans;
     --wl--tb-foot-height: var(--wl--s8);
     --wl--tb-foot-height-1\/4: calc(var(--wl--tb-foot-height) / 4);
+}
+
+html:dir(rlt) {
+    --dir-factor: -1;
 }
