@@ -9,6 +9,7 @@ import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
 import { CtxMenu } from "./parts/CtxMenu.jsx";
 import { State } from "./domain/state.js";
 import { TbContext } from "./contexts/state.js";
+import { VerticalScrollbar } from "./parts/VerticalScrollbar.jsx";
 
 export function Tb<S>(props: Props<S>) {
     const state = new State(props);
@@ -35,32 +36,7 @@ export function Tb<S>(props: Props<S>) {
                 </div>
                 <div class="wl--tb-thead-placeholder"></div>
                 <div class="wl--tb-tfoot-placeholder"></div>
-                <div class="wl--v-scrollbar wl--hidden wl--no-print" ref={elems.verticalScrollbar}>
-                    <button
-                        type="button"
-                        class="wl--arrow-up"
-                        tabIndex="-1"
-                        ref={elems.verticalScrollbarArrowUp}
-                    >
-                        <ArrowUpFillIcon />
-                    </button>
-                    <div class="wl--thumb-wrapper" ref={elems.verticalThumbWrapper}>
-                        <button
-                            type="button"
-                            class="wl--thumb"
-                            ref={elems.verticalThumb}
-                            tabIndex="-1"
-                        ></button>
-                    </div>
-                    <button
-                        type="button"
-                        class="wl--arrow-down"
-                        ref={elems.verticalScrollbarArrowDown}
-                        tabIndex="-1"
-                    >
-                        <ArrowDownFillIcon />
-                    </button>
-                </div>
+                <VerticalScrollbar elems={elems} />
                 <div
                     class="wl--h-scrollbar wl--hidden wl--no-print"
                     ref={elems.horizontalScrollbar}
