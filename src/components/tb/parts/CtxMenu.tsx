@@ -14,7 +14,7 @@ import { SortDir } from "../../common/types.js";
 
 export function CtxMenu<S>(props: { state: State<S>; api: ContextMenuApi<Col<S>> }) {
     const expandCol = (col: Col<S>) => {
-        const by = props.state.computeTbWrapperAndTbWidthDiff();
+        const by = props.state.elems.tbWrapperAndTbWidthDiff();
         if (by <= 0) return;
         if (col instanceof ColLeaf) col.increaseSizeBy(by);
         else batch(() => col.increaseSizeBy(by));
@@ -25,7 +25,7 @@ export function CtxMenu<S>(props: { state: State<S>; api: ContextMenuApi<Col<S>>
     };
 
     const autoFitCol = (col: Col<S>) => {
-        const by = props.state.computeTbWrapperAndTbWidthDiff();
+        const by = props.state.elems.tbWrapperAndTbWidthDiff();
         col.resizeBy(by);
     };
 

@@ -4,7 +4,6 @@ import { ColGroup } from "./parts/ColGroup.jsx";
 import { TBody } from "./parts/TBody.jsx";
 import { TFoot } from "./parts/TFoot.jsx";
 import { onMount } from "solid-js";
-import { initVerticalScrolling } from "./utils/scrolling.js";
 import { ArrowUpFillIcon } from "../icons/ArrowUpFill.jsx";
 import { ArrowDownFillIcon } from "../icons/ArrowDownFill.jsx";
 import { CtxMenu } from "./parts/CtxMenu.jsx";
@@ -12,25 +11,19 @@ import { State } from "./domain/state.js";
 
 export function Tb<S>(props: Props<S>) {
     const state = new State(props);
+    const elems = state.elems;
 
     onMount(() => {
         state.distributeFreeSpaceToLeafsWithNoWidth();
-        initVerticalScrolling(
-            state.tbWrapper,
-            state.tb,
-            state.verticalScrollbar,
-            state.verticalScrollbarArrowUp,
-            state.verticalScrollbarArrowDown,
-            state.verticalThumbWrapper,
-            state.verticalThumb,
-        );
+        state.observeTbWrapperLayoutAndOverflow();
+        state.initScrolling();
     });
 
     return (
         <>
             <div class="wl--tb-frame">
-                <div class="wl--tb-wrapper" ref={state.tbWrapper}>
-                    <table id={props.id} ref={state.tb}>
+                <div class="wl--tb-wrapper" ref={elems.tbWrapper}>
+                    <table id={props.id} ref={elems.tb}>
                         <ColGroup cols={state.cols} />
                         <THead state={state} ctxMenu={state.ctxMenu} />
                         <TBody cols={state.cols} rows={props.rows} />
@@ -40,58 +33,62 @@ export function Tb<S>(props: Props<S>) {
                 </div>
                 <div class="wl--tb-thead-placeholder"></div>
                 <div class="wl--tb-tfoot-placeholder"></div>
-                <div class="wl--v-scrollbar" ref={state.verticalScrollbar}>
+                <div class="wl--v-scrollbar wl--hidden wl--no-print" ref={elems.verticalScrollbar}>
                     <button
                         type="button"
                         class="wl--arrow-up"
                         tabIndex="-1"
-                        ref={state.verticalScrollbarArrowUp}
+                        ref={elems.verticalScrollbarArrowUp}
                     >
                         <ArrowUpFillIcon />
                     </button>
-                    <div class="wl--thumb-wrapper" ref={state.verticalThumbWrapper}>
+                    <div class="wl--thumb-wrapper" ref={elems.verticalThumbWrapper}>
                         <button
                             type="button"
                             class="wl--thumb"
-                            ref={state.verticalThumb}
+                            ref={elems.verticalThumb}
                             tabIndex="-1"
                         ></button>
                     </div>
                     <button
                         type="button"
                         class="wl--arrow-down"
-                        ref={state.verticalScrollbarArrowDown}
+                        ref={elems.verticalScrollbarArrowDown}
                         tabIndex="-1"
                     >
                         <ArrowDownFillIcon />
                     </button>
                 </div>
-                {/*<div class="wl--h-scrollbar"></div>*/}
-            </div>
-
-            {/*<div class="wl--tb-wrapper wl--no-print" ref={cols.wrapper}>
-                <table id={props.id} ref={cols.tb}>
-                    <ColGroup cols={cols} />
-                    <THead cols={cols} />
-                </table>
                 <div
-                    class="wl--tbody-only-tb-wrapper"
-                    classList={{
-                        "wl--scrollbar-is-block": scrollbarThickness > 0,
-                    }}
-                    ref={tBodyOnlyTbWrapper}
+                    class="wl--h-scrollbar wl--hidden wl--no-print"
+                    ref={elems.horizontalScrollbar}
                 >
-                    <table id={props.id} ref={tBodyOnlyTb}>
-                        <ColGroup cols={cols} />
-                        <TBody cols={cols} rows={props.rows} />
-                    </table>
+                    <button
+                        type="button"
+                        class="wl--arrow-start"
+                        tabIndex="-1"
+                        ref={elems.horizontalScrollbarArrowUp}
+                    >
+                        <ArrowUpFillIcon />
+                    </button>
+                    <div class="wl--thumb-wrapper" ref={elems.horizontalThumbWrapper}>
+                        <button
+                            type="button"
+                            class="wl--thumb"
+                            ref={elems.horizontalThumb}
+                            tabIndex="-1"
+                        ></button>
+                    </div>
+                    <button
+                        type="button"
+                        class="wl--arrow-end"
+                        ref={elems.horizontalScrollbarArrowDown}
+                        tabIndex="-1"
+                    >
+                        <ArrowDownFillIcon />
+                    </button>
                 </div>
-                <table id={props.id} class="wl--tfoot-only-tb">
-                    <ColGroup cols={cols} />
-                    <TFoot foots={foots} />
-                </table>
-                <div class="wl--tfoot-semi-border-top"></div>
-            </div>*/}
+            </div>
         </>
     );
 }

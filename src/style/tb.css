@@ -276,13 +276,7 @@
         z-index: 5000;
         background-color: rgba(0, 0, 0, 0);
         transition: width 0.05s ease-out;
-        display: none;
-
-        @media not print {
-            &.wl--show {
-                display: flex;
-            }
-        }
+        display: flex;
 
         &:hover {
             background-color: #f1f1f1;
@@ -339,5 +333,9 @@
                 }
             }
         }
+    }
+
+    > .wl--h-scrollbar {
+        display: none !important;
     }
 }
