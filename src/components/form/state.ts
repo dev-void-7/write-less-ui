@@ -27,7 +27,7 @@ export class FormState {
         if (errCode == undefined) return;
 
         for (const field of this.fields) {
-            if (field.errCodes.includes(errCode)) field.msgState.setCode(errCode);
+            if (field.errCodes.includes(errCode)) field.msgState.err(errCode);
         }
     }
 }
