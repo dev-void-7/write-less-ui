@@ -1,12 +1,17 @@
-import { Props, Status, Field } from "./types.js";
+import { MsgState } from "../msg/types.js";
+import { Props, Status, Field, Notifier } from "./types.js";
 
 export class FormState {
     fields: Array<Field> = [];
     props: Props;
     status: Status = Status.Idle;
+    msgState: MsgState;
+    notifier?: Notifier | undefined;
 
     constructor(props: Props) {
         this.props = props;
+        this.notifier = props.notifier;
+        this.msgState = new MsgState(props.mapCodeToMsg);
     }
 
     registerField(field: Field): number {
@@ -26,8 +31,18 @@ export class FormState {
 
         if (errCode == undefined) return;
 
+        let mapped = false;
+
         for (const field of this.fields) {
-            if (field.errCodes.includes(errCode)) field.msgState.err(errCode);
+            if (field.errCodes.includes(errCode)) {
+                field.msgState.err(errCode);
+                mapped = true;
+            }
+        }
+
+        if (!mapped) {
+            if (this.notifier) this.notifier.err(this.props.mapCodeToMsg(errCode));
+            else this.msgState.err(errCode);
         }
     }
 }
