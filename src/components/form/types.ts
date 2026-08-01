@@ -3,10 +3,11 @@ import { MsgState } from "../msg/types.js";
 export type { FormState } from "./state.js";
 
 export interface Props {
-	id?: string;
+    id?: string;
     mapCodeToMsg: (key: number) => string;
     children: JSX.Element;
     onSubmit: (body: { [key: string]: any }) => Promise<number | undefined>;
+    tagless?: true;
 }
 
 export const enum Status {
@@ -24,5 +25,5 @@ export interface Field {
     validate(): boolean;
     elem: HTMLElement;
     msgState: MsgState;
-	errCodes: Array<number>,
+    errCodes: Array<number>;
 }
