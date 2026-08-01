@@ -11,8 +11,10 @@ import { State } from "../domain/state.js";
 import { batch } from "solid-js";
 import { ColLeaf } from "../domain/cols/col-leaf.js";
 import { SortDir } from "../../common/types.js";
+import { tbTranslations } from "../../../translations/tb.js";
 
 export function CtxMenu<S>(props: { state: State<S>; api: ContextMenuApi<Col<S>> }) {
+
     const expandCol = (col: Col<S>) => {
         const by = props.state.elems.tbWrapperAndTbWidthDiff();
         if (by <= 0) return;
@@ -37,24 +39,24 @@ export function CtxMenu<S>(props: { state: State<S>; api: ContextMenuApi<Col<S>>
                 {
                     items: [
                         {
-                            label: () => "expand column",
+                            label: () => tbTranslations().columnDropdown.expandCol,
                             onclick: expandCol,
                             icon: <StachExpandVerticalIcon />,
                         },
                         {
-                            label: () => "shrink column",
+                            label: () => tbTranslations().columnDropdown.shrinkCol,
                             onclick: shrinkCol,
                             icon: <StachShrinkVerticalIcon />,
                         },
                         {
-                            label: () => "auto fit",
+                            label: () => tbTranslations().columnDropdown.autoFitCol,
                             onclick: autoFitCol,
                             icon: <AutoFitVerticalIcon />,
                         },
                     ],
                 },
                 {
-                    title: () => "SORT",
+                    title: () => tbTranslations().columnDropdown.sort.toUpperCase(),
                     hidden: sortHidden,
                     type: GroupType.Radio,
                     onclick: (col: Col<S>, dir: SortDir) => {
@@ -72,12 +74,12 @@ export function CtxMenu<S>(props: { state: State<S>; api: ContextMenuApi<Col<S>>
                     },
                     items: [
                         {
-                            label: () => "Ascending",
+                            label: () => tbTranslations().columnDropdown.asc,
                             value: SortDir.Asc,
                             icon: <BarsArrowUpIcon />,
                         },
                         {
-                            label: () => "Descending",
+                            label: () => tbTranslations().columnDropdown.desc,
                             value: SortDir.Desc,
                             icon: <BarsArrowDownIcon />,
                         },
