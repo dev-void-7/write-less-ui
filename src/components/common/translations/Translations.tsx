@@ -12,9 +12,10 @@ export type Translations = typeof dfltTranslations;
 export const dfltTranslations = {
     tb: {
         columnDropdown: {
-            expand: "Expand",
-            shrink: "Shrink",
-            autoFit: "Auto Fit",
+            expandCol: "Expand Column",
+            shrinkCol: "Shrink Column",
+            autoFitCol: "Auto Fit Column",
+            sort: "Sort",
             asc: "Ascending",
             desc: "Descending",
         },
