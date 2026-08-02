@@ -8,6 +8,7 @@ export class Cols<S = any> {
     cols: Accessor<Array<Col<S>>>;
     colsOrder: Accessor<Array<number>>;
     setColsOrder: Setter<Array<number>>;
+    visibleLeafsCount: Accessor<number>;
     orderedCols: Accessor<Array<Col<S>>>;
     firstVisibleCols: Accessor<Array<Col<S>>>;
     lastVisibleCols: Accessor<Array<Col<S>>>;
@@ -34,6 +35,9 @@ export class Cols<S = any> {
             getLeafs(this.orderedCols().filter((leaf) => !leaf.hidden())),
         );
         this.leafs = createMemo(() => getLeafs(this.cols()));
+        this.visibleLeafsCount = createMemo(
+            () => this.leafs().filter((col) => !col.hidden()).length,
+        );
 
         createEffect(() => this.setColsOrder(getColOrder(props.id, this.cols().length)));
     }

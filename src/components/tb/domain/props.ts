@@ -14,4 +14,5 @@ export interface Props<S> {
     onRowClick?: (rowIndex: number) => void;
     onSort?: (sortedBy: SortedBy<S> | undefined) => void;
     dfltSort?: SortedBy<S>;
+    shrink?: true;
 }

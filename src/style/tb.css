@@ -28,6 +28,30 @@
             display: none;
         }
 
+        &.wl--expand {
+            > table {
+                height: 100%;
+
+                > tbody > tr.wl--expansion-row > td {
+                    height: auto !important;
+                    padding: 0 !important;
+                    border-block-start: none !important;
+                    position: relative;
+                    overflow: hidden;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        border-block-start: var(--wl--tb-border-width) solid
+                            var(--wl--tb-border-color);
+                    }
+                }
+            }
+        }
+
         > table {
             table-layout: fixed;
             border-collapse: separate;
@@ -363,7 +387,7 @@
 
             > .wl--arrow-left,
             > .wl--arrow-right {
-                visibility: visible!important;
+                visibility: visible !important;
             }
         }
 

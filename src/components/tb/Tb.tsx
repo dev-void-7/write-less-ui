@@ -24,11 +24,17 @@ export function Tb<S>(props: Props<S>) {
     return (
         <TbContext.Provider value={state}>
             <div class="wl--tb-frame">
-                <div class="wl--tb-wrapper" ref={elems.tbWrapper}>
+                <div
+                    class="wl--tb-wrapper"
+                    classList={{
+                        "wl--expand": !props.shrink,
+                    }}
+                    ref={elems.tbWrapper}
+                >
                     <table id={props.id} ref={elems.tb}>
                         <ColGroup cols={cols} />
                         <THead cols={cols} />
-                        <TBody cols={cols} rows={props.rows} />
+                        <TBody cols={cols} rows={props.rows} expansionRow={!props.shrink} />
                         <TFoot foots={state.foots} />
                     </table>
                     <CtxMenu state={state} api={state.ctxMenu} />
