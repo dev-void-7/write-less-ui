@@ -1,17 +1,13 @@
-import { MsgState } from "../msg/types.js";
-import { Props, Status, Field, Notifier } from "./types.js";
+import toaster from "../toaster/domain/toaster.js";
+import { Props, Status, Field } from "./types.js";
 
 export class FormState {
     fields: Array<Field> = [];
     props: Props;
     status: Status = Status.Idle;
-    msgState: MsgState;
-    notifier?: Notifier | undefined;
 
     constructor(props: Props) {
         this.props = props;
-        this.notifier = props.notifier;
-        this.msgState = new MsgState(props.mapCodeToMsg);
     }
 
     registerField(field: Field): number {
@@ -41,8 +37,7 @@ export class FormState {
         }
 
         if (!mapped) {
-            if (this.notifier) this.notifier.err(this.props.mapCodeToMsg(errCode));
-            else this.msgState.err(errCode);
+            toaster.err(this.props.mapCodeToMsg(errCode));
         }
     }
 }
