@@ -1,0 +1,48 @@
+.wl--toaster {
+    margin: 0;
+    inset: auto;
+    top: 0;
+    inset-inline-start: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: var(--wl--s4);
+    border: none;
+    background-color: transparent;
+
+    &:has(*) {
+        width: 20vw;
+        min-width: calc(var(--wl--s-base) * 52);
+        padding: var(--wl--s4);
+    }
+
+    .wl--toast {
+        padding-block: var(--wl--s2);
+        padding-inline: var(--wl--s3);
+        border-radius: var(--wl--border-radius);
+        display: flex;
+        gap: var(--wl--s2);
+        align-items: center;
+        font-size: var(--wl--fs-2xs);
+        opacity: 0;
+        scale: 0.9;
+        transition:
+            opacity 0.2s ease-out,
+            scale 0.2s ease-out;
+        box-shadow:
+            rgba(0, 0, 0, 0.1) 0px 0 7px 1px,
+            rgba(0, 0, 0, 0.05) 0px 0 3px 1px;
+        background-color: white;
+
+        &.wl--show {
+            opacity: 1;
+            scale: 1;
+        }
+
+        > .wl--icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+    }
+}
