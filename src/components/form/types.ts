@@ -1,5 +1,6 @@
 import { JSX } from "solid-js";
 import { MsgState } from "../msg/types.js";
+import { Notifier } from "../common/types.js";
 export type { FormState } from "./state.js";
 
 export type Props = MainProps & Tagless;
@@ -37,11 +38,4 @@ export interface Field {
     elem: HTMLElement;
     msgState: MsgState;
     errCodes: Array<number>;
-}
-
-export interface Notifier {
-    err: (msg: string) => void;
-    warn: (msg: string) => void;
-    scs: (msg: string) => void;
-    info: (msg: string) => void;
 }

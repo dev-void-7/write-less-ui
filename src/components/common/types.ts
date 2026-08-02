@@ -3,3 +3,10 @@ export enum SortDir {
     Asc,
     Desc,
 }
+
+export interface Notifier {
+    err: (msg: string) => void;
+    warn: (msg: string) => void;
+    scs: (msg: string) => void;
+    info: (msg: string) => void;
+}
