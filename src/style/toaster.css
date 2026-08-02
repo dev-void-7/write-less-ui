@@ -40,6 +40,37 @@
             scale: 1;
         }
 
+        &.wl--err {
+            & > .wl--vr {
+                background-color: red;
+            }
+        }
+
+        &.wl--scs {
+            & > .wl--vr {
+                background-color: green;
+            }
+        }
+
+        &.wl--warn {
+            & > .wl--vr {
+                background-color: yellow;
+            }
+        }
+
+        &.wl--info {
+            & > .wl--vr {
+                background-color: blue;
+            }
+        }
+
+        > .wl--vr {
+            width: 3px;
+            border-radius: var(--wl--border-radius);
+            align-self: stretch;
+            flex-shrink: 0;
+        }
+
         > .wl--icon {
             width: 1.25rem;
             height: 1.25rem;

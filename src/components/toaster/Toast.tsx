@@ -19,7 +19,17 @@ export function Toast(props: ToastProps) {
     });
 
     return (
-        <div class="wl--toast" ref={toast}>
+        <div
+            class="wl--toast"
+            classList={{
+                "wl--err": props.type === Type.Error,
+                "wl--scs": props.type === Type.Success,
+                "wl--warn": props.type === Type.Warning,
+                "wl--info": props.type === Type.Info,
+            }}
+            ref={toast}
+        >
+            <div class="wl--vr"></div>
             <Switch>
                 <Match when={props.type === Type.Error}>
                     <ErrorXMarkAnimatedIcon />
