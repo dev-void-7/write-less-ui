@@ -6,25 +6,23 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    row-gap: var(--wl--s4);
+    align-items: start;
+    row-gap: var(--wl--toaster-row-gap);
     border: none;
     background-color: transparent;
 
     &:has(*) {
-        width: 20vw;
-        min-width: calc(var(--wl--s-base) * 52);
+        max-width: calc(var(--wl--s-base) * 87);
         padding: var(--wl--s4);
     }
 
     .wl--toast {
-        padding-block: var(--wl--s2);
-        padding-inline: var(--wl--s3);
+        padding: var(--wl--s2);
         border-radius: var(--wl--border-radius);
         display: flex;
         gap: var(--wl--s2);
         align-items: center;
-        font-size: var(--wl--fs-2xs);
+        font-size: var(--wl--toast-fs);
         opacity: 0;
         scale: 0.9;
         transition:
@@ -33,7 +31,7 @@
         box-shadow:
             rgba(0, 0, 0, 0.1) 0px 0 7px 1px,
             rgba(0, 0, 0, 0.05) 0px 0 3px 1px;
-        background-color: white;
+        background: var(--wl--toast-bg);
 
         &.wl--show {
             opacity: 1;
@@ -41,39 +39,24 @@
         }
 
         &.wl--err {
-            & > .wl--vr {
-                background-color: red;
-            }
+            --wl--icon-color: var(--wl--toast-err-icon-color);
         }
 
         &.wl--scs {
-            & > .wl--vr {
-                background-color: green;
-            }
+            --wl--icon-color: var(--wl--toast-scs-icon-color);
         }
 
         &.wl--warn {
-            & > .wl--vr {
-                background-color: yellow;
-            }
+            --wl--icon-color: var(--wl--toast-warn-icon-color);
         }
 
         &.wl--info {
-            & > .wl--vr {
-                background-color: blue;
-            }
-        }
-
-        > .wl--vr {
-            width: 3px;
-            border-radius: var(--wl--border-radius);
-            align-self: stretch;
-            flex-shrink: 0;
+            --wl--icon-color: var(--wl--toast-info-icon-color);
         }
 
         > .wl--icon {
-            width: 1.25rem;
-            height: 1.25rem;
+            width: var(--wl--toast-icon-size);
+            height: var(--wl--toast-icon-size);
         }
     }
 }

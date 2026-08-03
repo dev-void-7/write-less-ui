@@ -11,6 +11,7 @@
     --wl--s-base: 0.25rem;
     --wl--s1\/2: calc(var(--wl--s-base) * 0.5);
     --wl--s1: var(--wl--s-base);
+    --wl--s3\/2: calc(var(--wl--s-base) * 1.5);
     --wl--s2: calc(var(--wl--s-base) * 2);
     --wl--s3: calc(var(--wl--s-base) * 3);
     --wl--s4: calc(var(--wl--s-base) * 4);
@@ -120,6 +121,17 @@
     --wl--tb-foot-font: 500 var(--wl--fs-2xs)/125% IBMPlexSans;
     --wl--tb-foot-height: var(--wl--s8);
     --wl--tb-foot-height-1\/4: calc(var(--wl--tb-foot-height) / 4);
+
+    /* TOASTER */
+    --wl--toaster-row-gap: var(--wl--s4);
+    --wl--toast-fs: var(--wl--fs-2xs);
+    --wl--toast-color: rgb(45, 45, 45);
+    --wl--toast-bg: white;
+    --wl--toast-icon-size: var(--wl--s5);
+    --wl--toast-err-icon-color: unset;
+    --wl--toast-scs-icon-color: unset;
+    --wl--toast-info-icon-color: unset;
+    --wl--toast-warn-icon-color: unset;
 }
 
 html:dir(rlt) {

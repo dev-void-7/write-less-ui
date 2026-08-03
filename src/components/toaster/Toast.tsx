@@ -31,7 +31,6 @@ export function Toast(props: ToastProps) {
             }}
             ref={toast}
         >
-            <div class="wl--vr"></div>
             <Switch>
                 <Match when={props.type === Type.Error}>
                     <ErrorXMarkAnimatedIcon />
