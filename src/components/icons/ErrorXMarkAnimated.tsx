@@ -1,4 +1,4 @@
-import { Props } from "./common.jsx";
+import { Props, Vars } from "./common.jsx";
 
 export function ErrorXMarkAnimatedIcon(props: Props) {
     return (
@@ -13,7 +13,7 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                 overflow: "visible",
             }}
         >
-            <circle fill="#EF4444" cx="16" cy="16" r="0">
+            <circle fill={`var(${Vars.ColorVar}, #EF4444)`} cx="16" cy="16" r="0">
                 <animate
                     attributeName="opacity"
                     values="0; 1; 1"
@@ -35,7 +35,7 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                     keySplines="0.25 0.71 0.4 0.88; .59 .22 .87 .63"
                 />
             </circle>
-            <circle fill="#EF4444" cx="16" cy="16" r="12" opacity="0">
+            <circle fill={`var(${Vars.ColorVar}, #EF4444)`} cx="16" cy="16" r="12" opacity="0">
                 <animate
                     attributeName="opacity"
                     values="1; 0"
@@ -59,7 +59,7 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
             </circle>
             <path
                 fill="none"
-                stroke="#FCFCFC"
+                stroke="white"
                 stroke-width="4"
                 stroke-dasharray="16"
                 stroke-dashoffset="16"
@@ -79,7 +79,7 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
             </path>
             <path
                 fill="none"
-                stroke="#FCFCFC"
+                stroke="white"
                 stroke-width="4"
                 stroke-dasharray="16"
                 stroke-dashoffset="16"

@@ -1,4 +1,4 @@
-import { Props } from "./common.jsx";
+import { Props, Vars } from "./common.jsx";
 
 export function WarningExclamationMarkAnimatedIcon(props: Props) {
     return (
@@ -14,7 +14,7 @@ export function WarningExclamationMarkAnimatedIcon(props: Props) {
             }}
         >
 
-            <circle cx="16" cy="16" r="0" fill="#F59E0B">
+            <circle cx="16" cy="16" r="0" fill={`var(${Vars.ColorVar}, #F59E0B)`}>
                 <animate
                     attributeName="opacity"
                     values="0; 1; 1"
@@ -36,7 +36,7 @@ export function WarningExclamationMarkAnimatedIcon(props: Props) {
                     keySplines="0.25 0.71 0.4 0.88; .59 .22 .87 .63"
                 ></animate>
             </circle>
-            <circle cx="16" cy="16" r="12" opacity="0" fill="#F59E0B">
+            <circle cx="16" cy="16" r="12" opacity="0" fill={`var(${Vars.ColorVar}, #F59E0B)`}>
                 <animate
                     attributeName="opacity"
                     values="1; 0"
@@ -78,7 +78,7 @@ export function WarningExclamationMarkAnimatedIcon(props: Props) {
                     keySplines="0.0, 0.0, 0.58, 1.0"
                 ></animate>
             </path>
-            <circle cx="16" cy="23" r="2.5" opacity="0" fill="#FFFFFF">
+            <circle cx="16" cy="23" r="2.5" opacity="0" fill="white">
                 <animate
                     attributeName="opacity"
                     values="0;1"

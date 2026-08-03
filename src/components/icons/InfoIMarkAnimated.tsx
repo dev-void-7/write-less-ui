@@ -1,4 +1,4 @@
-import { Props } from "./common.jsx";
+import { Props, Vars } from "./common.jsx";
 
 export function InfoIMarkAnimatedIcon(props: Props) {
     return (
@@ -13,7 +13,7 @@ export function InfoIMarkAnimatedIcon(props: Props) {
                 overflow: "visible",
             }}
         >
-            <circle fill="#3B82F6" cx="16" cy="16" r="0">
+            <circle fill={`var(${Vars.ColorVar}, #3B82F6)`} cx="16" cy="16" r="0">
                 <animate
                     attributeName="opacity"
                     values="0; 1; 1"
@@ -35,7 +35,7 @@ export function InfoIMarkAnimatedIcon(props: Props) {
                     keySplines="0.25 0.71 0.4 0.88; .59 .22 .87 .63"
                 />
             </circle>
-            <circle fill="#3B82F6" cx="16" cy="16" r="12" opacity="0">
+            <circle fill={`var(${Vars.ColorVar}, #3B82F6)`} cx="16" cy="16" r="12" opacity="0">
                 <animate
                     attributeName="opacity"
                     values="1; 0"
@@ -57,7 +57,7 @@ export function InfoIMarkAnimatedIcon(props: Props) {
                     keySplines="0.0 0.0 0.2 1"
                 />
             </circle>
-            <circle fill="#FCFCFC" cx="16" cy="9" r="0" opacity="0">
+            <circle fill="white" cx="16" cy="9" r="0" opacity="0">
                 <animate
                     attributeName="opacity"
                     values="0; 1"
@@ -81,7 +81,7 @@ export function InfoIMarkAnimatedIcon(props: Props) {
             </circle>
             <path
                 fill="none"
-                stroke="#FCFCFC"
+                stroke="white"
                 stroke-width="4"
                 stroke-dasharray="10"
                 stroke-dashoffset="10"
