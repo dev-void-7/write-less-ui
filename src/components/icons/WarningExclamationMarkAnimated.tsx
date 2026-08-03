@@ -1,6 +1,6 @@
 import { Props } from "./common.jsx";
 
-export function ErrorXMarkAnimatedIcon(props: Props) {
+export function WarningExclamationMarkAnimatedIcon(props: Props) {
     return (
         <svg
             viewBox="0 0 32 32"
@@ -13,7 +13,8 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                 overflow: "visible",
             }}
         >
-            <circle fill="#EF4444" cx="16" cy="16" r="0">
+
+            <circle cx="16" cy="16" r="0" fill="#F59E0B">
                 <animate
                     attributeName="opacity"
                     values="0; 1; 1"
@@ -23,7 +24,7 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                     calcMode="spline"
                     keyTimes="0; 0.6; 1"
                     keySplines="0.25 0.71 0.4 0.88; .59 .22 .87 .63"
-                />
+                ></animate>
                 <animate
                     attributeName="r"
                     values="0; 17.5; 16"
@@ -33,9 +34,9 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                     calcMode="spline"
                     keyTimes="0; 0.6; 1"
                     keySplines="0.25 0.71 0.4 0.88; .59 .22 .87 .63"
-                />
+                ></animate>
             </circle>
-            <circle fill="#EF4444" cx="16" cy="16" r="12" opacity="0">
+            <circle cx="16" cy="16" r="12" opacity="0" fill="#F59E0B">
                 <animate
                     attributeName="opacity"
                     values="1; 0"
@@ -45,7 +46,7 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                     calcMode="spline"
                     keyTimes="0; 1"
                     keySplines="0.0 0.0 0.2 1"
-                />
+                ></animate>
                 <animate
                     attributeName="r"
                     values="12; 26"
@@ -55,48 +56,40 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                     calcMode="spline"
                     keyTimes="0; 1"
                     keySplines="0.0 0.0 0.2 1"
-                />
+                ></animate>
             </circle>
             <path
                 fill="none"
-                stroke="#FCFCFC"
                 stroke-width="4"
-                stroke-dasharray="16"
-                stroke-dashoffset="16"
+                stroke-dasharray="9"
+                stroke-dashoffset="9"
                 stroke-linecap="round"
-                d="M11,11 L21,21"
+                d="M16,7l0,9"
+                stroke="#FFFFFF"
             >
                 <animate
                     attributeName="stroke-dashoffset"
-                    values="16;0"
-                    dur="0.25s"
+                    values="9;0"
+                    dur="0.2s"
                     begin="250ms"
                     fill="freeze"
                     calcMode="spline"
                     keyTimes="0; 1"
                     keySplines="0.0, 0.0, 0.58, 1.0"
-                />
+                ></animate>
             </path>
-            <path
-                fill="none"
-                stroke="#FCFCFC"
-                stroke-width="4"
-                stroke-dasharray="16"
-                stroke-dashoffset="16"
-                stroke-linecap="round"
-                d="M21,11 L11,21"
-            >
+            <circle cx="16" cy="23" r="2.5" opacity="0" fill="#FFFFFF">
                 <animate
-                    attributeName="stroke-dashoffset"
-                    values="16;0"
+                    attributeName="opacity"
+                    values="0;1"
                     dur="0.25s"
                     begin="350ms"
                     fill="freeze"
                     calcMode="spline"
                     keyTimes="0; 1"
                     keySplines="0.0, 0.0, 0.58, 1.0"
-                />
-            </path>
+                ></animate>
+            </circle>
         </svg>
     );
 }

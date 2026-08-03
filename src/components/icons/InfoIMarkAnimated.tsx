@@ -1,6 +1,6 @@
 import { Props } from "./common.jsx";
 
-export function ErrorXMarkAnimatedIcon(props: Props) {
+export function InfoIMarkAnimatedIcon(props: Props) {
     return (
         <svg
             viewBox="0 0 32 32"
@@ -13,7 +13,7 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                 overflow: "visible",
             }}
         >
-            <circle fill="#EF4444" cx="16" cy="16" r="0">
+            <circle fill="#3B82F6" cx="16" cy="16" r="0">
                 <animate
                     attributeName="opacity"
                     values="0; 1; 1"
@@ -35,7 +35,7 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                     keySplines="0.25 0.71 0.4 0.88; .59 .22 .87 .63"
                 />
             </circle>
-            <circle fill="#EF4444" cx="16" cy="16" r="12" opacity="0">
+            <circle fill="#3B82F6" cx="16" cy="16" r="12" opacity="0">
                 <animate
                     attributeName="opacity"
                     values="1; 0"
@@ -57,38 +57,40 @@ export function ErrorXMarkAnimatedIcon(props: Props) {
                     keySplines="0.0 0.0 0.2 1"
                 />
             </circle>
-            <path
-                fill="none"
-                stroke="#FCFCFC"
-                stroke-width="4"
-                stroke-dasharray="16"
-                stroke-dashoffset="16"
-                stroke-linecap="round"
-                d="M11,11 L21,21"
-            >
+            <circle fill="#FCFCFC" cx="16" cy="9" r="0" opacity="0">
                 <animate
-                    attributeName="stroke-dashoffset"
-                    values="16;0"
-                    dur="0.25s"
+                    attributeName="opacity"
+                    values="0; 1"
+                    dur="0.2s"
                     begin="250ms"
                     fill="freeze"
                     calcMode="spline"
                     keyTimes="0; 1"
                     keySplines="0.0, 0.0, 0.58, 1.0"
                 />
-            </path>
+                <animate
+                    attributeName="r"
+                    values="0; 2.5; 2"
+                    dur="0.25s"
+                    begin="250ms"
+                    fill="freeze"
+                    calcMode="spline"
+                    keyTimes="0; 0.6; 1"
+                    keySplines="0.25 0.71 0.4 0.88; .59 .22 .87 .63"
+                />
+            </circle>
             <path
                 fill="none"
                 stroke="#FCFCFC"
                 stroke-width="4"
-                stroke-dasharray="16"
-                stroke-dashoffset="16"
+                stroke-dasharray="10"
+                stroke-dashoffset="10"
                 stroke-linecap="round"
-                d="M21,11 L11,21"
+                d="M16,14 L16,24"
             >
                 <animate
                     attributeName="stroke-dashoffset"
-                    values="16;0"
+                    values="10;0"
                     dur="0.25s"
                     begin="350ms"
                     fill="freeze"
