@@ -57,7 +57,7 @@ export function InfoIMarkAnimatedIcon(props: Props) {
                     keySplines="0.0 0.0 0.2 1"
                 />
             </circle>
-            <circle fill="white" cx="16" cy="9" r="0" opacity="0">
+            <circle fill="white" cx="16" cy="9.5" r="0" opacity="0">
                 <animate
                     attributeName="opacity"
                     values="0; 1"
@@ -81,16 +81,17 @@ export function InfoIMarkAnimatedIcon(props: Props) {
             </circle>
             <path
                 fill="none"
-                stroke="white"
-                stroke-width="4"
-                stroke-dasharray="10"
-                stroke-dashoffset="10"
+                stroke="#FCFCFC"
+                stroke-width="3.5"
+                stroke-dasharray="14"
+                stroke-dashoffset="14"
                 stroke-linecap="round"
-                d="M16,14 L16,24"
+                stroke-linejoin="round"
+                d="M14,15 L16,15 L16,23.5"
             >
                 <animate
                     attributeName="stroke-dashoffset"
-                    values="10;0"
+                    values="14;0"
                     dur="0.25s"
                     begin="350ms"
                     fill="freeze"
