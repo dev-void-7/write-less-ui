@@ -14,14 +14,14 @@ export function generateOnResizerPointerDown(col: Col) {
             }
             document.documentElement.style.removeProperty("cursor");
             resizeBy = e.clientX - originX;
-            this.style.insetInlineEnd = `calc(anchor(--th-anchor end) - 5px - ${resizeBy}px)`;
+            this.style.left = `calc(anchor(--th-anchor left) - 5px + ${resizeBy}px)`;
         };
         const onPointerUp = () => {
             this.classList.remove("wl--active");
             if (resizeBy !== 0) col.resizeBy(resizeBy);
             console.log(resizeBy);
             document.removeEventListener("pointermove", onPointerMove);
-            this.style.removeProperty("inset-inline-end");
+            this.style.removeProperty("left");
             document.documentElement.style.removeProperty("cursor");
         };
 
