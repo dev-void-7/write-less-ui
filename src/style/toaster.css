@@ -17,7 +17,8 @@
     }
 
     .wl--toast {
-        padding: var(--wl--s2);
+        padding-block: var(--wl--s2);
+        padding-inline: var(--wl--s2) var(--wl--s4);
         border-radius: var(--wl--border-radius);
         display: flex;
         gap: var(--wl--s2);
