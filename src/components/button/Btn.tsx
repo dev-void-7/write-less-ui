@@ -9,6 +9,7 @@ export function Btn(props: Props) {
                 display: props.hidden ? "none" : undefined,
                 "grid-column": `span ${props.cols || 12}`,
             }}
+            form={props.formId}
         >
             {props.startIcon}
             <div class="wl--children">{props.children}</div>
