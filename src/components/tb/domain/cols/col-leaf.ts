@@ -97,8 +97,14 @@ export class ColLeaf<S = unknown> {
     }
 
     setWidthAndStore(width: number) {
-        localStorage.setItem(`col-${this.id}-width`, width.toString());
         this.#setWidth(width);
+        const actualWidth = this.computedWidth();
+        if (Math.round(actualWidth * 1000) / 1000 !== Math.round(width * 1000) / 1000) {
+            this.#setWidth(actualWidth);
+            localStorage.setItem(`col-${this.id}-width`, actualWidth.toString());
+        } else {
+            localStorage.setItem(`col-${this.id}-width`, width.toString());
+        }
     }
 }
 
