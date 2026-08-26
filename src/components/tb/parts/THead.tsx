@@ -81,7 +81,7 @@ function THeadTrThGroup<S>(props: {
             <button
                 type="button"
                 class="wl--th-resizer"
-                onpointerdown={generateOnResizerPointerDown(props.col)}
+                onpointerdown={generateOnResizerPointerDown(props.col, state.elems.tb)}
             ></button>
         </th>
     );
@@ -132,7 +132,7 @@ function THeadTrThLeaf<S>(props: {
             <button
                 type="button"
                 class="wl--th-resizer"
-                onpointerdown={generateOnResizerPointerDown(props.col)}
+                onpointerdown={generateOnResizerPointerDown(props.col, state.elems.tb)}
             ></button>
         </th>
     );

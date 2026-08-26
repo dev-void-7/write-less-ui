@@ -134,6 +134,6 @@
     --wl--toast-warn-icon-color: unset;
 }
 
-html:dir(rlt) {
+html:dir(rtl) {
     --dir-factor: -1;
 }

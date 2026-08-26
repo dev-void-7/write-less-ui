@@ -1,27 +1,30 @@
 import { Col } from "../domain/cols/col.js";
 
-export function generateOnResizerPointerDown(col: Col) {
+export function generateOnResizerPointerDown(col: Col, tb: HTMLTableElement) {
     return function (this: HTMLButtonElement, ptrDownEvent: PointerEvent) {
         this.classList.add("wl--active");
-
+        const computedTbStyle = getComputedStyle(tb);
         const originX = ptrDownEvent.clientX;
         let resizeBy = 0;
+        let finalResizeBy = 0;
         const onPointerMove = (e: PointerEvent) => {
             e.preventDefault();
-            if (col.canNotResizeBy(e.clientX - originX)) {
+            resizeBy = (e.clientX - originX) * (computedTbStyle.direction == "rtl" ? -1 : 1);
+            if (col.canNotResizeBy(resizeBy)) {
                 document.documentElement.style.cursor = "not-allowed";
                 return;
             }
+
             document.documentElement.style.removeProperty("cursor");
-            resizeBy = e.clientX - originX;
-            this.style.left = `calc(anchor(--th-anchor left) - 5px + ${resizeBy}px)`;
+            finalResizeBy = resizeBy;
+            this.style.insetInlineEnd = `calc(anchor(--th-anchor end) - 5px - ${finalResizeBy}px)`;
         };
         const onPointerUp = () => {
             this.classList.remove("wl--active");
-            if (resizeBy !== 0) col.resizeBy(resizeBy);
-            console.log(resizeBy);
+            if (finalResizeBy !== 0) col.resizeBy(finalResizeBy);
+            console.log(finalResizeBy);
             document.removeEventListener("pointermove", onPointerMove);
-            this.style.removeProperty("left");
+            this.style.removeProperty("inset-inline-end");
             document.documentElement.style.removeProperty("cursor");
         };
 

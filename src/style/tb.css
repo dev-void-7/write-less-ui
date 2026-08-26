@@ -182,7 +182,7 @@
                         z-index: 4000;
                         top: anchor(--th-anchor top);
                         bottom: anchor(--th-anchor bottom);
-                        left: calc(anchor(--th-anchor left) - 5px);
+                        inset-inline-end: calc(anchor(--th-anchor end) - 5px);
                         background-color: transparent;
                         width: 10px;
                         padding: 0;
