@@ -36,6 +36,10 @@ export class State<S = any> {
         }
     }
 
+    computeElemsHeightAndWidth() {
+        this.elems.computeHeightsAndWidths();
+    }
+
     distributeFreeSpaceToLeafsWithNoWidth() {
         const freeSpace = this.elems.tbWrapperAndTbWidthDiff();
         this.cols.distributeFreeSpaceToLeafsWithNoWidth(freeSpace);

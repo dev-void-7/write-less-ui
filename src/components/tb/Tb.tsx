@@ -16,6 +16,7 @@ export function Tb<S>(props: Props<S>) {
     const elems = state.elems;
 
     onMount(() => {
+        state.computeElemsHeightAndWidth();
         state.distributeFreeSpaceToLeafsWithNoWidth();
         state.observeTbWrapperLayoutAndOverflow();
         state.initScrolling();
