@@ -9,7 +9,7 @@ export interface MainProps {
     id?: string;
     mapCodeToMsg: (key: number) => string;
     children: JSX.Element;
-    onSubmit: (body: { [key: string]: any }) => Promise<number | undefined>;
+    onSubmit: (body: { [key: string]: any }) => Promise<void>;
 }
 
 export type Tagless =

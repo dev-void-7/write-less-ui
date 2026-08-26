@@ -23,21 +23,29 @@ export class FormState {
             body[field.getKey()] = field.getValue();
         }
 
-        const errCode = await this.props.onSubmit(body);
+        try {
+            await this.props.onSubmit(body);
+        } catch (err) {
+            if (err === undefined) return;
 
-        if (errCode == undefined) return;
-
-        let mapped = false;
-
-        for (const field of this.fields) {
-            if (field.errCodes.includes(errCode)) {
-                field.msgState.err(errCode);
-                mapped = true;
+            if (typeof err != "number") {
+                toaster.err(this.props.mapCodeToMsg(-1));
+                console.error(err);
+                return;
             }
-        }
 
-        if (!mapped) {
-            toaster.err(this.props.mapCodeToMsg(errCode));
+            let mapped = false;
+
+            for (const field of this.fields) {
+                if (field.errCodes.includes(err)) {
+                    field.msgState.err(err);
+                    mapped = true;
+                }
+            }
+
+            if (!mapped) {
+                toaster.err(this.props.mapCodeToMsg(err));
+            }
         }
     }
 }
