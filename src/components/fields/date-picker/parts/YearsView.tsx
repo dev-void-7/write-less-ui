@@ -1,5 +1,6 @@
 import { For } from "solid-js";
 import { useDatePickerContext } from "../contexts/state.js";
+import { View } from "../domain/state.js";
 
 export function YearsView() {
     const state = useDatePickerContext();
@@ -18,7 +19,7 @@ export function YearsView() {
     };
 
     return (
-        <div class="wl--years">
+        <div class="wl--years" classList={{ "wl--hidden": state.view() !== View.Years }}>
             <For each={years()}>
                 {(year) => (
                     <button
