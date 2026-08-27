@@ -58,4 +58,10 @@ export class DateObject {
         if (this.month != month) return false;
         return this.day > day;
     }
+
+    setYMD(year: number, month: Range<1, 12>, day: Range<1, 31>) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
 }

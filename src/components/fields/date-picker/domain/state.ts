@@ -33,6 +33,7 @@ export class State<T extends Output> {
         [this.sYear, this.setSYear] = createSignal(0);
         [this.sMonth, this.setSMonth] = createSignal<Range<1, 12>>(1);
         [this.sDay, this.setSDay] = createSignal<Range<1, 31>>(1);
+        this.autoSetSelectedYMD();
     }
 
     autoSetSelectedYMD() {
@@ -62,6 +63,44 @@ export class State<T extends Output> {
             this.setSYear(year);
             this.setSMonth(month);
             this.setSDay(day);
+        });
+    }
+
+    selectNextMonth() {
+        this.setSMonth((pre) => {
+            if (pre == 12) {
+                this.setSYear((pre) => pre + 1);
+                return 1;
+            } else {
+                return (pre + 1) as Range<1, 12>;
+            }
+        });
+    }
+
+    selectPreMonth() {
+        this.setSMonth((pre) => {
+            if (pre == 1) {
+                this.setSYear((preYear) => preYear - 1);
+                return 12;
+            } else {
+                return (pre - 1) as Range<1, 12>;
+            }
+        });
+    }
+
+    selectDayAndPickAndClose(day: Range<1, 31>) {
+        batch(() => {
+            this.setSDay(day);
+            this.val.setYMD(this.sYear(), this.sMonth(), day);
+            this.setPicked(this.val.toHyphenedYyyyMmDd());
+            this.button.click();
+        });
+    }
+
+    selectYearAndSetViewToDays(year: number) {
+        batch(() => {
+            this.setSYear(year);
+            this.setView(View.Days);
         });
     }
 
