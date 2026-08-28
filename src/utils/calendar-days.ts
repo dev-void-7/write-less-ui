@@ -11,10 +11,8 @@ export function calenderDays(
     const date = new Date(year, month, 0);
     const daysOfMonth = date.getDate();
     date.setDate(1);
-    console.log(date.toString());
     const day = date.getDay();
     date.setDate(0);
-    console.log(date.toString());
     const daysOfPreMonth = date.getDate();
     const preMonthDays = [];
     const monthDays = [];
