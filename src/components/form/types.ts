@@ -7,7 +7,6 @@ export type Props = MainProps & Tagless;
 
 export interface MainProps {
     id?: string;
-    mapCodeToMsg: (key: number) => string;
     children: JSX.Element;
     onSubmit: (body: { [key: string]: any }) => Promise<void>;
 }

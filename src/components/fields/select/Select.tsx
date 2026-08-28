@@ -28,7 +28,7 @@ export function Select<V, I>(props: Props<V, I>) {
     let dropdown!: HTMLDivElement;
     let button!: HTMLButtonElement;
     let opts!: HTMLDivElement;
-    let msgState = form && new MsgState(form.props.mapCodeToMsg);
+    let msgState = form && new MsgState();
 
     handleOptsMutation(merged, selectedOpt, setSelectedOpt);
 

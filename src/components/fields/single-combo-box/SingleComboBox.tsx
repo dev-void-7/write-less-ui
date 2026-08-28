@@ -37,7 +37,7 @@ export function SingleComboBox<T, V, I>(props: Props<T, V, I>) {
     const form = useFormContext();
 
     const state = new State(merged);
-    const msgState = form && new MsgState(form.props.mapCodeToMsg);
+    const msgState = form && new MsgState();
 
     onMount(() => {
         handleOnMount(form, merged, state, msgState);

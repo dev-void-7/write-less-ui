@@ -1,4 +1,5 @@
 import { Accessor, createSignal, Setter } from "solid-js";
+import { mapCodeToMsg } from "../../states/map-code-to-msg.js";
 
 export interface Props {
     layout?: "box" | "none";
@@ -11,21 +12,18 @@ export class MsgState {
     setStatus: Setter<Status>;
     code: Accessor<number | undefined>;
     setCode: Setter<number | undefined>;
-	mapCodeToMsg: (key: number) => string;
-	
 
-    constructor(mapCodeToMsg: (key: number) => string) {
+    constructor() {
         [this.status, this.setStatus] = createSignal(Status.None as Status);
         [this.code, this.setCode] = createSignal();
-		this.mapCodeToMsg = mapCodeToMsg;
     }
 
-	get msg(): string | undefined {
-		const code = this.code();
-		if (code) {
-			return this.mapCodeToMsg(code);
-		}
-	}
+    get msg(): string | undefined {
+        const code = this.code();
+        if (code) {
+            return mapCodeToMsg(code);
+        }
+    }
 
     clear() {
         this.setCode(undefined);

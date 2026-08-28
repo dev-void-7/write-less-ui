@@ -1,3 +1,4 @@
+import { mapCodeToMsg } from "../../states/map-code-to-msg.js";
 import toaster from "../toaster/domain/toaster.js";
 import { Props, Status, Field } from "./types.js";
 
@@ -29,7 +30,7 @@ export class FormState {
             if (err === undefined) return;
 
             if (typeof err != "number") {
-                toaster.err(this.props.mapCodeToMsg(-1));
+                toaster.err(mapCodeToMsg(-1));
                 console.error(err);
                 return;
             }
@@ -44,7 +45,7 @@ export class FormState {
             }
 
             if (!mapped) {
-                toaster.err(this.props.mapCodeToMsg(err));
+                toaster.err(mapCodeToMsg(err));
             }
         }
     }

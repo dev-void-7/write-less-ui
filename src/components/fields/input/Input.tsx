@@ -24,7 +24,7 @@ export function Input<T extends Type>(props: Props<T>) {
     let msgState: MsgState | undefined;
 
     if (form) {
-        msgState = new MsgState(form.props.mapCodeToMsg);
+        msgState = new MsgState();
         onMount(() => {
             handleOnMountWhenForm(form, merged, input, msgState!);
         });

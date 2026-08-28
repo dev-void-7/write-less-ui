@@ -109,7 +109,7 @@ export class State<T extends Output> {
     }
 
     unsafeInitMsgState() {
-        this.msgState = new MsgState(this.form!.props.mapCodeToMsg);
+        this.msgState = new MsgState();
     }
 
     unsafeRegisterFieldInForm() {
