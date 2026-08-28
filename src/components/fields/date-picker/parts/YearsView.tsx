@@ -23,7 +23,7 @@ export function YearsView() {
             <For each={years()}>
                 {(year) => (
                     <button
-                        class="wl--day"
+                        class="wl--year"
                         classList={{ "wl--selected": state.sYear() === year }}
                         onClick={() => state.selectYearAndSetViewToDays(year)}
                     >

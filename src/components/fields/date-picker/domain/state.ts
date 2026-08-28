@@ -36,6 +36,10 @@ export class State<T extends Output> {
         this.autoSetSelectedYMD();
     }
 
+    toggleView() {
+        this.setView((view) => (view === View.Days ? View.Years : View.Days));
+    }
+
     autoSetSelectedYMD() {
         if (this.val.notEmpty()) {
             this.setSelectedYMD(this.val.year, this.val.month, this.val.day);

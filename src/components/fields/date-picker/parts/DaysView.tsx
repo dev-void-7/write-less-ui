@@ -20,12 +20,21 @@ export function DaysView() {
 function Days(props: { days: Array<Range<1, 31>>; disabled: boolean }) {
     const state = useDatePickerContext();
 
+    const selected = props.disabled
+        ? (_day: number) => false
+        : (day: number) =>
+              state.sDay() === day &&
+              state.sMonth() == state.val.month &&
+              state.sYear() == state.val.year;
+
     return (
         <For each={props.days}>
             {(day) => (
                 <button
                     class="wl--day"
-                    classList={{ "wl--selected": props.disabled == false && state.sDay() === day }}
+                    classList={{
+                        "wl--selected": selected(day),
+                    }}
                     disabled={props.disabled}
                     onClick={() => state.selectDayAndPickAndClose(day)}
                 >
