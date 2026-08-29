@@ -1,42 +1,107 @@
 .wl--btn {
+    --weight: 400;
+    --height: var(--wl--s8);
+    --space: var(--wl--s2);
+    --icon-weight: 1.25;
+    --icon-size: calc(var(--height) * var(--wl--icon-size-ratio));
+
+    height: var(--height);
+    padding-inline: var(--space);
+    column-gap: var(--space);
+    border-radius: var(--wl--radius-s);
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--wl--btn-height);
-    padding-inline: var(--wl--btn-height-1\/4);
-    column-gap: var(--wl--btn-height-1\/4);
-    background-color: var(--wl--btn-bg-color);
-    border: var(--wl--btn-border-width) solid var(--wl--btn-border-color);
-    border-radius: 4px;
     cursor: pointer;
-    filter: brightness(1);
     scale: 1;
-    transition:
-        filter 0.2s ease-out,
-        scale 0.2s ease-out;
+    transition: scale 0.2s ease-out;
     /* TODO: add focus style */
-
-    &:hover {
-        filter: brightness(0.85);
-    }
 
     &:active {
         scale: 0.97;
     }
 
-    & > :first-child:not(.wl--children),
-    & > :last-child:not(.wl--children) {
-        --wl--icon-color: var(--wl--btn-icon-color);
-        --wl--icon-weight: var(--wl--btn-icon-weight);
-        width: var(--wl--btn-icon-size);
-        height: var(--wl--btn-icon-size);
+    &:not(.outline) {
+        border: none;
+
+        &.primary {
+            background-color: var(--wl--primary-500);
+            color: white;
+
+            &:hover {
+                background-color: var(--wl--primary-600);
+            }
+
+            &:active {
+                background-color: var(--wl--primary-700);
+            }
+        }
+
+        &.secondary {
+            background-color: var(--wl--secondary-500);
+            color: white;
+
+            &:hover {
+                background-color: var(--wl--secondary-600);
+            }
+
+            &:active {
+                background-color: var(--wl--secondary-700);
+            }
+        }
     }
 
-    & > .wl--children * {
-        color: var(--wl--btn-color);
-        font-family: var(--wl--btn-font-family);
-        font-size: var(--wl--btn-font-size);
-        font-weight: var(--wl--btn-font-weight);
-        line-height: var(--wl--btn-line-height);
+    &.outline {
+        &.primary {
+            background-color: transparent;
+            border: 1px solid var(--wl--primary-500);
+            color: var(--wl--primary-500);
+
+            &:hover {
+                background-color: var(--wl--primary-600);
+                border: 1px solid var(--wl--primary-600);
+                color: white;
+            }
+
+            &:active {
+                background-color: var(--wl--primary-700);
+                border: 1px solid var(--wl--primary-700);
+                color: white;
+            }
+        }
+
+        &.secondary {
+            background-color: transparent;
+            border: 1px solid var(--wl--secondary-500);
+            color: var(--wl--secondary-500);
+
+            &:hover {
+                background-color: var(--wl--secondary-600);
+                border: 1px solid var(--wl--secondary-600);
+                color: white;
+            }
+
+            &:active {
+                background-color: var(--wl--secondary-700);
+                border: 1px solid var(--wl--secondary-700);
+                color: white;
+            }
+        }
+    }
+
+    & > :first-child:not(.wl--children),
+    & > :last-child:not(.wl--children) {
+        --wl--icon-color: inherit;
+        --wl--icon-weight: var(--icon-weight);
+        width: var(--icon-size);
+        height: var(--icon-size);
+    }
+
+    & > .wl--children,
+    .wl--children * {
+        color: inherit;
+        font-size: var(--wl--fs-2xs);
+        font-weight: var(--weight);
+        line-height: var(--wl--lh-tight);
     }
 }

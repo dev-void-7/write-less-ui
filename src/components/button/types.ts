@@ -11,6 +11,8 @@ export interface MainProps {
     cols?: Cols;
     disalbed?: boolean;
     hidden?: boolean;
+    theme?: BtnTheme;
+    outline?: boolean;
     type?: "button" | "submit";
 }
 
@@ -23,3 +25,8 @@ type FormId =
           type?: "button";
           formId?: never;
       };
+
+export const enum BtnTheme {
+    Primary,
+    Secondary,
+}
