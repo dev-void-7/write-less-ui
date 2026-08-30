@@ -440,7 +440,7 @@
             width: var(--wl--field-control-icon-size);
             height: var(--wl--field-control-icon-size);
             inset-inline-end: var(--wl--field-control-height-1\/4);
-            rotate: 0deg;
+            rotate: x 0deg;
             transition: rotate 0.2s ease-out;
             transform-origin: center;
         }
@@ -495,12 +495,8 @@
 
     &:has(> .wl--dropdown:popover-open) {
         & > .wl--select {
-            & > .wl--icon-arrow:dir(ltr) {
-                rotate: -180deg;
-            }
-
-            & > .wl--icon-arrow:dir(rtl) {
-                rotate: 180deg;
+            & > .wl--icon-arrow{
+                rotate: x 180deg;
             }
         }
     }
