@@ -112,9 +112,9 @@
     --clr-text-subtle: var(--wl--secondary-400);
 
     /* borders */
-    --clr-border: var(--wl--secondary-200);
-    --clr-border-strong: var(--wl--secondary-300);
-    --clr-border-focus: var(--wl--primary-500);
+    --wl--clr-border: var(--wl--secondary-200);
+    --wl--clr-border-strong: var(--wl--secondary-300);
+    --wl--clr-border-focus: var(--wl--primary-500);
 
     /* CONTEXT-MENU */
     --wl--ctx-menu-border-width: 1px;
@@ -136,27 +136,28 @@
     --wl--ctx-menu-item-label-fs: var(--wl--fs-2xs);
 
     /* DROPDOWN */
-    --wl--dropdown-opt-hover-color: lightgray;
+    --wl--dropdown-opt-hover-color: var(--wl--secondary-100);
     --wl--dropdown-border-width: 1px;
-    --wl--dropdown-border-color: lightgray;
+    --wl--dropdown-border-color: var(--wl--clr-border-strong);
 
     /* FIELD */
-    --wl--field-row-gap: 0.25rem;
-    --wl--field-label-color: black;
-    --wl--field-label-font: 400 var(--wl--fs-xs)/125% IBMPlexSans;
+    --wl--field-row-gap: var(--wl--s1);
+    --wl--field-label-color: var(--wl--gray-950);
+    --wl--field-label-fs: var(--wl--fs-xs);
+    --wl--field-label-fw: 400;
+    --wl--field-label-lh: var(--wl--lh-tight);
     --wl--field-control-height: var(--wl--s8);
     --wl--field-control-height-1\/4: calc(var(--wl--field-control-height) / 4);
     --wl--field-control-height-9\/8: calc(var(--wl--field-control-height) * 1.125);
     --wl--field-control-border-width: 1px;
-    --wl--field-control-border-color: darkgray;
-    --wl--field-control-color: black;
-    --wl--field-control-focus-border-color: black;
-    --wl--field-control-font-family: IBMPlexSans;
+    --wl--field-control-border-color: var(--wl--clr-border-strong);
+    --wl--field-control-color: var(--wl--gray-900);
+    --wl--field-control-focus-border-color: var(--wl--clr-border-focus);
     --wl--field-control-font-size: var(--wl--fs-2xs);
     --wl--field-control-font-weight: 400;
-    --wl--field-control-line-height: 125%;
+    --wl--field-control-line-height: var(--wl--lh-tight);
     --wl--field-control-icon-size: calc(var(--wl--field-control-height) * 0.625);
-    --wl--field-control-icon-color: black;
+    --wl--field-control-icon-color: var(--wl--gray-900);
     --wl--field-control-icon-weight: 1.25;
     --wl--field-control-dropdown-opt-min-height: calc(var(--wl--field-control-height) * 0.8125);
     --wl--field-control-dropdown-opt-min-height-1\/4: calc(
@@ -165,11 +166,13 @@
     --wl--field-control-dropdown-opt-icon-size: calc(
         var(--wl--field-control-dropdown-opt-min-height) * 0.625
     );
-    --wl--field-msg-font: 400 0.75rem/100% IBMPlexSans;
-    --wl--field-msg-err-color: red;
-    --wl--field-msg-scs-color: green;
-    --wl--field-msg-info-color: blue;
-    --wl--field-msg-warn-color: yellow;
+    --wl--field-msg-fs: var(--wl--fs-3xs);
+    --wl--field-msg-fw: 400;
+    --wl--field-msg-lh: var(--wl--lh-one);
+    --wl--field-msg-err-color: var(--wl--danger-700);
+    --wl--field-msg-scs-color: var(--wl--success-700);
+    --wl--field-msg-info-color: var(--wl--blue-700);
+    --wl--field-msg-warn-color: var(--wl--warning-700);
 
     /* FORM */
     --wl--form-gap: 0.5rem 1rem;

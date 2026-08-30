@@ -8,7 +8,9 @@
 
     & > .wl--label {
         color: var(--wl--field-label-color);
-        font: var(--wl--field-label-font);
+        font-size: var(--wl--field-label-fs);
+        font-weight: var(--wl--field-label-fw);
+        line-height: var(--wl--field-label-lh);
     }
 
     & > .wl--middle-part {
@@ -50,7 +52,6 @@
         padding-inline-end: var(--wl--field-control-height-9\/8);
         background-color: white;
         border: var(--wl--field-control-border-width) solid var(--wl--field-control-border-color);
-        font-family: var(--wl--field-control-font-family);
         font-size: var(--wl--field-control-font-size);
         font-weight: var(--wl--field-control-font-weight);
         line-height: var(--wl--field-control-line-height);
@@ -278,7 +279,9 @@
 
     & > .wl--label {
         color: var(--wl--field-label-color);
-        font: var(--wl--field-label-font);
+        font-size: var(--wl--field-label-fs);
+        font-weight: var(--wl--field-label-fw);
+        line-height: var(--wl--field-label-lh);
     }
 
     & > .wl--middle-part {
@@ -337,7 +340,6 @@
             padding-inline: var(--wl--field-control-height-1\/4);
             border: var(--wl--field-control-border-width) solid
                 var(--wl--field-control-border-color);
-            font-family: var(--wl--field-control-font-family);
             font-size: var(--wl--field-control-font-size);
             font-weight: var(--wl--field-control-font-weight);
             line-height: var(--wl--field-control-line-height);
@@ -393,7 +395,9 @@
 
     & > .wl--label {
         color: var(--wl--field-label-color);
-        font: var(--wl--field-label-font);
+        font-size: var(--wl--field-label-fs);
+        font-weight: var(--wl--field-label-fw);
+        line-height: var(--wl--field-label-lh);
     }
 
     & > .wl--select {
@@ -409,7 +413,6 @@
         padding-inline-end: var(--wl--field-control-height-9\/8);
         background-color: white;
         border: var(--wl--field-control-border-width) solid var(--wl--field-control-border-color);
-        font-family: var(--wl--field-control-font-family);
         font-size: var(--wl--field-control-font-size);
         font-weight: var(--wl--field-control-font-weight);
         line-height: var(--wl--field-control-line-height);
@@ -534,7 +537,9 @@
 
     & > .wl--label {
         color: var(--wl--field-label-color);
-        font: var(--wl--field-label-font);
+        font-size: var(--wl--field-label-fs);
+        font-weight: var(--wl--field-label-fw);
+        line-height: var(--wl--field-label-lh);
     }
 
     & > .wl--combo-box-wrapper {
@@ -554,7 +559,6 @@
             background-color: white;
             border: var(--wl--field-control-border-width) solid
                 var(--wl--field-control-border-color);
-            font-family: var(--wl--field-control-font-family);
             font-size: var(--wl--field-control-font-size);
             font-weight: var(--wl--field-control-font-weight);
             line-height: var(--wl--field-control-line-height);
@@ -645,7 +649,7 @@
             box-sizing: content-box;
             margin-inline: var(--wl--field-control-height-1\/4);
             margin-block: var(--wl--field-control-height-1\/4);
-            --search-height: calc(var(--wl--field-control-height) * 0.8125);
+            --search-height: calc(var(--wl--field-control-height) * 0.875);
             --wl--field-control-icon-size: calc(var(--search-height) * 0.625);
             --search-height-1\/4: calc(var(--search-height) / 4);
             --search-height-9\/8: calc(var(--search-height) * 1.125);
@@ -669,10 +673,9 @@
                 border: var(--wl--field-control-border-width) solid
                     var(--wl--field-control-border-color);
                 color: var(--wl--field-control-color);
-                font-family: var(--wl--field-control-font-family);
-                font-size: calc(var(--wl--field-control-font-size) * 0.8125);
+                font-size: calc(var(--wl--field-control-font-size) * 0.9125);
                 font-weight: var(--wl--field-control-font-weight);
-                line-height: calc(var(--wl--field-control-line-height) * 0.8125);
+                line-height: calc(var(--wl--field-control-line-height) * 0.9125);
 
                 &:focus {
                     border-color: var(--wl--field-control-focus-border-color);
@@ -739,7 +742,7 @@
                 & > .wl--icon-err {
                     width: var(--wl--field-control-height);
                     height: var(--wl--field-control-height);
-                    --wl--icon-color: red;
+                    --wl--icon-color: var( --wl--danger-500);
                 }
             }
         }
