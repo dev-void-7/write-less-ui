@@ -135,9 +135,6 @@
     --wl--ctx-menu-item-label-color: rgb(45, 45, 45);
     --wl--ctx-menu-item-label-fs: var(--wl--fs-s);
 
-    /* DROPDOWN */
-    --wl--dropdown-opt-hover-color: var(--wl--secondary-100);
-
     /* FIELD */
     --wl--field-row-gap: var(--wl--s1);
     --wl--field-label-color: var(--wl--gray-950);
@@ -164,6 +161,7 @@
     --wl--field-control-dropdown-opt-icon-size: calc(
         var(--wl--field-control-dropdown-opt-min-height) * 0.625
     );
+    --wl--field-control-dropdown-opt-hover-color: var(--wl--secondary-100);
     --wl--field-msg-fs: var(--wl--fs-xs);
     --wl--field-msg-fw: 400;
     --wl--field-msg-lh: var(--wl--lh-one);
