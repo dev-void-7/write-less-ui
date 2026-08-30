@@ -39,55 +39,96 @@
         }
     }
 
-    & > .wl--date-picker {
+    & > .wl--date-picker-wrapper {
         position: relative;
         anchor-name: --date-picker-anchor;
-        display: flex;
-        align-items: center;
-        height: var(--wl--field-control-height);
-        min-width: 0;
-        border-radius: var(--wl--radius-s);
-        outline: none;
-        padding-inline-start: var(--wl--field-control-height-1\/4);
-        padding-inline-end: var(--wl--field-control-height-9\/8);
-        background-color: white;
-        border: var(--wl--field-control-border-width) solid var(--wl--field-control-border-color);
-        font-size: var(--wl--field-control-font-size);
-        font-weight: var(--wl--field-control-font-weight);
-        line-height: var(--wl--field-control-line-height);
-        color: var(--wl--field-control-color);
 
-        &:focus {
-            border-color: var(--wl--field-control-focus-border-color);
+        & > .wl--date-picker {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: var(--wl--field-control-height);
+            min-width: 0;
+            width: 100%;
+            border-radius: var(--wl--radius-s);
+            outline: none;
+            padding-inline-start: var(--wl--field-control-height-1\/4);
+            padding-inline-end: var(--wl--field-control-height-9\/8);
+            background-color: white;
+            border: var(--wl--field-control-border-width) solid
+                var(--wl--field-control-border-color);
+            font-size: var(--wl--field-control-font-size);
+            font-weight: var(--wl--field-control-font-weight);
+            line-height: var(--wl--field-control-line-height);
+            color: var(--wl--field-control-color);
+
+            &:focus {
+                border-color: var(--wl--field-control-focus-border-color);
+            }
+
+            & > :first-child:not(.wl--selected) {
+                pointer-events: none;
+                position: absolute;
+                width: var(--wl--field-control-icon-size);
+                height: var(--wl--field-control-icon-size);
+                inset-inline-start: var(--wl--field-control-height-1\/4);
+            }
+
+            &:has(> :first-child:not(.wl--selected)) {
+                padding-inline-start: var(--wl--field-control-height-9\/8);
+            }
+
+            > .wl--selected {
+                flex-grow: 1;
+                flex-shrink: 0;
+                text-align: start;
+            }
+
+            & > .wl--icon {
+                pointer-events: none;
+                position: absolute;
+                width: var(--wl--field-control-icon-size);
+                height: var(--wl--field-control-icon-size);
+                inset-inline-end: var(--wl--field-control-height-1\/4);
+                rotate: 0deg;
+                transition: rotate 0.2s ease-out;
+                transform-origin: center;
+            }
         }
 
-        & > :first-child:not(.wl--selected) {
-            pointer-events: none;
+        & > .wl--btn-deselect {
             position: absolute;
-            width: var(--wl--field-control-icon-size);
-            height: var(--wl--field-control-icon-size);
-            inset-inline-start: var(--wl--field-control-height-1\/4);
-        }
+            cursor: pointer;
+            top: var(--wl--field-control-height-1\/4);
+            inset-inline-end: var(--wl--field-control-height-9\/8);
+            border: none;
+            background-color: transparent;
+            padding: 0;
+            line-height: 0;
+            min-height: 0;
 
-        &:has(> :first-child:not(.wl--selected)) {
-            padding-inline-start: var(--wl--field-control-height-9\/8);
-        }
+            & > .wl--icon-deselect {
+                width: calc(var(--wl--field-control-height) * 0.5);
+                height: calc(var(--wl--field-control-height) * 0.5);
+                --wl--icon-weight: 1.5;
+                --wl--icon-color: color-mix(
+                    in srgb,
+                    var(--wl--field-control-icon-color) 50%,
+                    transparent
+                );
 
-        > .wl--selected {
-            flex-grow: 1;
-            flex-shrink: 0;
-            text-align: start;
-        }
+                &:hover {
+                    --wl--icon-color: color-mix(
+                        in srgb,
+                        var(--wl--field-control-icon-color) 75%,
+                        transparent
+                    );
+                }
 
-        & > .wl--icon {
-            pointer-events: none;
-            position: absolute;
-            width: var(--wl--field-control-icon-size);
-            height: var(--wl--field-control-icon-size);
-            inset-inline-end: var(--wl--field-control-height-1\/4);
-            rotate: 0deg;
-            transition: rotate 0.2s ease-out;
-            transform-origin: center;
+                &:active {
+                    --wl--icon-color: var(--wl--field-control-icon-color);
+                }
+            }
         }
     }
 
@@ -501,7 +542,7 @@
 
     &:has(> .wl--dropdown:popover-open) {
         & > .wl--select {
-            & > .wl--icon-arrow{
+            & > .wl--icon-arrow {
                 rotate: x 180deg;
             }
         }
@@ -749,7 +790,7 @@
                 & > .wl--icon-err {
                     width: var(--wl--field-control-height);
                     height: var(--wl--field-control-height);
-                    --wl--icon-color: var( --wl--danger-500);
+                    --wl--icon-color: var(--wl--danger-500);
                 }
             }
         }
