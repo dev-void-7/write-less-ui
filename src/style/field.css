@@ -610,7 +610,7 @@
             & > .wl--icon-deselect {
                 width: calc(var(--wl--field-control-height) * 0.5);
                 height: calc(var(--wl--field-control-height) * 0.5);
-                --wl--icon-weight: var(--wl--combo-box-deselect-icon-weight);
+                --wl--icon-weight: 1.5;
                 --wl--icon-color: color-mix(
                     in srgb,
                     var(--wl--field-control-icon-color) 50%,
