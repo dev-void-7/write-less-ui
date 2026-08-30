@@ -1,37 +1,49 @@
 @font-face {
-    font-family: IBMPlexSans;
+    font-family: Tajawal;
+    font-style: normal;
+    font-weight: 200;
+    src: url("./../fonts/Tajawal-ExtraLight.ttf");
+}
+@font-face {
+    font-family: Tajawal;
     font-style: normal;
     font-weight: 300;
-    src: url("./../fonts/IBMPlexSansArabic-Light.ttf");
+    src: url("./../fonts/Tajawal-Light.ttf");
 }
 @font-face {
-    font-family: IBMPlexSans;
+    font-family: Tajawal;
     font-style: normal;
     font-weight: 400;
-    src: url("./../fonts/IBMPlexSansArabic-Regular.ttf");
+    src: url("./../fonts/Tajawal-Regular.ttf");
 }
 @font-face {
-    font-family: IBMPlexSans;
+    font-family: Tajawal;
     font-style: normal;
     font-weight: 500;
-    src: url("./../fonts/IBMPlexSansArabic-Medium.ttf");
+    src: url("./../fonts/Tajawal-Medium.ttf");
 }
 @font-face {
-    font-family: IBMPlexSans;
+    font-family: Tajawal;
     font-style: normal;
     font-weight: 600;
-    src: url("./../fonts/IBMPlexSansArabic-SemiBold.ttf");
+    src: url("./../fonts/Tajawal-Bold.ttf");
 }
 @font-face {
-    font-family: IBMPlexSans;
+    font-family: Tajawal;
     font-style: normal;
     font-weight: 700;
-    src: url("./../fonts/IBMPlexSansArabic-Bold.ttf");
+    src: url("./../fonts/Tajawal-ExtraBold.ttf");
+}
+@font-face {
+    font-family: Tajawal;
+    font-style: normal;
+    font-weight: 800;
+    src: url("./../fonts/Tajawal-Black.ttf");
 }
 
 * {
     box-sizing: border-box;
-    font-family: IBMPlexSans;
+    font-family: Tajawal;
 }
 
 @media print {
