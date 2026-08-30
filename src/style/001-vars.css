@@ -174,9 +174,6 @@
     --wl--field-msg-info-color: var(--wl--blue-700);
     --wl--field-msg-warn-color: var(--wl--warning-700);
 
-    /* FORM */
-    --wl--form-gap: 0.5rem 1rem;
-
     /* SPINNER */
     --wl--loader-spinner-width: var(--wl--s8);
     --wl--loader-spinner-color: black;

@@ -1,5 +1,5 @@
 .wl--form {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: var(--wl--form-gap);
+    gap: var(--wl--s2) var(--wl--s4);
 }
