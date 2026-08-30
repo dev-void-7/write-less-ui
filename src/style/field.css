@@ -470,6 +470,10 @@
                     background-color: var(--wl--field-control-dropdown-opt-hover-color);
                 }
 
+                &:active {
+                    background-color: var(--wl--field-control-dropdown-opt-active-color);
+                }
+
                 &.selected {
                     anchor-name: --selected-opt;
                 }
@@ -710,6 +714,10 @@
 
                     &.wl--focused {
                         background-color: var(--wl--field-control-dropdown-opt-hover-color);
+                    }
+
+                    &:active {
+                        background-color: var(--wl--field-control-dropdown-opt-active-color);
                     }
 
                     &.selected {
