@@ -180,12 +180,3 @@
 html:dir(rtl) {
     --dir-factor: -1;
 }
-
-.field-input {
-    height: var(--field-height);
-    font-size: var(--field-fs);
-}
-.field-input.lg {
-    height: var(--field-height-lg);
-    font-size: var(--field-fs-lg);
-}
