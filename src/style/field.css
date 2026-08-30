@@ -568,7 +568,7 @@
                 border-color: var(--wl--field-control-focus-border-color);
             }
 
-            & > :first-child:not(.wl--selected-label, .wl--placeholder) {
+            & > :first-child:not(.wl--selected-label, .wl--placeholder, .wl--icon-arrow) {
                 pointer-events: none;
                 position: absolute;
                 width: var(--wl--field-control-icon-size);
@@ -576,7 +576,7 @@
                 inset-inline-start: var(--wl--field-control-height-1\/4);
             }
 
-            &:has(> :first-child:not(.wl--selected-label, .wl--placeholder)) {
+            &:has(> :first-child:not(.wl--selected-label, .wl--placeholder, .wl--icon-arrow)) {
                 padding-inline-start: var(--wl--field-control-height-9\/8);
             }
 
