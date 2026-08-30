@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    row-gap: var(--wl--toaster-row-gap);
+    row-gap: var(var(--wl--s4));
     border: none;
     background-color: transparent;
 
@@ -23,7 +23,7 @@
         display: flex;
         gap: var(--wl--s2);
         align-items: center;
-        font-size: var(--wl--toast-fs);
+        font-size: var(var(--wl--fs-2xs));
         opacity: 0;
         scale: 0.9;
         transition:
@@ -32,7 +32,7 @@
         box-shadow:
             rgba(0, 0, 0, 0.1) 0px 0 7px 1px,
             rgba(0, 0, 0, 0.05) 0px 0 3px 1px;
-        background: var(--wl--toast-bg);
+        background: var(white);
 
         &.wl--show {
             opacity: 1;
@@ -40,24 +40,24 @@
         }
 
         &.wl--err {
-            --wl--icon-color: var(--wl--toast-err-icon-color);
+            --wl--icon-color: var(--wl--danger-500);
         }
 
         &.wl--scs {
-            --wl--icon-color: var(--wl--toast-scs-icon-color);
+            --wl--icon-color: var(--wl--success-500);
         }
 
         &.wl--warn {
-            --wl--icon-color: var(--wl--toast-warn-icon-color);
+            --wl--icon-color: var(--wl--warning-500);
         }
 
         &.wl--info {
-            --wl--icon-color: var(--wl--toast-info-icon-color);
+            --wl--icon-color: var(--wl--info-500);
         }
 
         > .wl--icon {
-            width: var(--wl--toast-icon-size);
-            height: var(--wl--toast-icon-size);
+            width: var(var(--wl--s5));
+            height: var(var(--wl--s5));
         }
     }
 }
