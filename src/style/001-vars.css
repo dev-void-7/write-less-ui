@@ -137,8 +137,6 @@
 
     /* DROPDOWN */
     --wl--dropdown-opt-hover-color: var(--wl--secondary-100);
-    --wl--dropdown-border-width: 1px;
-    --wl--dropdown-border-color: var(--wl--clr-border-strong);
 
     /* FIELD */
     --wl--field-row-gap: var(--wl--s1);
