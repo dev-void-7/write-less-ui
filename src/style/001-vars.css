@@ -20,6 +20,7 @@
     --wl--s2: calc(var(--wl--s-base) * 2);
     --wl--s3: calc(var(--wl--s-base) * 3);
     --wl--s4: calc(var(--wl--s-base) * 4);
+    --wl--s9\/2: calc(var(--wl--s-base) * 4.5);
     --wl--s5: calc(var(--wl--s-base) * 5);
     --wl--s6: calc(var(--wl--s-base) * 6);
     --wl--s7: calc(var(--wl--s-base) * 7);
@@ -162,6 +163,7 @@
         var(--wl--field-control-dropdown-opt-min-height) * 0.625
     );
     --wl--field-control-dropdown-opt-hover-color: var(--wl--secondary-100);
+    --wl--field-control-dropdown-opt-active-color: var(--wl--secondary-200);
     --wl--field-msg-fs: var(--wl--fs-xs);
     --wl--field-msg-fw: 400;
     --wl--field-msg-lh: var(--wl--lh-one);

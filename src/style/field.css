@@ -19,13 +19,13 @@
         justify-content: stretch;
 
         & > :first-child {
-            border-start-start-radius: 4px;
-            border-end-start-radius: 4px;
+            border-start-start-radius: var(--wl--radius-s);
+            border-end-start-radius: var(--wl--radius-s);
         }
 
         & > :last-child {
-            border-start-end-radius: 4px;
-            border-end-end-radius: 4px;
+            border-start-end-radius: var(--wl--radius-s);
+            border-end-end-radius: var(--wl--radius-s);
         }
 
         &:has(> :first-child:not(.wl--date-picker)) > .wl--date-picker > button {
@@ -46,7 +46,7 @@
         align-items: center;
         height: var(--wl--field-control-height);
         min-width: 0;
-        border-radius: 4px;
+        border-radius: var(--wl--radius-s);
         outline: none;
         padding-inline-start: var(--wl--field-control-height-1\/4);
         padding-inline-end: var(--wl--field-control-height-9\/8);
@@ -93,9 +93,9 @@
 
     & > .wl--dropdown {
         position-anchor: --date-picker-anchor;
-        row-gap: 0.5rem;
-        padding-inline: 1rem;
-        padding-block: 0.75rem;
+        row-gap: var(--wl--s2);
+        padding-inline: var(--wl--s4);
+        padding-block: var(--wl--s3);
         min-width: unset;
         max-height: unset;
         inset-inline-start: unset;
@@ -116,18 +116,18 @@
                 display: flex;
                 align-items: center;
                 justify-content: start;
-                column-gap: 0.5rem;
-                border-radius: 4px;
-                padding: 0.25rem 0.5rem;
-                font-weight: 600;
-                font-size: 0.8125rem;
+                column-gap: var(--wl--s2);
+                border-radius: var(--wl--radius-s);
+                padding: var(--wl--s1) var(--wl--s2);
+                font-weight: 500;
+                font-size: var(--wl--fs-xs);
 
                 &:hover {
-                    background-color: rgba(0, 0, 0, 0.1);
+                    background-color: var(--wl--field-control-dropdown-opt-hover-color);
                 }
 
                 &:active {
-                    background-color: rgba(0, 0, 0, 0.2);
+                    background-color: var(--wl--field-control-dropdown-opt-active-color);
                 }
 
                 &.wl--expanded {
@@ -137,8 +137,8 @@
                 }
 
                 > .wl--icon {
-                    width: 1.25rem;
-                    height: 1.25rem;
+                    width: var(--wl--s9\/2);
+                    height: var(--wl--s9\/2);
                     rotate: x 0deg;
                     transition: rotate 0.2s ease-out;
                     transform-origin: center;
@@ -148,7 +148,7 @@
             > .wl--month-arrows {
                 display: flex;
                 align-items: center;
-                column-gap: 0.5rem;
+                column-gap: var(--wl--s2);
                 margin-inline-start: auto;
 
                 > .wl--pre-month,
@@ -156,20 +156,20 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    padding: 0.25rem;
-                    border-radius: 4px;
+                    padding: var(--wl--s1);
+                    border-radius: var(--wl--radius-s);
 
                     &:hover {
-                        background-color: rgba(0, 0, 0, 0.1);
+                        background-color: var(--wl--field-control-dropdown-opt-hover-color);
                     }
 
                     &:active {
-                        background-color: rgba(0, 0, 0, 0.2);
+                        background-color: var(--wl--field-control-dropdown-opt-active-color);
                     }
 
                     > .wl--icon {
-                        width: 1.25rem;
-                        height: 1.25rem;
+                        width: var(--wl--s5);
+                        height: var(--wl--s5);
                     }
                 }
             }
@@ -182,19 +182,20 @@
                 display: grid;
                 grid-template-columns: repeat(7, 1fr);
                 grid-template-rows: repeat(7, 1fr);
-                gap: 0.75rem 0.5rem;
+                gap: var(--wl--s3) var(--wl--s2);
                 align-items: center;
                 justify-content: center;
 
                 > .wl--week-day {
-                    font-size: 0.8125rem;
+                    font-size: var(--wl--fs-xs);
                     font-weight: 500;
                     text-align: center;
                 }
 
                 > .wl--day {
-                    padding: 0.25rem 0.375rem;
-                    border-radius: 4px;
+                    padding: var(--wl--s1) var(--wl--s3\/2);
+                    border-radius: var(--wl--radius-s);
+                    font-size: var(--wl--fs-xs);
 
                     &:disabled {
                         cursor: not-allowed;
@@ -202,12 +203,12 @@
 
                     &:not(:disabled) {
                         &:hover {
-                            background-color: rgba(0, 0, 0, 0.1);
+                            background-color: var(--wl--field-control-dropdown-opt-hover-color);
                         }
 
                         &:active,
                         &.wl--selected {
-                            background-color: rgba(0, 0, 0, 0.2);
+                            background-color: var(--wl--field-control-dropdown-opt-active-color);
                         }
                     }
                 }
@@ -221,13 +222,14 @@
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
                 grid-template-rows: repeat(auto, 1fr);
-                gap: 0.75rem 0.5rem;
+                gap: var(--wl--s3) var(--wl--s2);
                 align-items: center;
                 justify-content: center;
 
                 > .wl--year {
-                    padding: 0.25rem 0.375rem;
-                    border-radius: 4px;
+                    padding: var(--wl--s1) var(--wl--s3\/2);
+                    border-radius: var(--wl--radius-s);
+                    font-size: var(--wl--fs-xs);
 
                     &:disabled {
                         cursor: not-allowed;
@@ -235,12 +237,12 @@
 
                     &:not(:disabled) {
                         &:hover {
-                            background-color: rgba(0, 0, 0, 0.1);
+                            background-color: var(--wl--field-control-dropdown-opt-hover-color);
                         }
 
                         &:active,
                         &.wl--selected {
-                            background-color: rgba(0, 0, 0, 0.2);
+                            background-color: var(--wl--field-control-dropdown-opt-active-color);
                         }
                     }
                 }
@@ -290,13 +292,13 @@
         justify-content: stretch;
 
         & > :first-child {
-            border-start-start-radius: 4px;
-            border-end-start-radius: 4px;
+            border-start-start-radius: var(--wl--radius-s);
+            border-end-start-radius: var(--wl--radius-s);
         }
 
         & > :last-child {
-            border-start-end-radius: 4px;
-            border-end-end-radius: 4px;
+            border-start-end-radius: var(--wl--radius-s);
+            border-end-end-radius: var(--wl--radius-s);
         }
 
         &:has(> :first-child:not(.wl--input-wrapper)) > .wl--input-wrapper > input {
@@ -335,7 +337,7 @@
             width: 100%;
             height: var(--wl--field-control-height);
             min-width: 0;
-            border-radius: 4px;
+            border-radius: var(--wl--radius-s);
             outline: none;
             padding-inline: var(--wl--field-control-height-1\/4);
             border: var(--wl--field-control-border-width) solid
@@ -407,7 +409,7 @@
         align-items: center;
         height: var(--wl--field-control-height);
         min-width: 0;
-        border-radius: 4px;
+        border-radius: var(--wl--radius-s);
         outline: none;
         padding-inline-start: var(--wl--field-control-height-1\/4);
         padding-inline-end: var(--wl--field-control-height-9\/8);
@@ -548,7 +550,7 @@
             align-items: center;
             height: var(--wl--field-control-height);
             min-width: 0;
-            border-radius: 4px;
+            border-radius: var(--wl--radius-s);
             outline: none;
             padding-inline-start: var(--wl--field-control-height-1\/4);
             padding-inline-end: var(--wl--field-control-height-9\/8);
@@ -662,7 +664,7 @@
                 width: 100%;
                 height: var(--search-height);
                 min-width: 0;
-                border-radius: 4px;
+                border-radius: var(--wl--radius-s);
                 outline: none;
                 padding-inline-start: var(--search-height-9\/8);
                 padding-inline-end: var(--search-height-1\/4);
