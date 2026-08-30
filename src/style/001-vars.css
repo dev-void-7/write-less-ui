@@ -178,27 +178,6 @@
     --wl--loader-width: var(--wl--s8);
     --wl--loader-color: var(--wl--primary-500);
 
-    /* TABLE */
-    --wl--tb-head-color: rgb(45, 45, 45);
-    --wl--tb-head-bg-color: rgb(245, 245, 245);
-    --wl--tb-head-font: 500 var(--wl--fs-2xs)/125% IBMPlexSans;
-    --wl--tb-head-height: var(--wl--s8);
-    --wl--tb-head-height-1\/4: calc(var(--wl--tb-head-height) / 4);
-    --wl--tb-border-width: 1px;
-    --wl--tb-border-color: darkgray;
-    --wl--tb-data-color: black;
-    --wl--tb-data-font-family: IBMPlexSans;
-    --wl--tb-data-font-size: var(--wl--fs-2xs);
-    --wl--tb-data-font-weight: 400;
-    --wl--tb-data-line-height: 125%;
-    --wl--tb-data-height: var(--wl--s8);
-    --wl--tb-data-height-1\/4: calc(var(--wl--tb-data-height) / 4);
-    --wl--tb-foot-color: rgb(45, 45, 45);
-    --wl--tb-foot-bg-color: rgb(245, 245, 245);
-    --wl--tb-foot-font: 500 var(--wl--fs-2xs)/125% IBMPlexSans;
-    --wl--tb-foot-height: var(--wl--s8);
-    --wl--tb-foot-height-1\/4: calc(var(--wl--tb-foot-height) / 4);
-
     /* TOASTER */
     --wl--toaster-row-gap: var(--wl--s4);
     --wl--toast-fs: var(--wl--fs-2xs);
