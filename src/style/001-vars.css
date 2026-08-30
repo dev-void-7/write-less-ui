@@ -175,8 +175,8 @@
     --wl--field-msg-warn-color: var(--wl--warning-700);
 
     /* SPINNER */
-    --wl--loader-spinner-width: var(--wl--s8);
-    --wl--loader-spinner-color: black;
+    --wl--loader-width: var(--wl--s8);
+    --wl--loader-color: var(--wl--primary-500);
 
     /* TABLE */
     --wl--tb-head-color: rgb(45, 45, 45);
