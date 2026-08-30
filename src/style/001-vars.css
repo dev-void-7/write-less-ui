@@ -107,9 +107,9 @@
     --wl--secondary-950: var(--wl--gray-950);
 
     /* text */
-    --clr-text: var(--wl--secondary-950);
-    --clr-text-muted: var(--wl--secondary-600);
-    --clr-text-subtle: var(--wl--secondary-400);
+    --wl--clr-text: var(--wl--secondary-950);
+    --wl--clr-text-muted: var(--wl--secondary-600);
+    --wl--clr-text-subtle: var(--wl--secondary-400);
 
     /* borders */
     --wl--clr-border: var(--wl--secondary-200);
