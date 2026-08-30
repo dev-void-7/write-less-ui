@@ -23,7 +23,7 @@
         display: flex;
         gap: var(--wl--s2);
         align-items: center;
-        font-size: var(var(--wl--fs-2xs));
+        font-size: var(var(--wl--fs-s));
         opacity: 0;
         scale: 0.9;
         transition:

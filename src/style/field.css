@@ -669,9 +669,9 @@
                 border: var(--wl--field-control-border-width) solid
                     var(--wl--field-control-border-color);
                 color: var(--wl--field-control-color);
-                font-size: calc(var(--wl--field-control-font-size) * 0.9125);
+                font-size: calc(var(--wl--field-control-font-size) * 0.925);
                 font-weight: var(--wl--field-control-font-weight);
-                line-height: calc(var(--wl--field-control-line-height) * 0.9125);
+                line-height: calc(var(--wl--field-control-line-height) * 0.925);
 
                 &:focus {
                     border-color: var(--wl--field-control-focus-border-color);
@@ -704,6 +704,7 @@
                         var(--wl--field-control-height) * 0.8125
                     );
                     min-height: var(--wl--field-control-dropdown-opt-min-height);
+                    font-size: var(--wl--field-control-font-size);
 
                     &.wl--focused {
                         background-color: var(--wl--dropdown-opt-hover-color);

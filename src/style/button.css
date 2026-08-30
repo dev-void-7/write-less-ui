@@ -100,7 +100,7 @@
     & > .wl--children,
     .wl--children * {
         color: inherit;
-        font-size: var(--wl--fs-2xs);
+        font-size: var(--wl--fs-s);
         font-weight: var(--weight);
         line-height: var(--wl--lh-tight);
     }

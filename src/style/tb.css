@@ -108,7 +108,7 @@
                     anchor-scope: --th-anchor;
                     anchor-name: --th-anchor;
                     color: var(var(--wl--clr-text-muted));
-                    font-size: var(--wl--fs-2xs);
+                    font-size: var(--wl--fs-s);
                     font-weight: 500;
                     line-height: var(--wl--lh-tight);
                     height: var(var(--wl--s8));
@@ -252,7 +252,7 @@
                     > td {
                         border-block-end: var(1px) solid var(var(--wl--clr-border-strong));
                         color: var(var(--wl--clr-text-muted));
-                        font-size: var(--wl--fs-2xs);
+                        font-size: var(--wl--fs-s);
                         font-weight: 500;
                         line-height: var(--wl--lh-tight);
                         height: var(var(--wl--s8));
